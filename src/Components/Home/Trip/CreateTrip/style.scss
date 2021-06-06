@@ -1,0 +1,48 @@
+.route-details{
+    background-color: white;
+    form{
+        row-gap: 2rem;
+    }
+}
+.available-trucks-list{
+    column-gap: 2rem;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    /* identical to box height */
+
+
+    color: #404040;
+    svg{
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+}
+.add-billing-details{
+    
+    button{
+        margin-right: 0.5rem;    
+        
+    }
+    .active{
+        background-color: rgba(231, 104, 50, 1);
+        color: white;
+    }
+}
+.truck-number-menu-list{
+    button{
+        padding-left: 3px !important;
+        padding-right: 3px !important;
+        font-size: 0.6rem;
+    }
+    p{
+        color: rgba(147, 147, 147, 1);
+        cursor: pointer;
+        font-size: 0.8rem;
+        svg{
+            width: 0.8rem;
+        }
+    }
+}
