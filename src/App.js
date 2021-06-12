@@ -1,27 +1,59 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import Home from './Components/Home/Home';
 import HomeStatic from './Components/HomeStatic/HomeStatic';
-import { useEffect, useState } from 'react';
-import { curerntUser } from './Services/AuthServices';
+import { useContext, useEffect, useState } from 'react';
+import { currentUser } from './Services/AuthServices';
+import {  toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import { GlobalLoadingContext } from './Context/GlobalLoadingContext';
+import GlobalLoader from './GlobalLoader';
 
 function App() {
-  const [user,setUser] = useState(null);
+  const [user,setUser] = useState("loading");
+
+  const {globalLoading} = useContext(GlobalLoadingContext);
+
   useEffect(() => {
-    let AuthObservable = curerntUser.subscribe((data) => {
+    let AuthObservable = currentUser.subscribe((data) => {
       setUser(data);
+      console.log(data)
     })
     return () => {
       AuthObservable.unsubscribe()
     }
   })
 
+  toast.configure({
+    position:toast.POSITION.TOP_RIGHT,
+    autoClose:5000,
+    hideProgressBar:false,
+    newestOnTop:false,
+    closeOnClick:true,
+    rtl:false,
+    pauseOnFocusLoss:false,
+    draggable:false,
+    pauseOnHover:false,
+  });
   return (
-    <Router>
-      <Switch>
-        <Route path="/" component={user!==null ? Home : HomeStatic}></Route>
-      </Switch>
-    </Router>
+    <>
+      {(globalLoading || user==="loading") && <GlobalLoader />}
+
+      {user!=="loading" &&
+      <Router>
+        <Switch>
+          {user === null ? 
+            <>
+              <Route path="/" exact component={HomeStatic}></Route>
+              <Route path="*" render={() => <Redirect to="/" />}></Route>
+            </>
+            :
+            <Route path="/" component={Home}></Route>
+          }
+          
+        </Switch>
+      </Router> }
+    </>
   );
 }
 

@@ -1,14 +1,16 @@
 import Auth from '@aws-amplify/auth';
 import { Button } from '@material-ui/core';
 import { KeyboardBackspaceOutlined } from '@material-ui/icons';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useContext } from 'react';
 import { useState } from 'react';
 import OtpInput from 'react-otp-input';
 import { AuthModalContext } from '../../Context/AuthModalContext';
-import { SignInWithPhoneNoAndOtp } from '../../Services/AuthServices';
+import { SetOtp, SignInWithPhoneNoAndOtp } from '../../Services/AuthServices';
 import './style.scss'
 import 'crypto-js/lib-typedarrays'
+import { GlobalLoadingContext } from '../../Context/GlobalLoadingContext';
+import {toast} from 'react-toastify'
 
 export default function SignInOTP2() {
 
@@ -16,18 +18,53 @@ export default function SignInOTP2() {
     const { AuthMethod , SignInStage , SignUpStage, SignInData } = useContext(AuthModalContext);
     const [signInStage,setSignInStage] = SignInStage;
     const [signInData,setSignInData] = SignInData;
+    const [resend,setResend] = useState(false);
+
+    const {setGlobalLoading} = useContext(GlobalLoadingContext)
+
+    useEffect(() => {
+        setTimeout(() => {
+            setResend(true);
+        },1000*60)
+
+        return () => {
+            clearTimeout()
+        }
+    },[])
 
     let HandleSubmit = async (e) => {
         e.preventDefault();
         let pass = `TA${OTP}`;
-        console.log(pass)
-        let SignInResponse = await Auth.signIn(signInData.phoneNumber.replace(/\s/g,'').replace('-',''),pass)
-        console.log(SignInResponse);
+        let username = signInData.phoneNumber;
+        setGlobalLoading(true);
+        let SignInResponse = await SignInWithPhoneNoAndOtp(username,pass);
+        setGlobalLoading(false);
+        if(!SignInResponse){
+            toast.error("Unable to Verify")
+            return
+        }
+        if(!SignInResponse.isExistingUser){
+            setSignInStage(2);
+        }
+    }
+
+    let ResendOtp = async () => {
+        setGlobalLoading(true);
+        let SetOpt = await SetOtp(signInData.phoneNumber);
+        setGlobalLoading(false)
+        if(SetOpt.status !== 200){
+          toast.error("Unable to Send Otp");  
+          return
+        }
+        setResend(false);
+        setTimeout(() => {
+            setResend(true);
+        },1000*60)
     }
 
     return (
         <>
-        <Button onClick={() => setSignInStage(1)} className="mt-3 ml-2" startIcon={<KeyboardBackspaceOutlined />} color="default">Back</Button>
+        <Button onClick={() => setSignInStage(0)} className="mt-3 ml-2" startIcon={<KeyboardBackspaceOutlined />} color="default">Back</Button>
         <div className="mt-4 px-3 py-5 opt-verification-container">
 
             <h3>Phone Verification</h3>
@@ -41,7 +78,7 @@ export default function SignInOTP2() {
                     onChange={setOTP}
                 />
                 <div className="align-self-start d-flex align-items-center px-4 mt-3">
-                    <p className="mx-2">I dont’t recived a code </p> <span className="text-primary">Resend</span>
+                    <p className="mx-2">I dont’t recived a code </p> <Button disabled={!resend} onClick={ResendOtp} color="primary">Resend</Button>
                     
                 </div>
                 <Button variant="contained" color="primary" disabled={OTP.length !== 4} className="my-3 mx-auto" type="submit">Send OTP</Button>

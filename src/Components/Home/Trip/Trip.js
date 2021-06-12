@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { TripContext } from '../../../Context/TripContext'
 import CreateTrip from './CreateTrip/CreateTrip'
 import TripsData from './TripsData/TripsData'
+import TripSummary from './TripsData/TripSummary/TripSummary';
 
 export default function Trip() {
     const {TripPage} = useContext(TripContext);
@@ -9,7 +10,8 @@ export default function Trip() {
 
     const Component = [
         <TripsData />,
-        <CreateTrip />
+        <CreateTrip />,
+        <TripSummary />
     ]
     useEffect(() => {
         return () => {

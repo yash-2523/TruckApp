@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import './style.scss'
@@ -11,6 +11,7 @@ import { Route, Switch } from 'react-router';
 import Trip from './Trip/Trip';
 import { BrowserRouter } from 'react-router-dom';
 import TripContextProvider from '../../Context/TripContext';
+import { cur, currentUser } from '../../Services/AuthServices';
 
 function Home(props) {
   const { window } = props;
@@ -24,6 +25,12 @@ function Home(props) {
   
 
   const container = window !== undefined ? () => window().document.body : undefined;
+
+  useEffect(() => {
+    if(currentUser.value === null){
+      window.location = "/"
+    }
+  },[])
 
   return (
       <div className={classes.root}>

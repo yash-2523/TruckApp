@@ -4,37 +4,45 @@ import { useContext } from 'react';
 import { useRef } from 'react';
 import { useState } from 'react';
 import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/material.css'
 import { AuthModalContext } from '../../Context/AuthModalContext';
+import {toast} from 'react-toastify';
+import { GlobalLoadingContext } from '../../Context/GlobalLoadingContext';
+import { CreateUser } from '../../Services/AuthServices';
 
 export default function SignUpPage1() {
 
-    const [phoneNo,setPhoneNo] = useState("");
-    const { AuthMethod , SignInStage , SignUpStage, SignUpData } = useContext(AuthModalContext);
-    const [signUpStage,setSignUpStage] = SignUpStage;
-    const firstNameRef = useRef("");
+    const { SignInStage, SignInData } = useContext(AuthModalContext);
+    const fullNameRef = useRef("");
     const emailRef = useRef("");
-    const passwordRef = useRef("");
-    const confirmPasswordRef=  useRef("")
+    const roleRef = useRef("")
     const [termsAndConditions,setTermsAndConditon] = useState(false);
-    const [signUpData,setSignUpData] = SignUpData;
+    const [signInData,setSignInData] = SignInData;
+    const { setGlobalLoading } = useContext(GlobalLoadingContext)
 
-    function handleOnChange(value, data, event, formattedValue) {
-        setPhoneNo(formattedValue);
+    const roleMapping = {
+        "Transporter": "party",
+        "Broker": "broker",
+        "FleetOwner": "fleet_owner"
     }
 
-    let HandleSubmit = (e) => {
+    let HandleSubmit = async (e) => {
         e.preventDefault();
+        if(roleRef.current.value===""){
+            toast.error("All Fields are neccessary")
+            return
+        }
+        
+        setGlobalLoading(true)
 
-        // Validate Credentials
+        let createUserResponse = await CreateUser(fullNameRef.current.value, signInData.phoneNumber,roleMapping[roleRef.current.value],emailRef.current.value || "");
 
-        setSignUpData({
-            email: emailRef.current.value,
-            password: passwordRef.current.value,
-            firstName: firstNameRef.current.value,
-            phoneNumber: phoneNo
-        })
-        setSignUpStage(1);
+        if(!createUserResponse){
+            toast.error("Something Went Wrong, Please Try Again !")
+        }
+
+        setGlobalLoading(false);
+
+        
     }
     return (
         <div className="mt-4 px-3 py-5">
@@ -45,47 +53,32 @@ export default function SignUpPage1() {
                     required
                     variant="outlined"
                     className="my-3 p-0"
-                    inputRef={firstNameRef}
+                    inputRef={fullNameRef}
                 ></TextField>
-                <PhoneInput 
-                  isValid={(value, country) => {
-                    if (value.match(/12345/)) {
-                      return 'Invalid value: '+value+', '+country.name;
-                    } else if (value.match(/1234/)) {
-                      return false;
-                    } else {
-                      return true;
-                    }
-                  }}
-                  
-                  onChange={(value,data,event,formattedValue) => handleOnChange(value,data,event,formattedValue)}  
-                  inputStyle={{width: '100%'}}
-                />
 
                 <TextField 
                     type="email"
                     label="Emai-Id"
-                    required
                     variant="outlined"
                     className="my-3 p-0"
                     inputRef={emailRef}
-                ></TextField>
-                <TextField 
-                    type="password"
-                    label="Password"
                     required
-                    variant="outlined"
-                    className="my-3 p-0"
-                    inputRef={passwordRef}
                 ></TextField>
+
                 <TextField 
-                    type="password"
-                    label="Confirm Password"
+                    label="Select Role"
+                    inputProps = {{list: "roles"}}
+                    name="roles"
+                    inputRef = {roleRef}
                     required
-                    variant="outlined"
-                    className="my-3 p-0"
-                    inputRef={confirmPasswordRef}
-                ></TextField>
+                    autoComplete={"off"}
+                />
+
+                <datalist id="roles">
+                    <option value="Transporter"></option>
+                    <option value="FleetOwner"></option>
+                    <option value="Broker"></option>
+                </datalist>
                 <FormControlLabel
                     control={
                     <Checkbox
@@ -98,7 +91,7 @@ export default function SignUpPage1() {
                     }
                     label="I agree to Terms & Condition"
                 />
-                <Button variant="contained" color="primary" className="my-3 mx-auto" type="submit">Save And Continue</Button>
+                <Button variant="contained" color="primary" className="my-3 mx-auto" type="submit">Sign Up</Button>
             </form>  
         </div>
     )

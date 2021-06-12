@@ -4,6 +4,8 @@
         row-gap: 2rem;
     }
 }
+
+
 .available-trucks-list{
     column-gap: 2rem;
     font-family: Roboto;
@@ -30,6 +32,9 @@
         background-color: rgba(231, 104, 50, 1);
         color: white;
     }
+    > div{
+        row-gap: 0.5rem;
+    }
 }
 .truck-number-menu-list{
     button{
@@ -44,5 +49,130 @@
         svg{
             width: 0.8rem;
         }
+    }
+    .available-truck-list{
+        max-height: 150px;
+        overflow-y: scroll;
+    }
+}
+
+.add-truck-form{
+    column-gap: 0.7rem;
+}
+
+.truck-types{
+    row-gap: 0.5rem;
+    .mini-truck-lcv{
+        color: rgba(252, 157, 46, 1) !important;
+        background-color: rgba(255, 241, 224, 1);
+        span{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(252, 157, 46, 1);
+        }
+    }
+    .open-body-truck{
+        color: rgba(61, 187, 124, 1) !important;
+        background-color: rgba(230, 249, 241, 1);
+        span{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(61, 187, 124, 1);
+        }
+    }
+    .closed-container{
+        color: rgba(135, 140, 255, 1) !important;
+        background-color: rgba(242, 242, 255, 1);
+        span{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(135, 140, 255, 1);
+        }
+    }
+    .trailer{
+        color: rgba(0, 163, 255, 1) !important;
+        background-color: rgba(235, 248, 255, 1);
+        span{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(0, 163, 255, 1);
+        }
+    }
+}
+
+
+
+@media screen and (max-width: "760px") {
+    .create-trip-accordian-details{
+        > div{
+            flex-direction: column !important;
+            row-gap: 1rem;
+            align-items: center !important;
+            > div{
+                row-gap: 0.3rem;
+            }
+        }
+    }
+    .add-truck-form{
+        transform: scale(1,0.9);
+        transform-origin: 0% 0%;
+        flex-direction: column !important;
+        row-gap: 0.8rem;
+    }
+}
+
+@media screen and (max-width: "540px") {
+    .create-trip-accordian-details{
+        > div{
+            flex-direction: column !important;
+            row-gap: 1rem;
+            align-items: center !important;
+            > div{
+                row-gap: 0.3rem;
+            }
+        }
+    }
+    .route-details{
+        form > div{
+            flex-direction: column !important;
+            row-gap: 0.8rem;
+            width: 100% !important;
+        }
+    }
+    .add-truck-form{
+        transform: scale(1,0.9);
+        transform-origin: 0% 0%;
+        flex-direction: column !important;
+        row-gap: 0.8rem;
+    }
+}
+
+@media screen and (max-width: "300px") {
+    .create-trip-accordian-details{
+        > div{
+            flex-direction: column !important;
+            row-gap: 1rem;
+            align-items: center !important;
+            > div{
+                row-gap: 0.3rem;
+            }
+        }
+    }
+    .route-details{
+        form > div{
+            flex-direction: column !important;
+            row-gap: 0.8rem;
+            width: 100% !important;
+        }
+    }
+    .add-truck-form{
+        transform: scale(1,0.9);
+        transform-origin: 0% 0%;
+        flex-direction: column !important;
+        row-gap: 0.8rem;
     }
 }

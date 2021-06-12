@@ -6,12 +6,18 @@ import reportWebVitals from './reportWebVitals';
 
 import Amplify from 'aws-amplify'
 import config from './aws-exports.js'
+import GlobalLoadingContextProvider from './Context/GlobalLoadingContext';
+import { ConfirmProvider } from 'material-ui-confirm';
 
 Amplify.configure(config);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <GlobalLoadingContextProvider>
+      <ConfirmProvider>
+        <App />
+      </ConfirmProvider>
+    </GlobalLoadingContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

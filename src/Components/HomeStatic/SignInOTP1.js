@@ -7,39 +7,49 @@ import { useContext } from 'react';
 import { AuthModalContext } from '../../Context/AuthModalContext';
 import { Link } from 'react-router-dom';
 import { SetOtp } from '../../Services/AuthServices';
+import { toast, } from 'react-toastify';
+import { GlobalLoadingContext } from '../../Context/GlobalLoadingContext';
+
 
 export default function SignInOTP1() {
 
     const [phoneNo,setPhoneNo] = useState("")
-    const { AuthMethod , SignInStage , SignUpStage, SignInData } = useContext(AuthModalContext);
+    const { SignInStage, SignInData } = useContext(AuthModalContext);
     const [signInStage,setSignInStage] = SignInStage;
     const [signInData,setSignInData] = SignInData;
-
+    const {setGlobalLoading} = useContext(GlobalLoadingContext)
     function handleOnChange(value, data, event, formattedValue) {
-        setPhoneNo(formattedValue.trim());
+        setPhoneNo(formattedValue.replace(/\s/g,'').replace('-',''));
     }
 
     let HandleSubmit = async(e) => {
         e.preventDefault();
-        
-        
+        console.log(phoneNo.length !== 13)
+        if(phoneNo.length !== 13){
+            toast.error("Invalid Phone Number")
+            return
+        }
+        setGlobalLoading(true);
         let SetOpt = await SetOtp(phoneNo);
+        setGlobalLoading(false)
         if(SetOpt.status !== 200){
-          // show Error
-          console.log(SetOpt);
+          toast.error("Unable to Send Otp");  
           return
         }
         setSignInData({
             phoneNumber: phoneNo
         })
-        setSignInStage(2)
+        setSignInStage(1)
     }  
 
     return (
         <div className="mt-4 px-3 py-5">
+            <p className="text-secondary">Hello, nice to meet you</p>   
+            <h4 className="mt-1 mb-5">Get moving with Truckapp.Ai</h4>
             <form onSubmit={(e) => HandleSubmit(e)} className="d-flex flex-column align-items-center">
-
                 <PhoneInput
+                  onlyCountries={["in"]}  
+                  country={"in"}
                   onChange={(value,data,event,formattedValue) => handleOnChange(value,data,event,formattedValue)}  
                   inputStyle={{width: '100%'}}
                 />
