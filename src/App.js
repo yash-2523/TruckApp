@@ -17,7 +17,6 @@ function App() {
   useEffect(() => {
     let AuthObservable = currentUser.subscribe((data) => {
       setUser(data);
-      console.log(data)
     })
     return () => {
       AuthObservable.unsubscribe()

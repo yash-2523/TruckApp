@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/static/css/main.1dd9ee34.chunk.css",
+    "main.js": "/static/js/main.b4a802f7.chunk.js",
+    "main.js.map": "/static/js/main.b4a802f7.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.6c01b483.js",
+    "runtime-main.js.map": "/static/js/runtime-main.6c01b483.js.map",
+    "static/css/2.b6ec9fbe.chunk.css": "/static/css/2.b6ec9fbe.chunk.css",
+    "static/js/2.529b5971.chunk.js": "/static/js/2.529b5971.chunk.js",
+    "static/js/2.529b5971.chunk.js.map": "/static/js/2.529b5971.chunk.js.map",
+    "static/js/3.c5f267b1.chunk.js": "/static/js/3.c5f267b1.chunk.js",
+    "static/js/3.c5f267b1.chunk.js.map": "/static/js/3.c5f267b1.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.b6ec9fbe.chunk.css.map": "/static/css/2.b6ec9fbe.chunk.css.map",
+    "static/css/main.1dd9ee34.chunk.css.map": "/static/css/main.1dd9ee34.chunk.css.map",
+    "static/js/2.529b5971.chunk.js.LICENSE.txt": "/static/js/2.529b5971.chunk.js.LICENSE.txt",
+    "static/media/AvailableTruck.63ee5a07.svg": "/static/media/AvailableTruck.63ee5a07.svg",
+    "static/media/ClosedContainerTruck.6f9aaf37.svg": "/static/media/ClosedContainerTruck.6f9aaf37.svg",
+    "static/media/Inr.5b9fe312.svg": "/static/media/Inr.5b9fe312.svg",
+    "static/media/MiniTruck.bb0dfe41.svg": "/static/media/MiniTruck.bb0dfe41.svg",
+    "static/media/OnMarketTruck.f7eb4a99.svg": "/static/media/OnMarketTruck.f7eb4a99.svg",
+    "static/media/OpenBodyTruck.c9d9b23e.svg": "/static/media/OpenBodyTruck.c9d9b23e.svg",
+    "static/media/PdfFile.a1ff1c54.svg": "/static/media/PdfFile.a1ff1c54.svg",
+    "static/media/TrailerTruck.c8b82972.svg": "/static/media/TrailerTruck.c8b82972.svg",
+    "static/media/style.scss": "/static/media/auth_modal_background.63e890e6.png",
+    "static/media/home.fa72cc71.svg": "/static/media/home.fa72cc71.svg",
+    "static/media/settings.1aeb7ce0.svg": "/static/media/settings.1aeb7ce0.svg",
+    "static/media/trip.48f3a291.svg": "/static/media/trip.48f3a291.svg",
+    "static/media/truck.5a9e7762.svg": "/static/media/truck.5a9e7762.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6c01b483.js",
+    "static/css/2.b6ec9fbe.chunk.css",
+    "static/js/2.529b5971.chunk.js",
+    "static/css/main.1dd9ee34.chunk.css",
+    "static/js/main.b4a802f7.chunk.js"
+  ]
+}

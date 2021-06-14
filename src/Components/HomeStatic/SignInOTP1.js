@@ -24,7 +24,6 @@ export default function SignInOTP1() {
 
     let HandleSubmit = async(e) => {
         e.preventDefault();
-        console.log(phoneNo.length !== 13)
         if(phoneNo.length !== 13){
             toast.error("Invalid Phone Number")
             return

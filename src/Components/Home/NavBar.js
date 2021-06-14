@@ -37,7 +37,6 @@ export default function NavBar(props) {
     }
 
     let handleLogout = async () => {
-        console.log("logout")
         setGlobalLoading(true);
         let signOutResponse = await SignOut();
         setGlobalLoading(false);

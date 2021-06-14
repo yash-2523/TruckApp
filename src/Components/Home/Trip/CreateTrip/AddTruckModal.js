@@ -62,7 +62,6 @@ export default function AddTruckModal(props) {
                 props.close();
             }
             else{
-                console.log(createTruckResponse)
                 setGlobalLoading(false);
                 toast.error("It seems like Truck Already Exists")
             }

@@ -22,7 +22,6 @@ async function createTrip(tripDetails,role){
         truck_id: tripDetails.truckNumber,
         driver_name: tripDetails.driverName
     }
-    console.log(params)
     if(tripDetails.billingType !== "fixed"){
         params[`${tripDetails.billingType.split('-')[1]}`] = parseInt(tripDetails.total);
         params[`rate_${tripDetails.billingType.replace('-','_')}`] = parseInt(tripDetails.rate);

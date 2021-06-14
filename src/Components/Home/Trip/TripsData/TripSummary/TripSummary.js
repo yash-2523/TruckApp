@@ -43,6 +43,39 @@ export default function TripSummary() {
         setOpenPaymentMadeModal(false);
     }
 
+    let getTableScaling = () => {
+        let tableRows = document.querySelectorAll("tr");
+        let table = document.querySelector(".table");
+        if(tableRows !== undefined && table!==null && tableRows.length > 0){
+            if(window.innerWidth < tableRows[0].offsetWidth){
+                for(let i=0;i<tableRows.length;i++){
+                    tableRows[i].style.transform = `scale(${(window.innerWidth / tableRows[i].offsetWidth) - 0.03})`
+                    tableRows[i].style.transformOrigin = "0% center"
+                    table.style.borderSpacing = "0rem 0rem"
+                }
+            }
+            else{
+                for(let i=0;i<tableRows.length;i++){
+                    tableRows[i].style.transform = `scale(1)`
+                    tableRows[i].style.transformOrigin = "0% center"
+                    table.style.borderSpacing = "0rem 0.8rem"
+                }
+            }
+            
+        }
+        
+    }
+
+    useEffect(() => {
+        getTableScaling();
+
+        window.addEventListener('resize',getTableScaling)
+
+        return () => {
+            window.removeEventListener('resize',getTableScaling)
+        }
+    },[])
+
     useEffect(async () => {
         
         if(!tripId){
@@ -59,11 +92,10 @@ export default function TripSummary() {
     let TripDetails = async () => {
         try{
             let TripDetailsResponse = await getTripDetails(tripId);
-            console.log(TripDetailsResponse)
             
             if(TripDetailsResponse){
                 setTripDetails(TripDetailsResponse);
-
+                getTableScaling()
                 let tempTotalPaymentMade = parseInt(0);
                 let tempPaymentMadeTransactions = [];
 
@@ -74,21 +106,21 @@ export default function TripSummary() {
                     if(parseInt(transaction.amount) < parseInt(0)){
                         tempTotalPaymentMade += parseInt(Math.abs(parseInt(transaction.amount)));
                         tempPaymentMadeTransactions.push(
-                            <div className="w-100 d-flex justify-content-between align-items-center">
-                                <span>{getDate(transaction.date)}</span>
-                                <span>{transaction.reason}</span>
-                                <span><INRIcon /> {Math.abs(parseInt(transaction.amount))}</span>
-                            </div>
+                            <>
+                                <span className="text-start">{getDate(transaction.date)}</span>
+                                <span className="text-center">{transaction.reason}</span>
+                                <span className="text-end"><INRIcon /> {Math.abs(parseInt(transaction.amount))}</span>
+                            </>
                         )
                     }
                     else{
                         tempTotalPaymentRecieved += parseInt(Math.abs(parseInt(transaction.amount)));
                         tempPaymentRecievedTransactions.push(
-                            <div className="w-100 d-flex justify-content-between align-items-center">
-                                <span>{getDate(transaction.date)}</span>
-                                <span>{transaction.reason}</span>
-                                <span><INRIcon /> {Math.abs(parseInt(transaction.amount))}</span>
-                            </div>
+                            <>
+                                <span className="text-start">{getDate(transaction.date)}</span>
+                                <span className="text-center">{transaction.reason}</span>
+                                <span className="text-end"><INRIcon /> {Math.abs(parseInt(transaction.amount))}</span>
+                            </>
                         )
                     }
                 })
@@ -110,7 +142,6 @@ export default function TripSummary() {
                 setTripPage(0);
             }
         }catch(err){
-            console.log(err)
             toast.error("Unable to get Trip");
             setTripId(false);
             setTripPage(0);
@@ -162,11 +193,11 @@ export default function TripSummary() {
             <Button className="mt-4" startIcon={<KeyboardBackspaceOutlined />} onClick={() => setTripPage(0)}>Trips</Button>
             {tripDetails===false ? <div className="w-100 mt-5 py-3 text-center"><PulseLoader size={15} margin={2} color="#36D7B7" /></div> 
                 :
-             <div className="px-lg-3 px-md-2 px-1 pb-3">
-                <table className="w-100 rounded-3 position-relative mt-4 table px-2">
+             <div className="w-100 px-lg-3 px-md-2 px-lg-1 px-md-1 px-1 mx-auto pb-3">
+                <table className="w-100 rounded-3 position-relative mt-4 table trip-summary-table px-lg-2 px-md-2 px-1">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th style={{width: "1%"}}></th>
                             <th>Start Date</th>
                             <th>Party Name</th>
                             <th>Truck No</th>
@@ -177,18 +208,39 @@ export default function TripSummary() {
                     </thead>
                     <tbody>
                         <tr> 
-                            <td><Fab className={tripDetails.status} ><LocalShippingOutlined className={tripDetails.status} /></Fab></td>
+                            <td style={{width: "1%"}}><Fab className={tripDetails.status} ><LocalShippingOutlined className={tripDetails.status} /></Fab></td>
                             <td>{getDate(tripDetails.trip_start_date)}</td>
                             <td>{tripDetails.customer_name}</td>
                             <td>{tripDetails.truck_number}</td>
-                            <td><p>{tripDetails.origin_city}</p><p>{tripDetails.destination_city}</p></td>
+                            <td className="d-flex justify-content-center align-items-center">
+                                {/* <div className="d-flex justify-content-center align-items-center m-auto">
+                                    <div className="d-flex flex-column justify-content-between align-items-center mx-1">
+                                        <span className="dot" style={{backgroundColor: "rgba(45, 188, 83, 1)"}}></span>
+                                        <span className="vertical-line my-1"></span>
+                                        <span className="dot" style={{backgroundColor: "rgba(231, 104, 50, 1)"}}></span>
+                                    </div>
+                                    <div className="d-flex flex-column justify-content-between align-items-center"><span>{tripDetails.origin_city}</span><span>{tripDetails.destination_city}</span></div>
+                                </div> */}
+
+                                <div className="d-flex flex-column justify-content-between align-items-start m-auto">
+                                    <div className="d-flex align-items-center justify-content-start">
+                                        <span className="dot" style={{backgroundColor: "rgba(45, 188, 83, 1)"}}></span>
+                                        <span className="mx-1">{tripDetails.origin_city}</span>
+                                    </div>
+                                    <span className="vertical-line"></span>
+                                    <div className="d-flex align-items-center justify-content-start">
+                                        <span className="dot" style={{backgroundColor: "rgba(231, 104, 50, 1)"}}></span>
+                                        <span className="mx-1">{tripDetails.destination_city}</span>
+                                    </div>
+                                </div>
+                            </td>
                             <td><span className={tripDetails.status}>{tripDetails.status}</span></td>
                             <td><Icon className="mx-1"><INRIcon className="mt-1" /></Icon>  {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived))}</td>
                         </tr>
                     </tbody>
 
                     <tr>
-                        <td colSpan="7" className="text-end">
+                        <td colSpan="7" className="text-start">
                             <Tooltip title="Edit Trip" arrow><IconButton className="mx-1" onClick={HandleEditTrip}><EditOutlined /></IconButton></Tooltip>
                             <Tooltip title="Delete Trip" arrow><IconButton className="mx-1" onClick={HandleDeleteTip}><DeleteOutlined /></IconButton></Tooltip> 
                             {tripDetails.status!=="settled" && <Button color="default" size="small" style={{padding: '0.2rem'}} onClick={() => {
@@ -219,7 +271,7 @@ export default function TripSummary() {
                         >
                             <div className="w-100 d-flex justify-content-between align-items-center"><h6><b>Payments Made</b></h6> <span><INRIcon /> {paymentsMade.totalPaymentMade}</span></div>
                         </AccordionSummary>
-                        <AccordionDetails className="d-flex flex-column">{paymentsMade.transactions}</AccordionDetails>
+                        <AccordionDetails className="transaction-details">{paymentsMade.transactions}</AccordionDetails>
                     </Accordion>
                     <Accordion className="w-100 mx-0 total-charges shadow-none">
                         <AccordionSummary
@@ -230,12 +282,12 @@ export default function TripSummary() {
                         >
                             <div className="w-100 d-flex justify-content-between align-items-center"><h6><b>Payments Received</b></h6> <span><INRIcon /> {paymentsReceived.totalPaymentReceived}</span></div>
                         </AccordionSummary>
-                        <AccordionDetails className="d-flex flex-column">{paymentsReceived.transactions}</AccordionDetails>
+                        <AccordionDetails className="transaction-details">{paymentsReceived.transactions}</AccordionDetails>
                     </Accordion>
                     <div className="w-100 px-1 my-3 dashed-border"></div>
                     <div className="w-100 mt-2 d-flex justify-content-between align-items-center revenue-profit px-5">
                         <b>Profit</b>
-                        <span className="text-success"><INRIcon /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsMade.totalPaymentMade))}</span>
+                        <span><INRIcon /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsMade.totalPaymentMade))}</span>
                     </div>
                 </div>
             

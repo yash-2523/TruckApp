@@ -69,7 +69,6 @@ async function CreateTransactionExpense(tripDetails,role,expenseDetails){
         expense_date: new Date(expenseDetails.expenseDate).getTime(),
         expense_note : expenseDetails.expenseNote
     }
-    console.log(params)
     try{
         return await API.post('backend','/create_transaction',{
             body: params

@@ -44,7 +44,6 @@ async function getUser(){
         let userCredentials = await Auth.currentCredentials();
         try{
             let res = await API.post('backend','/get_user_details',{});
-            // console.log(res)
             if(res.isExistingUser){
                 currentUser.next({...res,...userCredentials});
             }
@@ -60,7 +59,6 @@ async function getUser(){
 }
 
 async function CreateUser(name,phone,role,email){
-    console.log(phone)
     try{
         let newUser = await API.post('backend','/create_user', {
             
@@ -73,7 +71,6 @@ async function CreateUser(name,phone,role,email){
             }
         });
         if(newUser.success == false){
-            console.log(newUser)
             return false;
         }
         else{
@@ -100,10 +97,6 @@ async function SignOut(){
     }
 }
 
-async function getTrips(){
-    
-    console.log(API.Credentials);
-}
 
 
 export { currentUser, SetOtp, SignInWithPhoneNoAndOtp, SignOut, CreateUser }

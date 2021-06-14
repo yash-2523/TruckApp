@@ -17,7 +17,7 @@
             vertical-align: middle;
         }
         th{
-            font-family: Mulish;
+            font-family: 'Mulish';
             font-style: normal;
             font-weight: 600;
             font-size: 14px;
@@ -39,7 +39,7 @@
             text-align: center;
         }
         td{
-            font-family: Lato;
+            font-family: 'Lato';
             font-style: normal;
             font-weight: normal;
             font-size: 12px;
@@ -48,11 +48,23 @@
             vertical-align: middle;
             color: #404040;
             border: none;
+            white-space: nowrap;
             button{
                 box-shadow: none;
                 width: 40px;
                 height: 40px;
                 pointer-events: none;
+            }
+
+            .dot{
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+            }
+            .vertical-line{
+                height: 22px;
+                padding-left: 1.5px;
+                border-right: 1px dashed #000000;
             }
         }
         .not_settled{
@@ -80,7 +92,7 @@
 
 .trip-revenue-details{
     background-color: white;
-    font-family: Roboto;
+    font-family: 'Roboto';
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
@@ -92,8 +104,17 @@
     }
     color: #404040;
 
+
+    .transaction-details{
+        display: grid;
+        grid-template-columns: auto auto auto;
+        align-items: center !important;
+        row-gap: 0.5rem;
+    }
+
+
     .total-charges{
-        font-family: Lato;
+        font-family: 'Lato';
         font-style: normal;
         font-weight: normal;
         font-size: 12px;
@@ -105,7 +126,7 @@
             fill: #8F8F8F !important;
         }
         h6{
-            font-family: Roboto;
+            font-family: 'Roboto';
             font-style: normal;
             font-weight: normal;
             font-size: 14px;
@@ -129,6 +150,9 @@
     
 
     .revenue-profit{
+        span{
+            color: rgba(45, 188, 83, 1);
+        }
         svg > path{
             fill: rgba(45, 188, 83, 1) !important;
         }
@@ -143,7 +167,7 @@
 .trip-bill-details{
     background-color: white;
     div > p{
-        font-family: Roboto;
+        font-family: 'Roboto';
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
@@ -151,7 +175,7 @@
         color: #404040;
     }
     div > span{
-        font-family: Lato;
+        font-family: 'Lato';
         font-style: normal;
         font-weight: bold;
         font-size: 12px;
@@ -198,7 +222,7 @@
         .payment-receive-intro{
             background-color: rgba(250, 251, 255, 1);
             p{
-                font-family: Mulish;
+                font-family: 'Mulish';
                 font-style: normal;
                 font-weight: normal;
                 font-size: 14px;
@@ -211,7 +235,7 @@
         
             }
             h3{
-                font-family: Mulish;
+                font-family: 'Mulish';
                 font-style: normal;
                 font-weight: 600;
                 font-size: 24px;
@@ -226,7 +250,7 @@
             background-color: white;
             h3{
                 
-                font-family: Mulish;
+                font-family: 'Mulish';
                 font-style: normal;
                 font-weight: 600;
                 font-size: 24px;
@@ -276,7 +300,7 @@
         .payment-made-intro{
             background-color: rgba(250, 251, 255, 1);
             p{
-                font-family: Mulish;
+                font-family: 'Mulish';
                 font-style: normal;
                 font-weight: normal;
                 font-size: 14px;
@@ -289,7 +313,7 @@
         
             }
             h3{
-                font-family: Mulish;
+                font-family: 'Mulish';
                 font-style: normal;
                 font-weight: 600;
                 font-size: 24px;
@@ -304,7 +328,7 @@
             background-color: white;
             h3{
                 
-                font-family: Mulish;
+                font-family: 'Mulish';
                 font-style: normal;
                 font-weight: 600;
                 font-size: 24px;
@@ -325,32 +349,9 @@
         }
     }
 }
-
-@media screen and (max-width: "500px") {
-    
-    .table{
-        transform: scale(0.9);
-        transform-origin: 0% 0%;
-        td{
-            font-size: 0.8rem;
-        }
-    }
-}
-
-@media screen and (max-width: "450px") {
-    
-    .table{
-        transform: scale(0.95);
-        transform-origin: 5% 0%;
-    }
-}
 @media screen and (max-width: "400px") {
     .operations > div{
         transform: scale(0.8);
-    }
-    .table{
-        transform: scale(0.87);
-        transform-origin: 0% 0%;
     }
 }
 
@@ -358,33 +359,15 @@
     .operations > div{
         transform: scale(0.8);
     }
-    .table{
-        transform: scale(0.83);
-        transform-origin: 0% 0%;
-    }
 }
 
 @media screen and (max-width: "320px") {
     .operations > div{
         transform: scale(0.8);
     }
-    .table{
-        transform: scale(0.73);
-        transform-origin: 0% 0%;
-    }
 }
 @media screen and (max-width: "290px") {
     .operations > div{
         transform: scale(0.8);
-    }
-    .table{
-        transform: scale(0.7);
-        transform-origin: 0% 0%;
-        td{
-            button,svg{
-                transform: scale(0.7);
-            }
-            font-size: 0.5rem !important;
-        }
     }
 }

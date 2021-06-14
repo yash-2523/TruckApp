@@ -13,6 +13,7 @@ import { currentUser } from '../../../../Services/AuthServices';
 import { toast } from 'react-toastify';
 import { GlobalLoadingContext } from '../../../../Context/GlobalLoadingContext';
 import moment from 'moment';
+import { MoonLoader } from 'react-spinners';
 
 export default function CreateTrip() {
 
@@ -100,12 +101,10 @@ export default function CreateTrip() {
                 setTripPage(2);
             }
             else{
-                console.log(CreateTripResponse)
                 toast.error("Unable to create Trip")
             }
             
         }catch(err){
-            console.log(err)
             setGlobalLoading(false);
         }
 
@@ -190,6 +189,7 @@ export default function CreateTrip() {
                                 SelectProps={{
                                     native: "true"
                                 }}
+                                
                                 className="col-lg-5 col-md-5 col-sm-10 col-10"
                                 InputProps={{
                                     startAdornment: (
