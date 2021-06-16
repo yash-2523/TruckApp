@@ -1,0 +1,133 @@
+.side-navbar{
+    background-color: rgba(54, 55, 64, 1);
+    a{
+        text-decoration: none;
+    }
+    .side-nav-item{
+        font-family: 'Mulish';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 20px;
+        cursor: pointer;
+        letter-spacing: 0.2px;
+        
+        color: #A4A6B3;
+        column-gap: 1.5rem;
+        border-left: 3px solid transparent;
+        svg{
+            margin-top: 1px;
+        }
+        &:hover{
+            background-color: rgba(159, 162, 180, 0.05);
+        }
+    }
+    .active{
+        border-left-color: rgba(221, 226, 255, 1);
+        background-color: rgba(159, 162, 180, 0.08);
+        color: #DDE2FF;
+        svg > path{
+            fill: white;
+        }
+    }
+}
+.main-container{
+    background-color :rgba(247, 248, 252, 1);
+    
+}
+.appBar{
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    padding: 0px !important;
+    width: calc(100% - 255px) !important;
+    margin-left: 255px !important;
+    .collapsable-bars{
+        display: none;
+    }
+
+    @media screen and (max-width: "540px") {
+        width: 100% !important;
+        margin-left: 0px !important;
+        .collapsable-bars{
+            display: block;
+        }
+    }
+}
+.navbar{
+    overflow-x: hidden;
+    background-color: rgba(255, 255, 255, 1) !important;
+    color: black !important;
+
+    h3{
+
+        font-family: 'Mulish';
+        font-style: normal;
+        font-weight: bold;
+        font-variant: small-caps;
+        color: #252733;
+    }
+    .navbar-user-icon{
+        column-gap: 1.3rem;
+    }
+    button{
+        padding: 0px auto !important;
+    }
+    span{
+        cursor: pointer;
+        font-size: 1rem;
+        column-gap: 0.4rem;
+        img{
+            width: 30px;
+            height: 30px;
+        }
+    }
+}
+
+@media screen and (max-width: "450px") {
+    
+    .navbar-user-icon{
+        column-gap: 0.3rem !important;
+    }
+    .navbar{
+        h3{
+            font-size: 1.2rem;
+        }
+        button{
+            transform: scale(0.9);
+            // padding: 0px !important;
+        }
+        span{
+            font-size: 0.7rem;
+            column-gap: 0.3rem;
+            img{
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: "300px") {
+    
+    .navbar-user-icon{
+        column-gap: 0px !important;
+    }
+    .navbar{
+        h3{
+            font-size: 1rem;
+        }
+        button{
+            transform: scale(1);
+            padding: 0px 10px !important;
+        }
+        span{
+            font-size: 0.7rem;
+            column-gap: 0.3rem;
+            img{
+                width: 20px;
+                height: 20px;
+            }
+            transform: scale(0.8);
+        }
+    }
+}

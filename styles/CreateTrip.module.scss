@@ -1,0 +1,191 @@
+.route-details{
+    background-color: white;
+    form{
+        row-gap: 2rem;
+    }
+}
+
+
+.available-trucks-list{
+    column-gap: 1rem;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;;
+
+    color: #404040;
+    svg{
+        // margin-top: 1rem;
+        width: 100% !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        path{
+            transform: scale(0.5);
+        }
+    }
+}
+.add-billing-details{
+    
+    button{
+        margin-right: 0.5rem;    
+        
+    }
+    .active{
+        background-color: rgba(231, 104, 50, 1);
+        color: white;
+    }
+    > div{
+        row-gap: 0.5rem;
+    }
+}
+.truck-number-menu-list{
+    button{
+        padding-left: 3px !important;
+        padding-right: 3px !important;
+        font-size: 0.6rem;
+    }
+    p{
+        color: rgba(147, 147, 147, 1);
+        cursor: pointer;
+        font-size: 0.8rem;
+        svg{
+            width: 0.8rem;
+        }
+    }
+    .available-truck-list{
+        max-height: 150px;
+        overflow-y: scroll;
+    }
+    .menu-paper{
+        width: 270px;
+        @media screen and (max-width: "300px") {
+            .menu-paper{
+                width: 240px;
+            }
+        }
+    }
+    // width: 300px;
+}
+
+.add-truck-form{
+    column-gap: 0.7rem;
+}
+
+.truck-types{
+    row-gap: 0.5rem;
+    .mini-truck-lcv{
+        color: rgba(252, 157, 46, 1) !important;
+        background-color: rgba(255, 241, 224, 1);
+        span{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(252, 157, 46, 1);
+        }
+    }
+    .open-body-truck{
+        color: rgba(61, 187, 124, 1) !important;
+        background-color: rgba(230, 249, 241, 1);
+        span{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(61, 187, 124, 1);
+        }
+    }
+    .closed-container{
+        color: rgba(135, 140, 255, 1) !important;
+        background-color: rgba(242, 242, 255, 1);
+        span{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(135, 140, 255, 1);
+        }
+    }
+    .trailer{
+        color: rgba(0, 163, 255, 1) !important;
+        background-color: rgba(235, 248, 255, 1);
+        span{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(0, 163, 255, 1);
+        }
+    }
+}
+
+
+
+@media screen and (max-width: "760px") {
+    .create-trip-accordian-details{
+        > div{
+            flex-direction: column !important;
+            row-gap: 1rem;
+            align-items: center !important;
+            > div{
+                row-gap: 0.3rem;
+            }
+        }
+    }
+    .add-truck-form{
+        transform: scale(1,0.9);
+        transform-origin: 0% 0%;
+        flex-direction: column !important;
+        row-gap: 0.8rem;
+    }
+}
+
+@media screen and (max-width: "540px") {
+    .create-trip-accordian-details{
+        > div{
+            flex-direction: column !important;
+            row-gap: 1rem;
+            align-items: center !important;
+            > div{
+                row-gap: 0.3rem;
+            }
+        }
+    }
+    .route-details{
+        form > div{
+            flex-direction: column !important;
+            row-gap: 0.8rem;
+            width: 100% !important;
+        }
+    }
+    .add-truck-form{
+        transform: scale(1,0.9);
+        transform-origin: 0% 0%;
+        flex-direction: column !important;
+        row-gap: 0.8rem;
+    }
+}
+
+@media screen and (max-width: "300px") {
+    .create-trip-accordian-details{
+        > div{
+            flex-direction: column !important;
+            row-gap: 1rem;
+            align-items: center !important;
+            > div{
+                row-gap: 0.3rem;
+            }
+        }
+    }
+    .route-details{
+        form > div{
+            flex-direction: column !important;
+            row-gap: 0.8rem;
+            width: 100% !important;
+        }
+    }
+    .add-truck-form{
+        transform: scale(1,0.9);
+        transform-origin: 0% 0%;
+        flex-direction: column !important;
+        row-gap: 0.8rem;
+    }
+}
