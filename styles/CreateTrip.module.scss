@@ -75,6 +75,9 @@
 
 .truck-types{
     row-gap: 0.5rem;
+    span{
+        width: max-content;
+    }
     .mini-truck-lcv{
         color: rgba(252, 157, 46, 1) !important;
         background-color: rgba(255, 241, 224, 1);

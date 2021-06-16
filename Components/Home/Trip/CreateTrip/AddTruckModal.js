@@ -127,8 +127,8 @@ export default function AddTruckModal(props) {
                     <h5 className="mt-4">Ownership</h5>
 
                     <FormGroup row>
-                        <FormControlLabel label="Market Truck" control={<Checkbox style={{color: "rgba(231, 104, 50, 1)"}} checked={truckDetails.truckType.marketTruck} onChange={(e) => setTruckDetails({...truckDetails,truckType: {...truckDetails.truckType,marketTruck: e.target.checked}})} />}></FormControlLabel>
-                        <FormControlLabel label="My Truck" control={<Checkbox style={{color: "rgba(231, 104, 50, 1)"}} checked={truckDetails.truckType.myTruck} onChange={(e) => setTruckDetails({...truckDetails,truckType: {...truckDetails.truckType,myTruck: e.target.checked}})} />}></FormControlLabel>
+                        <FormControlLabel label="Market Truck" control={<Checkbox style={{color: "rgba(231, 104, 50, 1)"}} checked={truckDetails.truckType.marketTruck} onChange={(e) => setTruckDetails({...truckDetails,truckType: {...truckDetails.truckType,marketTruck: e.target.checked,myTruck: false}})} />}></FormControlLabel>
+                        <FormControlLabel label="My Truck" control={<Checkbox style={{color: "rgba(231, 104, 50, 1)"}} checked={truckDetails.truckType.myTruck} onChange={(e) => setTruckDetails({...truckDetails,truckType: {...truckDetails.truckType,myTruck: e.target.checked,marketTruck: false}})} />}></FormControlLabel>
                     </FormGroup>
                     <DialogActions className="mt-4 d-flex align-items-center">
                         <Button variant="outlined" onClick={props.close}>Close</Button>

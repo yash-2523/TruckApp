@@ -133,7 +133,8 @@ export default function CreateTrip(props) {
     }
 
     useEffect(async () => {
-        
+        getCities();
+        getTrucks()
         if(tripId!==null && tripId !== undefined){
             await TripDetails();
             let temp = {
@@ -152,8 +153,7 @@ export default function CreateTrip(props) {
             }
             setTripDetails({...tripDetails,...temp})
         }
-        getCities();
-        getTrucks()
+        
     },[])
 
     useEffect(() => {
@@ -163,7 +163,8 @@ export default function CreateTrip(props) {
                 isValid=false;
             }
         })
-        if(tripDetails.customerNumber.length !== 10){
+        console.log(tripDetails);
+        if(tripDetails.customerNumber?.length !== 10){
             isValid=false;
         }
 
@@ -202,8 +203,8 @@ export default function CreateTrip(props) {
                                 onChange={(e) => setTripDetails({...tripDetails,origin: e.target.value})}
                             >
                                 <option aria-label="None" value="" />
-                                {cities.map(city => 
-                                    <option key={`origin_city_${city}`} value={city}>{city}</option>
+                                {cities.map((city,i) => 
+                                    <option key={`origin_city_${city}_${i}`} value={city}>{city}</option>
                                 )}
 
                             </TextField>
@@ -226,8 +227,8 @@ export default function CreateTrip(props) {
                                 onChange={(e) => setTripDetails({...tripDetails,destination: e.target.value})}
                             >
                                 <option aria-label="None" value="" />
-                                {cities.map(city => 
-                                    <option key={`destination_city_${city}`} value={city}>{city}</option>
+                                {cities.map((city,i) => 
+                                    <option key={`destination_city_${city}_${i}`} value={city}>{city}</option>
                                 )}
 
                             </TextField>
