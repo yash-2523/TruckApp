@@ -1,12 +1,12 @@
 import { Icon } from '@material-ui/core'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
+import styles from '../../styles/Home.module.scss'
 import HomeIcon from './svg/home.svg'
+import SettingsIcon from './svg/settings.svg'
 import TripIcon from './svg/trip.svg'
 import TruckIcon from './svg/truck.svg'
-import SettingsIcon from './svg/settings.svg'
-import Link from 'next/link'
-import {useRouter} from 'next/router'
-import styles from '../../styles/Home.module.scss'
 
 export default function SideNavBar() {
     const route = useRouter();

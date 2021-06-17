@@ -1,13 +1,13 @@
-import { Button, InputAdornment, InputLabel, TextField } from '@material-ui/core'
-import { ArrowRightAltOutlined, Cancel,  } from '@material-ui/icons';
-import INRIcon from '../svg/Inr.svg'
-import React, { useContext, useEffect, useState } from 'react'
-import styles from '../../../../../styles/TripsData.module.scss';
-import ImageUploader from '../../../../ImageUploader';
-import { CreateTransactionExpense, getExpense } from '../../../../../Services/TripDataServices'
+import { Button, InputAdornment, InputLabel, TextField } from '@material-ui/core';
+import { ArrowRightAltOutlined, Cancel } from '@material-ui/icons';
+import React, { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { GlobalLoadingContext } from '../../../../../Context/GlobalLoadingContext';
 import { currentUser } from '../../../../../Services/AuthServices';
-import { toast } from 'react-toastify';
+import { CreateTransactionExpense, getExpense } from '../../../../../Services/TripDataServices';
+import styles from '../../../../../styles/TripsData.module.scss';
+import ImageUploader from '../../../../ImageUploader';
+import INRIcon from '../svg/Inr.svg';
 
 export default function AddPaymentMadeModal(props) {
 

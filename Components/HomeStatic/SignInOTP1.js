@@ -1,12 +1,11 @@
-import { Button } from '@material-ui/core'
+import { Button } from '@material-ui/core';
+import { useContext, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/material.css'
-import { useEffect, useRef, useState } from 'react';
-import { useContext } from 'react';
+import 'react-phone-input-2/lib/material.css';
+import { toast } from 'react-toastify';
 import { AuthModalContext } from '../../Context/AuthModalContext';
-import { SetOtp } from '../../Services/AuthServices';
-import { toast, } from 'react-toastify';
 import { GlobalLoadingContext } from '../../Context/GlobalLoadingContext';
+import { SetOtp } from '../../Services/AuthServices';
 
 export default function SignInOTP1() {
 
@@ -40,6 +39,7 @@ export default function SignInOTP1() {
             setSignInStage(1)
         }).catch(err => {
             setGlobalLoading(false);
+            toast.error("Unable to Send OTP")
             return
         });
         

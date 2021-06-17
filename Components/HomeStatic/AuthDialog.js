@@ -1,12 +1,10 @@
-import Image from 'next/image'
-import { Cancel, } from '@material-ui/icons'
-import { useEffect } from 'react'
-import { useContext } from 'react'
+import { Cancel } from '@material-ui/icons'
+import { useContext, useEffect } from 'react'
 import { AuthModalContext } from '../../Context/AuthModalContext'
+import styles from '../../styles/HomeStatic.module.scss'
 import SignInOTP1 from './SignInOTP1'
 import SignInOTP2 from './SignInOTP2'
 import SignUpPage1 from './SignUpPage1'
-import styles from '../../styles/HomeStatic.module.scss'
 
 export default function AuthDialog(props) {
 
@@ -36,25 +34,6 @@ export default function AuthDialog(props) {
     let ChangeScaling = () => {
         const mainContainer = document.querySelector('#auth-main-container');
         const mainContainerImages = document.querySelectorAll('#auth-main-container > div > img');
-        // if(window.innerWidth > "830"){
-        //     mainContainer.style.transform = "scale(1)";
-
-        //     for(let i=0;i<mainContainerImages.length;i++){
-        //         if(mainContainerImages[i].tagName == "IMG"){
-        //             mainContainerImages[i].style.transform = "scale(1)";
-        //             mainContainerImages[i].style.transformOrigin = "none";
-        //         }
-        //     }
-        // }
-        // else{
-            // mainContainer.style.transform = `scale(${window.innerWidth / parseInt(800)})`;
-            // for(let i=0;i<mainContainerImages.length;i++){
-            //     if(mainContainerImages[i].tagName == "IMG"){
-            //         mainContainerImages[i].style.transform = `scale(${window.innerWidth / parseInt(800)})`;
-            //         mainContainerImages[i].style.transformOrigin = "20% 0%";
-            //     }
-            // }
-        // }
 
         let horizontalScaling, verticalScaling;
 

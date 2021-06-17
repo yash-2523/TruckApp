@@ -1,9 +1,9 @@
 
-import { useContext, useState } from 'react'
-import AuthContextProvider from '../../Context/AuthModalContext'
+import { useContext, useState } from 'react';
+import AuthContextProvider from '../../Context/AuthModalContext';
 import { GlobalLoadingContext } from '../../Context/GlobalLoadingContext';
-import AuthDialog from './AuthDialog'
-import GlobalLoader from '../GlobalLoader'
+import GlobalLoader from '../GlobalLoader';
+import AuthDialog from './AuthDialog';
 
 export default function HomeStatic() {
 

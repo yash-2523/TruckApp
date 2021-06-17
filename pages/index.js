@@ -1,12 +1,8 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import dynamic from 'next/dynamic'
-import { useContext, useEffect, useState } from 'react';
-import {currentUser} from '../Services/AuthServices'
-import GlobalLoader from '../Components/GlobalLoader';
-import React from 'react';
-import HomeStatic from '../Components/HomeStatic/HomeStatic';
 import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import GlobalLoader from '../Components/GlobalLoader';
+import HomeStatic from '../Components/HomeStatic/HomeStatic';
+import { currentUser } from '../Services/AuthServices';
 
 export default function Index() {
 

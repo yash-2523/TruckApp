@@ -7,7 +7,7 @@ import { getTrips } from '../../Services/TripDataServices';
 
 export default function Trip() {
 
-    const [tripData,setTripData] = useState([]);
+    const [tripData,setTripData] = useState("loading");
     const [status,setStatus] = useState("all");
     const [token,setToken] = useState("");
     const [loading, setLoading] = useState(false); 
@@ -33,9 +33,13 @@ export default function Trip() {
                 setTripData(data.trips);
                 setToken(data.token);
             }
+            else{
+                setTripData([])
+            }
             setLoading(false);
         
         }catch(err){
+            setTripData([])
             setLoading(false);
         }
 
@@ -67,7 +71,7 @@ export default function Trip() {
 
     let RefreshTrips = async () => {
         setLoading(true);
-        setTripData([])
+        setTripData("loading")
         setToken("");
         try{
             let data = await getTrips("",status);
@@ -75,9 +79,13 @@ export default function Trip() {
                 setTripData(data.trips);
                 setToken(data.token);
             }
+            else{
+                setTripData([])
+            }
             setLoading(false);
         
         }catch(err){
+            setTripData([])
             setLoading(false);
         }
     }

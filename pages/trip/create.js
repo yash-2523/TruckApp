@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import CreateTrip from "../../Components/Home/Trip/CreateTrip/CreateTrip";
 import { currentUser } from "../../Services/AuthServices";

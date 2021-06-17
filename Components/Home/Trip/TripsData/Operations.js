@@ -1,8 +1,7 @@
 import { Button, InputAdornment, TextField } from '@material-ui/core'
 import { Add, Search } from '@material-ui/icons'
 import { useRouter } from 'next/router'
-import React, { useContext, useRef } from 'react'
-import { TripContext } from '../../../../Context/TripContext'
+import React, { useRef } from 'react'
 import styles from '../../../../styles/TripsData.module.scss'
 
 export default function Operations(props) {

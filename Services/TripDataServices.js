@@ -46,7 +46,7 @@ async function CreateTransactionAdvance(tripDetails,role,paymentDetails){
         trip_id : tripDetails.trip_id,
         mode: paymentDetails.paymentMode,
         advance_amount: parseInt(paymentDetails.paymentAmount),
-        advance_date: new Date(paymentDetails.paymentDate).getTime(),
+        advance_date: (new Date(paymentDetails.paymentDate).getTime()) / 1000,
         advance_note : paymentDetails.paymentNote
     }
     try{
@@ -66,7 +66,7 @@ async function CreateTransactionExpense(tripDetails,role,expenseDetails){
         mode: expenseDetails.expenseMode,
         expense_type: expenseDetails.expenseType,
         expense_amount: parseInt(expenseDetails.expenseAmount),
-        expense_date: new Date(expenseDetails.expenseDate).getTime(),
+        expense_date: (new Date(expenseDetails.expenseDate).getTime()) / 1000,
         expense_note : expenseDetails.expenseNote
     }
     try{
@@ -86,4 +86,16 @@ async function getExpense(){
     }
 }
 
-export {getTrips, deleteTrip, getTripDetails, CreateTransactionAdvance, getExpense, CreateTransactionExpense}
+async function getBill(idx){
+    try{
+        return await API.post('backend','/get_bill',{
+            body:{
+                trip_id: idx
+            }
+        })
+    }catch(err){
+        return false;
+    }
+}
+
+export {getTrips, deleteTrip, getTripDetails, CreateTransactionAdvance, getExpense, CreateTransactionExpense, getBill}

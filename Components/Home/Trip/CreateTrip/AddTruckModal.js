@@ -1,14 +1,14 @@
-import { Button, Checkbox, Dialog, DialogActions, FormControl, FormControlLabel, FormGroup, Icon, Radio, RadioGroup, TextField } from '@material-ui/core'
+import { Button, Checkbox, Dialog, DialogActions, FormControlLabel, FormGroup, Icon, Radio, RadioGroup, TextField } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
+import { PulseLoader } from 'react-spinners'
+import { toast } from 'react-toastify'
+import { GlobalLoadingContext } from '../../../../Context/GlobalLoadingContext'
+import { createTruck, getTruckTypes } from '../../../../Services/TruckServices'
+import styles from '../../../../styles/CreateTrip.module.scss'
+import ClosedContainerTruckIcon from './svg/ClosedContainerTruck.svg'
 import MiniTruckIcon from './svg/MiniTruck.svg'
 import OpenBodyTruckIcon from './svg/OpenBodyTruck.svg'
-import ClosedContainerTruckIcon from './svg/ClosedContainerTruck.svg'
 import TrailerTruckIcon from './svg/TrailerTruck.svg'
-import styles from '../../../../styles/CreateTrip.module.scss'
-import { getTruckTypes, createTruck } from '../../../../Services/TruckServices'
-import { PulseLoader } from 'react-spinners'
-import { GlobalLoadingContext } from '../../../../Context/GlobalLoadingContext'
-import { toast } from 'react-toastify'
 
 export default function AddTruckModal(props) {
 

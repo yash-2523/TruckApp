@@ -1,13 +1,12 @@
-import { AppBar, IconButton, Menu, MenuItem } from '@material-ui/core'
+import { AppBar, IconButton, Menu, MenuItem } from '@material-ui/core';
 import { ExpandMoreOutlined, MenuOutlined, NotificationsOutlined } from '@material-ui/icons';
-import React, { useContext, useEffect } from 'react'
-import { useState } from 'react';
-import { GlobalLoadingContext } from '../../Context/GlobalLoadingContext';
-import { useStyles } from './MaterialStyles';
-import {currentUser, SignOut} from '../../Services/AuthServices';
-import { toast } from 'react-toastify'
 import { useRouter } from 'next/router';
-import styles from '../../styles/Home.module.scss'
+import React, { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { GlobalLoadingContext } from '../../Context/GlobalLoadingContext';
+import { currentUser, SignOut } from '../../Services/AuthServices';
+import styles from '../../styles/Home.module.scss';
+import { useStyles } from './MaterialStyles';
 
 export default function NavBar(props) {
 
