@@ -1,5 +1,5 @@
-import { AppBar, IconButton, Menu, MenuItem } from '@material-ui/core';
-import { ExpandMoreOutlined, MenuOutlined, NotificationsOutlined } from '@material-ui/icons';
+import { AppBar, IconButton, Menu, MenuItem, Avatar } from '@material-ui/core';
+import {  ExpandMoreOutlined, MenuOutlined, NotificationsOutlined } from '@material-ui/icons';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -44,7 +44,6 @@ export default function NavBar(props) {
             toast.error("Unable to Logout")
         }
     }
-    
 
     return (
 
@@ -66,7 +65,7 @@ export default function NavBar(props) {
                     <IconButton><NotificationsOutlined style={{color:"rgba(197, 199, 205, 1)"}} /></IconButton>
                     <span className="d-flex align-items-center" onClick={handleClick}>
                         {user.name}
-                        <img className="rounded-circle" src="/TruckApp.png"></img>
+                        <Avatar src={user.profile} className={styles['avatar']} variant="circle">{user && user.name?.split(' ').map(word => word.charAt(0).toUpperCase())}</Avatar>
                         <ExpandMoreOutlined style={{color:"rgba(54, 123, 245, 1)"}} />
                     </span>
                     <Menu
@@ -81,10 +80,5 @@ export default function NavBar(props) {
                 </div>
             </div>
         </AppBar>
-
-        // <div className="w-100 flex-grow-1 flex-stretch d-flex px-2 py-2 justify-content-between align-items-center navbar">
-            
-          
-        // </div>
     )
 }

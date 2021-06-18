@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }) {
   if(user!==null && user!=="loading" && router.pathname==="/"){
     router.push({pathname: "/dashboard"})
   }
-
+  console.log(user)
   return (
     <GlobalLoadingContextProvider>
       <ConfirmProvider>

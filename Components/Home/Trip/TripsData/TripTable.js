@@ -50,10 +50,11 @@ export default function TripTable(props) {
         <>
             <div className="text-end mt-4 mx-2">{<Button onClick={RefreshTrips} startIcon={<RefreshOutlined />} color="">Refresh</Button>}</div>
 
-            {tripData === "loading" ? <div className="w-100 text-center"><PulseLoader size={15} margin={2} color="#36D7B7" /></div> :
+            {tripData === "loading" ? <div className="w-100 text-center"><PulseLoader size={15} margin={2} color="#36D7B7" /></div> 
+            :
             <>
             {tripData.length === 0 ? 
-            <h4 className={`text-center mt-5 ${styles['no-trip-found']}`}>No Trip Found <SentimentDissatisfiedOutlined /></h4> 
+            <h4 className={`text-center mt-5 ${styles['no-trip-found']}`}>No Data Found <SentimentDissatisfiedOutlined /></h4> 
                 : 
             <table className={`w-100 rounded-3 position-relative mt-4 ${styles['table']} px-lg-2 px-md-2 px-1 mx-auto`} id="table">
                 <thead>
@@ -68,7 +69,6 @@ export default function TripTable(props) {
                     </tr>
                 </thead>
                 <tbody>
-
                     {tripData.map(data =>
                         <Link href={`/trip/${data.trip_id}`} key={data.trip_id}><tr style={{cursor: "pointer"}} > 
                             <td style={{width: "1%"}}><Fab className={styles[data.status.toString()]} ><LocalShippingOutlined className={styles[data.status.toString()]} /></Fab></td>

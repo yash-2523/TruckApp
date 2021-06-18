@@ -1,12 +1,24 @@
 import API from "@aws-amplify/api";
+import moment from "moment";
 
-async function getTrips(token,status){
+async function getTrips(token,status, from_date = null, to_date = null){
+    if(from_date===null || from_date==="" || to_date===null || to_date===""){
+        
+        from_date = null;
+        to_date = null;
+    }
+    else{
+        from_date = ((new Date(from_date).getTime()) / 1000);
+        to_date = ((new Date(moment(new Date(to_date)).add(1,'days').format("YYYY-MM-DD")).getTime()) / 1000);
+    }
     try{
         return await API.post('backend','/get_trips',{
             body: {
                 "token": token,
                 "key": "PK",
-                "status": status
+                "status": status,
+                "from_date": from_date,
+                "to_date": to_date
             }
         });
     }catch(err){

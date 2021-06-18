@@ -12,6 +12,8 @@ export default function Trip() {
     const [token,setToken] = useState("");
     const [loading, setLoading] = useState(false); 
     const [user,setUser] = useState(currentUser.value);
+    const [fromDate,setFromDate] = useState("");
+    const [toDate,setToDate] = useState("");
     const router = useRouter();
     useEffect(() => {
         let AuthObservable = currentUser.subscribe((data) => {
@@ -48,16 +50,35 @@ export default function Trip() {
         }
     },[])
 
-    let HandleOperation = (search,months,status) => {
-        // Fetch data from backend as per the filters
-        // Use axios for more optimization
-        // Then setTripData(data recieved);
+
+
+    let HandleOperation = async (from_date,to_date,trip_status) => {
+        setFromDate(from_date);
+        setToDate(to_date)
+        setTripData("loading")
+        setStatus(trip_status)
+        setToken("");
+        try{
+            let data = await getTrips("",trip_status,from_date,to_date);
+            if(data){
+                setTripData(data.trips);
+                setToken(data.token)
+            }
+            else{
+                setTripData([]);
+                setToken("")
+            }
+        }catch(err){
+            setTripData([])
+            setToken("");
+        }
+
     }
 
     let LoadMoreTrips = async () => {
         setLoading(true);
         try{
-            let data = await getTrips(token,status);
+            let data = await getTrips(token,status,fromDate,toDate);
             if(data){
                 setTripData([...tripData,...data.trips]);
                 setToken(data.token);
@@ -74,7 +95,7 @@ export default function Trip() {
         setTripData("loading")
         setToken("");
         try{
-            let data = await getTrips("",status);
+            let data = await getTrips("",status,fromDate,toDate);
             if(data){
                 setTripData(data.trips);
                 setToken(data.token);

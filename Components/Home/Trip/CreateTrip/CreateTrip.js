@@ -200,7 +200,6 @@ export default function CreateTrip(props) {
                                 value={tripDetails.origin}
                                 onChange={(e) => setTripDetails({...tripDetails,origin: e.target.value})}
                             >
-                                <option aria-label="None" value="" />
                                 {cities.map((city,i) => 
                                     <option key={`origin_city_${city}_${i}`} value={city}>{city}</option>
                                 )}
@@ -221,10 +220,10 @@ export default function CreateTrip(props) {
                                       </InputAdornment>
                                     ),
                                   }}
+                                  disabled={cities === []}
                                 value={tripDetails.destination}
                                 onChange={(e) => setTripDetails({...tripDetails,destination: e.target.value})}
                             >
-                                <option aria-label="None" value="" />
                                 {cities.map((city,i) => 
                                     <option key={`destination_city_${city}_${i}`} value={city}>{city}</option>
                                 )}
