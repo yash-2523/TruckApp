@@ -83,7 +83,7 @@ export default function Operations(props) {
             <div className="d-flex align-items-center justify-content-evenly flex-wrap">
                 <TextField
                     select
-                    label="Months"
+                    label="Filters"
                     value={filters}
                     onChange={(e) => HandleFilters(e)}
                     SelectProps={{
