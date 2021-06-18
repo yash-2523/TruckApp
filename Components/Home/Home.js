@@ -47,6 +47,7 @@ function Home(props) {
       {globalLoading && <GlobalLoader />}
       <div className={classes.root}>
         <NavBar handleDrawerToggle={handleDrawerToggle} />
+
         <nav className={classes.drawer} aria-label="mailbox folders">
           <Hidden smUp implementation="css">
             <Drawer
@@ -77,6 +78,7 @@ function Home(props) {
             </Drawer>
           </Hidden>
         </nav>
+        
         <main className={classes.content}>
           <div className={`w-100 h-100 mt-lg-5 mt-md-5 mt-4 pt-lg-3 pt-md-3 pt-4 ${styles['main-container']}`}>
             <Component {...pageProps} /> 
