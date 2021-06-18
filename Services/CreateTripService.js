@@ -17,7 +17,7 @@ async function createTrip(tripDetails,role){
         role : role,
         billing_type : tripDetails.billingType.replace('-','_'),
         freight_amount: parseInt(tripDetails.freightAmount),
-        trip_start_date: new Date(tripDetails.startDate).getTime(),
+        trip_start_date: (new Date(tripDetails.startDate).getTime()) / 1000,
         start_km_reading: parseInt(tripDetails.startKmReading),
         truck_id: tripDetails.truckNumber,
         driver_name: tripDetails.driverName

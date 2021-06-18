@@ -1,21 +1,20 @@
 
-import { Accordion, AccordionDetails, AccordionSummary, Button, Icon, InputAdornment, Menu, MenuList, MenuItem, TextField,} from '@material-ui/core'
-import { AddCircleRounded, ArrowBackIosOutlined, CancelOutlined, CheckOutlined, Close, ExpandMoreOutlined, KeyboardBackspaceOutlined, RoomSharp, SaveOutlined, SpeedOutlined } from '@material-ui/icons'
+import { Accordion, AccordionDetails, AccordionSummary, Button, Icon, InputAdornment, Menu, MenuItem, TextField } from '@material-ui/core';
+import { AddCircleRounded, ArrowBackIosOutlined, CheckOutlined, ExpandMoreOutlined, KeyboardBackspaceOutlined, RoomSharp, SaveOutlined, SpeedOutlined } from '@material-ui/icons';
+import moment from 'moment';
+import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
-import {getAllCities, createTrip} from '../../../../Services/CreateTripService'
-import {getTripDetails} from '../../../../Services/TripDataServices'
-import { TripContext } from '../../../../Context/TripContext';
-import AddTruckModal from './AddTruckModal';
-import styles from '../../../../styles/CreateTrip.module.scss'
-import AvailableTruckIcon from './svg/AvailableTruck.svg'
-import OnMarketTruckIcon from './svg/OnMarketTruck.svg';
-import { getAllTrucks } from '../../../../Services/TruckServices';
-import { currentUser } from '../../../../Services/AuthServices';
+import { PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { GlobalLoadingContext } from '../../../../Context/GlobalLoadingContext';
-import moment from 'moment';
-import router, { useRouter } from 'next/router';
-import { PulseLoader } from 'react-spinners';
+import { currentUser } from '../../../../Services/AuthServices';
+import { createTrip, getAllCities } from '../../../../Services/CreateTripService';
+import { getTripDetails } from '../../../../Services/TripDataServices';
+import { getAllTrucks } from '../../../../Services/TruckServices';
+import styles from '../../../../styles/CreateTrip.module.scss';
+import AddTruckModal from './AddTruckModal';
+import AvailableTruckIcon from './svg/AvailableTruck.svg';
+import OnMarketTruckIcon from './svg/OnMarketTruck.svg';
 
 export default function CreateTrip(props) {
 
@@ -53,6 +52,21 @@ export default function CreateTrip(props) {
             let TripDetailsResponse = await getTripDetails(tripId);
             if(TripDetailsResponse){
                 await setEditTrip(TripDetailsResponse);
+                let temp = {
+                    origin: TripDetailsResponse.origin_city,
+                    destination: TripDetailsResponse.destination_city,
+                    customerName: TripDetailsResponse.customer_name,
+                    customerNumber: TripDetailsResponse.customer_phone?.slice(-10),
+                    driverName: TripDetailsResponse.driver_name,
+                    truckNumber: TripDetailsResponse.truck_number,
+                    rate: parseInt(0),
+                    total: parseInt(0),
+                    billingType: "fixed",
+                    freightAmount: TripDetailsResponse.freight_amount,
+                    startKmReading: parseInt(0),
+                    startDate: moment(new Date(TripDetailsResponse.trip_start_date * 1000)).format('dd-mm-yyyy')
+                }
+                setTripDetails({...tripDetails,...temp})
                 setLoading(false)
             }
             else{
@@ -137,21 +151,6 @@ export default function CreateTrip(props) {
         getTrucks()
         if(tripId!==null && tripId !== undefined){
             await TripDetails();
-            let temp = {
-                origin: editTrip.origin_city,
-                destination: editTrip.destination_city,
-                customerName: editTrip.customer_name,
-                customerNumber: editTrip.customer_phone?.slice(-10),
-                driverName: editTrip.driver_name,
-                truckNumber: editTrip.truck_number,
-                rate: parseInt(0),
-                total: parseInt(0),
-                billingType: "fixed",
-                freightAmount: editTrip.freight_amount,
-                startKmReading: parseInt(0),
-                startDate: moment(new Date(editTrip.trip_start_date)).format('dd-mm-yyyy')
-            }
-            setTripDetails({...tripDetails,...temp})
         }
         
     },[])
@@ -163,7 +162,6 @@ export default function CreateTrip(props) {
                 isValid=false;
             }
         })
-        console.log(tripDetails);
         if(tripDetails.customerNumber?.length !== 10){
             isValid=false;
         }
@@ -202,7 +200,6 @@ export default function CreateTrip(props) {
                                 value={tripDetails.origin}
                                 onChange={(e) => setTripDetails({...tripDetails,origin: e.target.value})}
                             >
-                                <option aria-label="None" value="" />
                                 {cities.map((city,i) => 
                                     <option key={`origin_city_${city}_${i}`} value={city}>{city}</option>
                                 )}
@@ -223,10 +220,10 @@ export default function CreateTrip(props) {
                                       </InputAdornment>
                                     ),
                                   }}
+                                  disabled={cities === []}
                                 value={tripDetails.destination}
                                 onChange={(e) => setTripDetails({...tripDetails,destination: e.target.value})}
                             >
-                                <option aria-label="None" value="" />
                                 {cities.map((city,i) => 
                                     <option key={`destination_city_${city}_${i}`} value={city}>{city}</option>
                                 )}

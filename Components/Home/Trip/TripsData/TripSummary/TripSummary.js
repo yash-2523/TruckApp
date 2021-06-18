@@ -3,24 +3,18 @@ import { DeleteOutlined, EditOutlined, ExpandMoreOutlined, KeyboardBackspaceOutl
 import { useConfirm } from 'material-ui-confirm';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react';
 import { PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { GlobalLoadingContext } from '../../../../../Context/GlobalLoadingContext';
-import { TripContext } from '../../../../../Context/TripContext'
-import { deleteTrip, getTripDetails } from '../../../../../Services/TripDataServices';
-import INRIcon from '../svg/Inr.svg'
-import PDFFileIcon from '../svg/PdfFile.svg'
+import { deleteTrip, getBill, getTripDetails } from '../../../../../Services/TripDataServices';
+import styles from '../../../../../styles/TripsData.module.scss';
+import INRIcon from '../svg/Inr.svg';
+import PDFFileIcon from '../svg/PdfFile.svg';
 import AddPaymentMadeModal from './AddPaymentMadeModal';
 import AddPaymentRecieveModal from './AddPaymentRecieveModal';
-import styles from '../../../../../styles/TripsData.module.scss';
 
 export default function TripSummary() {
-
-    // const { TripId, TripPage, EditTrip } = useContext(TripContext);
-    // const [tripId,setTripId] = TripId;
-    // const [tripPage, setTripPage] = TripPage;
-    // const [editTrip, setEditTrip] = EditTrip;
     const router = useRouter();
     const tripId = router.query.id;
     const {setGlobalLoading} = useContext(GlobalLoadingContext);
@@ -172,7 +166,7 @@ export default function TripSummary() {
     }
 
     let getDate = (milliseconds) => {
-        return moment(new Date(milliseconds)).format('DD-MM-YYYY')
+        return moment(new Date(milliseconds * 1000)).format('DD-MM-YYYY')
     }
 
     let HandleEditTrip = async () => {
@@ -180,6 +174,24 @@ export default function TripSummary() {
             router.push({pathname:'/trip'});
         }
         router.push({pathname: `/trip/create/`,query: {id: tripId}})
+    }
+
+    let HandleGetBill = async () => {
+        setGlobalLoading(true);
+        try{
+            let getBillResponse = await getBill(tripId);
+            setGlobalLoading(false)
+            if(getBillResponse && getBillResponse.success){
+                window.open(getBillResponse.link,'_blank')
+                setGlobalLoading(false)
+            }else{
+                setGlobalLoading(false)
+                toast.error("Unable to get Bill");
+            }
+        }catch(err){
+            setGlobalLoading(false)
+            toast.error("Unable to get Bill");
+        }
     }
 
     return (
@@ -288,7 +300,7 @@ export default function TripSummary() {
                         <span className="col-4 text-end text-primary primary"><INRIcon /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived))}</span>
                     </div>
 
-                    <Button className="mt-5" startIcon={<PDFFileIcon />} color="primary" variant="contained">View Bill</Button>
+                    <Button className="mt-5" startIcon={<PDFFileIcon />} color="primary" variant="contained" onClick={HandleGetBill}>View Bill</Button>
                 </div>
             
                 {openPaymentReceiveModal && <AddPaymentRecieveModal settleAmount={settleAmount} UpdateTripDetails={TripDetails} tripDetails={{...tripDetails,trip_id: tripId}} ClosePaymentReceiveModal={ClosePaymentReceiveModal} />}

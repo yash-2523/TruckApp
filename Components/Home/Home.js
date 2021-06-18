@@ -1,16 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
-import { useStyles } from './MaterialStyles';
-import GlobalLoader from '../GlobalLoader';
 import { useTheme } from '@material-ui/core/styles';
-import SideNavBar from './SideNavBar';
-import NavBar from './NavBar';
-import { currentUser } from '../../Services/AuthServices';
+import { useRouter } from 'next/router';
+import React, { useContext, useEffect, useState } from 'react';
 import { GlobalLoadingContext } from '../../Context/GlobalLoadingContext';
-import styles from '../../styles/Home.module.scss'
-import {useRouter} from 'next/router';
-// import { useRouter } from '../../.next/server/pages/trip';
+import { currentUser } from '../../Services/AuthServices';
+import styles from '../../styles/Home.module.scss';
+import GlobalLoader from '../GlobalLoader';
+import { useStyles } from './MaterialStyles';
+import NavBar from './NavBar';
+import SideNavBar from './SideNavBar';
 
 function Home(props) {
   const { window } = props;

@@ -1,20 +1,16 @@
-import { Button, Fab, Icon, TablePagination } from '@material-ui/core'
-import { LocalShippingOutlined, RefreshOutlined } from '@material-ui/icons'
-import React, { useContext, useEffect} from 'react'
-import styles from '../../../../styles/TripsData.module.scss'
-import INRIcon from './svg/Inr.svg'
-import { PulseLoader } from 'react-spinners'
-import { TripContext } from '../../../../Context/TripContext'
+import { Button, Fab, Icon } from '@material-ui/core'
+import { LocalShippingOutlined, RefreshOutlined, SentimentDissatisfiedOutlined } from '@material-ui/icons'
 import * as moment from 'moment'
 import Link from 'next/link'
+import React, { useEffect } from 'react'
+import { PulseLoader } from 'react-spinners'
+import styles from '../../../../styles/TripsData.module.scss'
+import INRIcon from './svg/Inr.svg'
 
 export default function TripTable(props) {
     const {tripData, token, loading, LoadMoreTrips, RefreshTrips } = props.Operations
-    // const { TripPage,TripId } = useContext(TripContext);
-    // const [tripId,setTripId] = TripId;
-    // const [tripPage,setTripPage] = TripPage;
     let getDate = (milliseconds) => {
-        return moment(new Date(milliseconds)).format('DD-MM-YYYY')
+        return moment(new Date(milliseconds * 1000)).format('DD-MM-YYYY')
     }
 
     let getTableScaling = () => {
@@ -54,7 +50,12 @@ export default function TripTable(props) {
         <>
             <div className="text-end mt-4 mx-2">{<Button onClick={RefreshTrips} startIcon={<RefreshOutlined />} color="">Refresh</Button>}</div>
 
-            {tripData.length === 0 ? <div className="w-100 text-center"><PulseLoader size={15} margin={2} color="#36D7B7" /></div> :
+            {tripData === "loading" ? <div className="w-100 text-center"><PulseLoader size={15} margin={2} color="#36D7B7" /></div> 
+            :
+            <>
+            {tripData.length === 0 ? 
+            <h4 className={`text-center mt-5 ${styles['no-trip-found']}`}>No Data Found <SentimentDissatisfiedOutlined /></h4> 
+                : 
             <table className={`w-100 rounded-3 position-relative mt-4 ${styles['table']} px-lg-2 px-md-2 px-1 mx-auto`} id="table">
                 <thead>
                     <tr>
@@ -68,7 +69,6 @@ export default function TripTable(props) {
                     </tr>
                 </thead>
                 <tbody>
-
                     {tripData.map(data =>
                         <Link href={`/trip/${data.trip_id}`} key={data.trip_id}><tr style={{cursor: "pointer"}} > 
                             <td style={{width: "1%"}}><Fab className={styles[data.status.toString()]} ><LocalShippingOutlined className={styles[data.status.toString()]} /></Fab></td>
@@ -99,7 +99,8 @@ export default function TripTable(props) {
                     {loading ? <PulseLoader size={15} margin={2} color="#36D7B7" /> : (token!=="" && token!=="[]") && <Button onClick={LoadMoreTrips}>Load More</Button>}
                     </td>
                 </tr>
-            </table> }
+            </table>}
+            </> }
         </>
     )
 }

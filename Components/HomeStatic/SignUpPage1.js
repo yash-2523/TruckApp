@@ -1,15 +1,13 @@
 import { Button, Checkbox, FormControlLabel, TextField } from '@material-ui/core';
-import { useContext } from 'react';
-import { useRef } from 'react';
-import { useState } from 'react';
+import { useContext, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
 import { AuthModalContext } from '../../Context/AuthModalContext';
-import {toast} from 'react-toastify';
 import { GlobalLoadingContext } from '../../Context/GlobalLoadingContext';
 import { CreateUser } from '../../Services/AuthServices';
 
 export default function SignUpPage1() {
 
-    const { SignInStage, SignInData } = useContext(AuthModalContext);
+    const {  SignInData } = useContext(AuthModalContext);
     const fullNameRef = useRef("");
     const emailRef = useRef("");
     const roleRef = useRef("")

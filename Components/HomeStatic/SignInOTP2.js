@@ -1,21 +1,19 @@
 
 import { Button } from '@material-ui/core';
 import { KeyboardBackspaceOutlined } from '@material-ui/icons';
-import  { useEffect } from 'react'
-import { useContext } from 'react';
-import { useState } from 'react';
+import 'crypto-js/lib-typedarrays';
+import { useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
+import { toast } from 'react-toastify';
 import { AuthModalContext } from '../../Context/AuthModalContext';
-import { SetOtp, SignInWithPhoneNoAndOtp } from '../../Services/AuthServices';
-import 'crypto-js/lib-typedarrays'
 import { GlobalLoadingContext } from '../../Context/GlobalLoadingContext';
-import {toast} from 'react-toastify'
-import styles from '../../styles/HomeStatic.module.scss'
+import { SetOtp, SignInWithPhoneNoAndOtp } from '../../Services/AuthServices';
+import styles from '../../styles/HomeStatic.module.scss';
 
 export default function SignInOTP2() {
 
     const [OTP,setOTP] = useState("");
-    const { AuthMethod , SignInStage , SignUpStage, SignInData } = useContext(AuthModalContext);
+    const { SignInStage,  SignInData } = useContext(AuthModalContext);
     const [signInStage,setSignInStage] = SignInStage;
     const [signInData,setSignInData] = SignInData;
     const [resend,setResend] = useState(false);

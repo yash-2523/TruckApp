@@ -1,12 +1,24 @@
 import API from "@aws-amplify/api";
+import moment from "moment";
 
-async function getTrips(token,status){
+async function getTrips(token,status, from_date = null, to_date = null){
+    if(from_date===null || from_date==="" || to_date===null || to_date===""){
+        
+        from_date = null;
+        to_date = null;
+    }
+    else{
+        from_date = ((new Date(from_date).getTime()) / 1000);
+        to_date = ((new Date(moment(new Date(to_date)).add(1,'days').format("YYYY-MM-DD")).getTime()) / 1000);
+    }
     try{
         return await API.post('backend','/get_trips',{
             body: {
                 "token": token,
                 "key": "PK",
-                "status": status
+                "status": status,
+                "from_date": from_date,
+                "to_date": to_date
             }
         });
     }catch(err){
@@ -46,7 +58,7 @@ async function CreateTransactionAdvance(tripDetails,role,paymentDetails){
         trip_id : tripDetails.trip_id,
         mode: paymentDetails.paymentMode,
         advance_amount: parseInt(paymentDetails.paymentAmount),
-        advance_date: new Date(paymentDetails.paymentDate).getTime(),
+        advance_date: (new Date(paymentDetails.paymentDate).getTime()) / 1000,
         advance_note : paymentDetails.paymentNote
     }
     try{
@@ -66,7 +78,7 @@ async function CreateTransactionExpense(tripDetails,role,expenseDetails){
         mode: expenseDetails.expenseMode,
         expense_type: expenseDetails.expenseType,
         expense_amount: parseInt(expenseDetails.expenseAmount),
-        expense_date: new Date(expenseDetails.expenseDate).getTime(),
+        expense_date: (new Date(expenseDetails.expenseDate).getTime()) / 1000,
         expense_note : expenseDetails.expenseNote
     }
     try{
@@ -86,4 +98,16 @@ async function getExpense(){
     }
 }
 
-export {getTrips, deleteTrip, getTripDetails, CreateTransactionAdvance, getExpense, CreateTransactionExpense}
+async function getBill(idx){
+    try{
+        return await API.post('backend','/get_bill',{
+            body:{
+                trip_id: idx
+            }
+        })
+    }catch(err){
+        return false;
+    }
+}
+
+export {getTrips, deleteTrip, getTripDetails, CreateTransactionAdvance, getExpense, CreateTransactionExpense, getBill}

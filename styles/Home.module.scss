@@ -76,9 +76,15 @@
         cursor: pointer;
         font-size: 1rem;
         column-gap: 0.4rem;
+        .avatar{
+            color: white;
+            background-color: #673ab7;
+            transform: scale(0.7);
+        }
         img{
-            width: 30px;
-            height: 30px;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
         }
     }
 }
@@ -99,10 +105,6 @@
         span{
             font-size: 0.7rem;
             column-gap: 0.3rem;
-            img{
-                width: 20px;
-                height: 20px;
-            }
         }
     }
 }
@@ -123,11 +125,10 @@
         span{
             font-size: 0.7rem;
             column-gap: 0.3rem;
-            img{
-                width: 20px;
-                height: 20px;
-            }
             transform: scale(0.8);
+            .avatar{
+                transform: scale(0.5);
+            }
         }
     }
 }
