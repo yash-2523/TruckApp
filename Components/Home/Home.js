@@ -79,7 +79,7 @@ function Home(props) {
         </nav>
         
         <main className={classes.content}>
-          <div className={`w-100 h-100 mt-lg-5 mt-md-5 mt-4 pt-lg-3 pt-md-3 pt-4 ${styles['main-container']}`}>
+          <div className={`w-100 h-100 mt-lg-5 mt-md-5 mt-4 pt-lg-4 pt-md-4 pt-4 ${styles['main-container']}`}>
             <Component {...pageProps} /> 
           </div>
         </main>

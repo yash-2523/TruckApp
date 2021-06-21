@@ -1,5 +1,5 @@
-import {Button, IconButton } from '@material-ui/core';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { Button, TextField } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import SortIcon from '@material-ui/icons/Sort';
@@ -8,24 +8,24 @@ import Link from 'next/link'
 import styles from '../../../styles/Truck.module.scss'
 
 
-const Operations = () => {
-    return ( <div className={`w-100 d-flex ${styles.operations}`}>
-        <Button className={`{${styles.add_button}}`} variant="outlined" color="primary" startIcon={<AddCircleIcon />}>
-            <Link href="/truck/add" prefetch={true}>Add A New Truck</Link>
-        </Button>
-        <div className={`flex-grow-1 d-flex justify-content-between align-items-center ${styles.buttons_container}`}>
-            <div className="d-flex">
-                <IconButton>
-                    <RefreshIcon/>
-                </IconButton>
-                
+const Operations = ({ trucks }) => {
+    return (
+        <>
+
+            <div className={`w-100 d-flex justify-content-between align-items-center ${styles.operations}`}>
+                <div className={styles.no_of_trucks}>
+                    My Truck : {Array.isArray(trucks) ? trucks.length : '0'}
+                    <div className={`d-flex justify-content-center align-items-center ${styles.truck_image}`}>
+                        <img src="/truck.png" alt="" />
+                    </div>
+                </div>
+                <div className={`d-flex justify-content-end`}>
+                    <TextField className={`mx-4`} label="Search Trucks" variant="standard" />
+                    <Link href='/truck/add'><Button startIcon={<AddIcon />} variant='contained' color="primary">Add New Truck</Button></Link>
+                </div>
+
             </div>
-            <div className="d-flex">
-                <Button startIcon={<SortIcon />}>Sort</Button>
-                <Button startIcon={<FilterListIcon />}>Filter</Button>
-            </div>
-        </div>
-    </div> );
+        </>);
 }
 
 export default Operations;
