@@ -1,0 +1,78 @@
+.auth-modal{
+    width: 100vw;
+    min-height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .main-container{
+        position: relative;
+        display: flex;
+        z-index: 1000;
+        width: 800px;
+        height: 600px;
+        background-image: url('../Components/HomeStatic/assets/auth_modal_background.png');
+        .close-btn{
+            cursor: pointer;
+            color: white;
+            top: -3%;
+            right: -3%;
+            z-index: 1000;
+        }
+        .auth-intro{
+            button{
+                background: transparent;
+                outline: none;
+                border: none;
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 24px;
+                line-height: 28px;
+
+                color: #FFFFFF;
+            }
+            .active{
+                border-bottom: 1px solid white;
+            }
+        }
+    }
+}
+.otp-verification-container{
+    p{
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 14px;
+
+        color: #9F9F9F;
+
+    }
+}
+
+.otp-box{
+    width: 60px;
+    height: 60px;
+    background: #FFFFFF;
+    margin-right: 15px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    input{
+        border: none;
+        outline: none;
+        color: black;
+
+        
+    }
+
+    
+    
+}
