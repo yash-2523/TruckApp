@@ -14,7 +14,7 @@ export default function Truck() {
 
     const [user,setUser] = useState(currentUser.value);
     const [trucks,setTrucks] = useState('loading');
-    const props = {trucks}
+    
 
     let getTrucks = async () => {
         try{
@@ -31,10 +31,11 @@ export default function Truck() {
         getTrucks()
     },[])
 
+    const props = {trucks}
     return (
         <>
         {(user!==null && user!=="loading") && 
-            <div className={`w-100 h-100 px-lg-3 px-md-2 px-1 `}>
+            <div className={`w-100 h-100`}>
                 <Operations {...props}/>
                 <TruckTable {...props}/>
             </div>
