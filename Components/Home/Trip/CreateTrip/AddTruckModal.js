@@ -105,7 +105,7 @@ export default function AddTruckModal(props) {
 
                     <RadioGroup className={`d-flex flex-column my-2 ${styles['truck-types']}`} value={truckDetails.containerType} onChange={(e) => setTruckDetails({...truckDetails,containerType: e.target.value})}>
                         {truckTypes.length<=0 ? <PulseLoader size={15} margin={2} color="#36D7B7" /> : truckTypes.map((truck,i) => 
-                            <div className={`d-flex px-2 justify-content-between align-items-center py-1 ${styles[truck.toString().replaceAll('/','-').replaceAll(' ','-').toLowerCase()]}`}>
+                            <div className={`d-flex px-2 justify-content-between align-items-center py-1 ${styles[truck.toString().split(' ')[0].toLowerCase()]}`}>
                                 <Icon>{TruckIcons[i]}</Icon>
                                 {truck}
                                 <Radio value={truck} name="truckType" />

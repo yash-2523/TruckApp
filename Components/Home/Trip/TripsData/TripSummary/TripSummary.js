@@ -258,7 +258,7 @@ export default function TripSummary() {
                 <div className={`mt-lg-3 mt-md-2 mt-3 py-4 rounded-3 d-flex align-items-center flex-column ${styles['trip-revenue-details']} px-lg-5 px-md-4 px-2`}>
                     <div className="w-100 d-flex justify-content-between align-items-center px-5">
                         <b>Revenue</b>
-                        <span className="text-primary"><INRIcon /> {tripDetails.freight_amount}</span>
+                        <span className="text-primary"><INRIcon className="inr-icon" /> {tripDetails.freight_amount}</span>
                     </div>
                     
                     {(parseInt(paymentsMade.totalPaymentMade) > 0) && <Accordion className={`w-100 mt-3 mx-0 ${styles['total-charges']} shadow-none`}>
@@ -268,7 +268,7 @@ export default function TripSummary() {
                         id="panel1a-header"
                         className="w-100 m-0"
                         >
-                            <div className="w-100 d-flex justify-content-between align-items-center"><h6><b>Payments Made</b></h6> <span><INRIcon /> {paymentsMade.totalPaymentMade}</span></div>
+                            <div className="w-100 d-flex justify-content-between align-items-center"><h6><b>Payments Made</b></h6> <span><INRIcon className="inr-icon" /> {paymentsMade.totalPaymentMade}</span></div>
                         </AccordionSummary>
                         <AccordionDetails className={styles["transaction-details"]}>{paymentsMade.transactions}</AccordionDetails>
                     </Accordion>}
@@ -279,26 +279,26 @@ export default function TripSummary() {
                         id="panel1a-header"
                         className="w-100 m-0"
                         >
-                            <div className="w-100 d-flex justify-content-between align-items-center"><h6><b>Payments Received</b></h6> <span><INRIcon /> {paymentsReceived.totalPaymentReceived}</span></div>
+                            <div className="w-100 d-flex justify-content-between align-items-center"><h6><b>Payments Received</b></h6> <span><INRIcon className="inr-icon" /> {paymentsReceived.totalPaymentReceived}</span></div>
                         </AccordionSummary>
                         <AccordionDetails className={styles["transaction-details"]}>{paymentsReceived.transactions}</AccordionDetails>
                     </Accordion>}
                     <div className={`w-100 px-1 my-3 ${styles['dashed-border']}`}></div>
                     <div className={`w-100 mt-2 d-flex justify-content-between align-items-center ${styles['revenue-profit']} px-5`}>
                         <b>Profit</b>
-                        <span><INRIcon /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsMade.totalPaymentMade))}</span>
+                        <span><INRIcon className="inr-icon" /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsMade.totalPaymentMade))}</span>
                     </div>
                 </div>
             
                 <div className={`mt-lg-3 mt-md-2 mt-3 py-4 rounded-3 d-flex align-items-center flex-column ${styles['trip-bill-details']} px-lg-5 px-md-4 px-2`}>
                     <div className="w-100 d-flex justify-content-between align-items-center">
                         <p className="col-4 text-start">Freight Amount</p>
-                        <span className="col-4 text-end"><INRIcon /> {tripDetails.freight_amount}</span>
+                        <span className="col-4 text-end"><INRIcon className="inr-icon" /> {tripDetails.freight_amount}</span>
                     </div>
                     <div className={`w-100 px-1 my-3 ${styles['dashed-border']}`}></div>
                     <div className="w-100 d-flex justify-content-between align-items-center">
                         <p className="col-4 text-start">Balance</p>
-                        <span className="col-4 text-end text-primary primary"><INRIcon /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived))}</span>
+                        <span className={`col-4 text-end text-primary ${styles['primary']}`}><INRIcon className={`inr-icon`} /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived))}</span>
                     </div>
 
                     <Button className="mt-5" startIcon={<PDFFileIcon />} color="primary" variant="contained" onClick={HandleGetBill}>View Bill</Button>

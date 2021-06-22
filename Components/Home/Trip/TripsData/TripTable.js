@@ -90,7 +90,7 @@ export default function TripTable(props) {
                                     </div>
                                 </td>
                                 <td><span className={styles[data.status]} style={{background: "transparent"}}>{data.status.replace('_','-')}</span></td>
-                                <td><Icon className="mx-1"><INRIcon className="mt-1" /></Icon>  {data.to_receive}</td>
+                                <td><INRIcon className="inr-icon" /> {data.to_receive}</td>
                             </tr>
                         </Link>
                     )}
