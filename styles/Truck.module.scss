@@ -1,0 +1,120 @@
+.operations{
+    margin-bottom: 1rem;
+    font-size: 14px;
+
+    .no_of_trucks{
+        background-color: #fff;
+        border-radius:6px;
+        padding:.6rem .9rem .9rem 4rem;
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+        position: relative;
+        font-weight: 500;
+
+        .truck_image{
+            position:absolute;
+            top:-20px;
+            left:10px;
+            background: #FFC2D7;
+            border-radius: 4px; 
+            width:44px;
+            height:42px;
+        }
+    }
+}
+
+
+.table{
+    background-color: #fff;
+    border-collapse: separate;
+    border-radius: 4px;
+    padding:0rem .5rem .6rem;
+    border: 1px solid #E3E3E3;
+    border-spacing: 0 .8rem;
+    font-family:Mulish;
+    font-size: 14px;
+
+    tr{
+        text-align: center;
+        
+    }
+
+    thead{
+
+        th{
+            color: #9FA2B4;
+            font-weight: 600;
+            padding:.6rem 0;
+            
+        }
+
+        th:first-child{
+            width:10%;
+        }
+    }
+
+    tbody{
+        tr{
+            background: #F7F8FC;
+        }
+
+        td{
+            padding:.5rem 0;
+        }
+
+        td:first-child{
+            width:10%;
+
+            .icon_bg{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius:10px;
+                height:40px;
+                width:40px;
+                margin-left: 1rem;
+            }
+        }
+    }
+
+    .mini_truck{
+        background: #FEF6E9;
+        color: #F4A125;
+    }
+
+    .mini_truck_text{
+        color: #F4A125;
+    }
+
+    .open_body{
+        background: #E6F9F1;
+        color: #3DBB7C;
+
+    }
+
+    .open_body_text{
+        color: #3DBB7C;
+
+    }
+
+    .closed_container{
+        background: #F2F2FF;
+        color:  #878CFF;
+
+    }
+
+    .closed_container_text{
+        color:  #878CFF;
+
+    }
+
+    .trailers{
+        background: #EBF8FF;
+        color: #00A3FF;
+
+    }
+
+    .trailers_text{
+        color:  #00A3FF;
+
+    }
+}

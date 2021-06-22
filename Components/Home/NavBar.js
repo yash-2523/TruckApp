@@ -3,6 +3,8 @@ import {  ExpandMoreOutlined, MenuOutlined, NotificationsOutlined } from '@mater
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import Link from 'next/link'
+
 import { GlobalLoadingContext } from '../../Context/GlobalLoadingContext';
 import { currentUser, SignOut } from '../../Services/AuthServices';
 import styles from '../../styles/Home.module.scss';
@@ -74,7 +76,7 @@ export default function NavBar(props) {
                         onClose={handleClose}
                         style={{marginTop: "30px"}}
                     >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <Link href='/dashboard/profile'><MenuItem onClick={handleClose}>Profile</MenuItem></Link>
                         <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                 </div>
