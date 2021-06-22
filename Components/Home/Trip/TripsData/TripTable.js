@@ -5,7 +5,7 @@ import Link from 'next/link'
 import React, { useEffect } from 'react'
 import { PulseLoader } from 'react-spinners'
 import styles from '../../../../styles/TripsData.module.scss'
-import INRIcon from './svg/Inr.svg'
+import INRIcon from '../../svg/InrIcon.svg'
 
 export default function TripTable(props) {
     const {tripData, token, loading, LoadMoreTrips, RefreshTrips } = props.Operations
@@ -89,7 +89,7 @@ export default function TripTable(props) {
                                 </div>
                             </td>
                             <td><span className={styles[data.status]} style={{background: "transparent"}}>{data.status.replace('_','-')}</span></td>
-                            <td><Icon className="mx-1"><INRIcon className="mt-1" /></Icon>  {data.to_receive}</td>
+                            <td><Icon className="mx-1"><INRIcon className="mt-1 inr-icon" /></Icon>  {data.to_receive}</td>
                         </tr></Link>
                     )}
 

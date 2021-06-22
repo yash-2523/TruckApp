@@ -1,0 +1,58 @@
+.table{
+    background-color: white;
+    border-collapse: collapse; 
+    // border-spacing: 0rem 0.8rem;
+    thead{
+        height: 67px;
+        tr{
+            vertical-align: middle;
+        }
+        th{
+            padding: 0.5rem 0.5rem;
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+
+            letter-spacing: 0.2px;
+
+            color: #9FA2B4;
+
+        }
+    }
+    tbody{
+        tr{
+            height: 70px;
+            vertical-align: middle;
+            border-top: 1.5px solid #DFE0EB;
+            cursor: pointer;
+        }
+        td{
+            padding: 0.5rem 0.5rem;
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 20px;
+            letter-spacing: 0.2px;
+
+            color: #252733;
+            div{
+                column-gap: 0.7rem;
+                .avatar{
+                    color: white;
+                    background-color: #673ab7;
+                    width: 32px;
+                    height: 32px;
+                    font-size: 16px;
+                }
+            }
+            svg > path{
+                fill: #252733;
+                transform: scale(0.7);
+                transform-origin: center;
+            }
+        }
+    }
+}

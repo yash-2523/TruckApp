@@ -85,3 +85,39 @@ a{
   color: black;
   cursor: pointer;
 }
+
+.inr-icon{
+  transform: scale(0.7);
+  transform-origin: center;
+}
+
+.confirm-dialog{
+  
+  .confirm-dialog-title{
+    font-family: 'Mulish';
+    font-weight: bold;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: 0.3px;
+    color: #252733;
+    column-gap: 0.7rem;
+    .confirm-dialog-title-icon{
+      background: rgba(245, 54, 54, 0.3);
+      svg{
+        fill: #F53636;
+      }
+    }
+  }
+
+  .confirm-content{
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 30px;
+    letter-spacing: 0.4px;
+    color: #9FA2B4 !important;
+  }
+
+}

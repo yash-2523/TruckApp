@@ -1,10 +1,4 @@
-.operations{
-    row-gap: 0.8rem;
-    div{
-        column-gap: 1rem;
-        row-gap: 0.7rem;
-    }
-}
+
 .no-trip-found{
     font-family: 'Mulish';
     font-style: normal;
@@ -353,27 +347,5 @@
                 column-gap: 1rem;
             }
         }
-    }
-}
-@media screen and (max-width: "400px") {
-    .operations > div{
-        transform: scale(0.8);
-    }
-}
-
-@media screen and (max-width: "360px") {
-    .operations > div{
-        transform: scale(0.8);
-    }
-}
-
-@media screen and (max-width: "320px") {
-    .operations > div{
-        transform: scale(0.8);
-    }
-}
-@media screen and (max-width: "290px") {
-    .operations > div{
-        transform: scale(0.8);
     }
 }

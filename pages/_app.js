@@ -11,6 +11,7 @@ import HeadTags from '../Components/HeadTags';
 import Home from '../Components/Home/Home';
 import { useRouter } from 'next/router';
 import GlobalLoader from '../Components/GlobalLoader';
+import ConfirmDialog from '../Components/ConfirmDialog';
 
 function MyApp({ Component, pageProps }) {
   Amplify.configure(config);
@@ -44,12 +45,12 @@ function MyApp({ Component, pageProps }) {
   if(user!==null && user!=="loading" && router.pathname==="/"){
     router.push({pathname: "/dashboard"})
   }
-  console.log(user)
   return (
     <GlobalLoadingContextProvider>
       <ConfirmProvider>
         <>
           <HeadTags />
+          <ConfirmDialog />
           {user==="loading" && <GlobalLoader />}
           {(user==="loading" || user===null) ?
             
