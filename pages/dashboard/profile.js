@@ -2,7 +2,7 @@ import {TextField , Button} from '@material-ui/core'
 import { useState, useEffect } from 'react'
 
 import styles from '../../styles/Profile.module.scss'
-import { currentUser } from '../../Services/AuthServices';
+import { currentUser,getUser } from '../../Services/AuthServices';
 import { updateUser } from '../../Services/ProfileServices';
 
 const Profile = () => {
@@ -27,6 +27,7 @@ const Profile = () => {
         e.preventDefault()
         updateUser(name,email).then(x=>{
             if (x.success){
+                getUser()
                 setOpacity(1)
             setTimeout(() => {
                 setOpacity(0)
@@ -51,7 +52,7 @@ const Profile = () => {
                     <img src="/success.png" alt="successful" />
                     <div>User Details updated successfully</div>
                 </div>
-                <Button type="submit" variant="contained" color="primary">Update</Button>
+                <Button type="submit" variant="contained" color="primary" size='large'>Update</Button>
             </div>
         </form>
      );
