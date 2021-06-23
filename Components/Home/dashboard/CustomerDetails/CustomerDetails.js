@@ -1,4 +1,4 @@
-import { SentimentDissatisfiedOutlined } from '@material-ui/icons'
+import { SentimentDissatisfiedOutlined,LocalShippingOutlined } from '@material-ui/icons'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { PulseLoader } from 'react-spinners'
@@ -6,9 +6,10 @@ import { getTrips } from '../../../../Services/TripDataServices'
 import balanceInfoStyles from '../../../../styles/CustomerBalanceInfo.module.scss'
 import INRIcon from '../../svg/InrIcon.svg'
 import TotalBalanceIcon from './svg/TotalBalance.svg'
-import Trip from './Trip'
-import { Button } from '@material-ui/core'
-import styles from '../../../../styles/CustomerDetails.module.scss'
+import { Button,Fab } from '@material-ui/core'
+import tripStyles from '../../../../styles/TripsData.module.scss'
+import Link from 'next/link'
+import moment from 'moment'
 
 export default function CustomerDetails() {
 
@@ -35,7 +36,7 @@ export default function CustomerDetails() {
             return;
         }
         try{
-            let customerTripResponse = await getTrips(token,"all","","",customerId);
+            let customerTripResponse = await getTrips(token,"all","","",customerId,true);
             if(customerTripResponse){
                 setCustomerTrips(customerTripResponse.trips);
                 setToken(customerTripResponse.token)
@@ -71,29 +72,32 @@ export default function CustomerDetails() {
         }
     }
 
-    
+    let getDate = (milliseconds) => {
+        return moment(new Date(milliseconds * 1000)).format('DD-MM-YYYY')
+    }    
 
     let getTripContainerScaling = () => {
-        let tripDetailsContainer = document.querySelectorAll('.trip-details-container');
-        
         let TotalBalanceContainer = document.querySelector('#total-balance');
-        if(tripDetailsContainer!==null && tripDetailsContainer!==undefined && tripDetailsContainer.length!==0){
-            if(tripDetailsContainer[0].offsetWidth < "600"){
-                for(let i=0;i<tripDetailsContainer.length;i++){
-                    tripDetailsContainer[i].firstChild.style.transform = `scale(${Math.min(1,parseFloat(tripDetailsContainer[0].offsetWidth / 600))})`;
-                    tripDetailsContainer[i].firstChild.style.transformOrigin = `0% center`;
-                    tripDetailsContainer[i].lastChild.style.transform = `scale(${Math.min(1,parseFloat(tripDetailsContainer[0].offsetWidth / 300))})`;
-                    tripDetailsContainer[i].lastChild.style.transformOrigin = `0% 0%`;
-                }
-                
-            }else{
-                for(let i=0;i<tripDetailsContainer.length;i++){
-                    for(let j=0;j<tripDetailsContainer[i].children.length;j++){
-                        tripDetailsContainer[i].children[j].style.transform = `scale(1)`;
-                        tripDetailsContainer[i].children[j].style.transformOrigin = `0% center`;
-                    }
+        let tableRows = document.querySelectorAll("tr");
+        let table = document.querySelector("#table");
+        let mainContainer = document.querySelector("#main-container")
+        if(tableRows !== undefined && table!==null && tableRows.length > 0){
+            if(mainContainer.offsetWidth < tableRows[0].offsetWidth){
+                for(let i=0;i<tableRows.length;i++){
+                    table.style.borderSpacing = "0rem 0rem"
+                    tableRows[i].style.transform = `scale(${(mainContainer.offsetWidth / tableRows[i].offsetWidth) - 0.03})`
+                    tableRows[i].style.transformOrigin = "0% 0%";
+                    
                 }
             }
+            else{
+                for(let i=0;i<tableRows.length;i++){
+                    tableRows[i].style.transform = `scale(1)`
+                    tableRows[i].style.transformOrigin = "0% 0%"
+                    table.style.borderSpacing = "0rem 0.8rem"
+                }
+            }
+            
         }
 
         if(TotalBalanceContainer!==null && TotalBalanceContainer!==undefined){
@@ -122,17 +126,55 @@ export default function CustomerDetails() {
                     </span>
                 </span>
 
-                {customerTrips.length === 0 ? <h4 className={`text-center mt-5 ${styles['no-trip-found']}`}>No Data Found <SentimentDissatisfiedOutlined /></h4>
+                {customerTrips.length === 0 ? <h4 className={`text-center mt-5 ${tripStyles['no-trip-found']}`}>No Data Found <SentimentDissatisfiedOutlined /></h4>
                     :
 
-                    <div className={`d-flex flex-column mt-4 ${styles['all-trips-container']}`}>
-                        {customerTrips.map(trip => 
-                            <Trip key={trip.trip_id} trip={trip} />
-                        )}
-                        <div className="text-center">
-                            {loading ? <PulseLoader margin={2} size={15} color="#36D7B7" /> : ((token!=="" && token!=="[]") && <Button onClick={LoadMoreTrips}>Load More</Button>)}
-                        </div>
-                    </div>
+                    <table className={`w-100 rounded-3 position-relative mt-4 ${tripStyles['table']} px-lg-2 px-md-2 px-1 mx-auto`} id="table">
+                        <thead>
+                            <tr>
+                                <th style={{width: "1%"}}></th>
+                                <th>Start Date</th>
+                                <th>Party Name</th>
+                                <th>Truck No</th>
+                                <th>Route</th>
+                                <th>Status</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {customerTrips.map(data =>
+                                <Link href={`/trip/${data.trip_id}`} key={data.trip_id}>
+                                    <tr style={{cursor: "pointer"}} > 
+                                        <td style={{width: "1%"}}><Fab className={tripStyles[data.status]} ><LocalShippingOutlined className={tripStyles[data.status]} /></Fab></td>
+                                        <td>{getDate(data.trip_start_date)}</td>
+                                        <td>{data.customer_name}</td>
+                                        <td>{data.truck_id}</td>
+                                        <td className="d-flex justify-content-center align-items-center">
+                                            <div className="d-flex flex-column justify-content-between align-items-start m-auto">
+                                                <div className="d-flex align-items-center justify-content-start">
+                                                    <span className={tripStyles['dot']} style={{backgroundColor: "rgba(45, 188, 83, 1)"}}></span>
+                                                    <span className="mx-1">{data.origin_city}</span>
+                                                </div>
+                                                <span className={tripStyles["vertical-line"]}></span>
+                                                <div className="d-flex align-items-center justify-content-start">
+                                                    <span className={tripStyles["dot"]} style={{backgroundColor: "rgba(231, 104, 50, 1)"}}></span>
+                                                    <span className="mx-1">{data.destination_city}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span className={tripStyles[data.status]} style={{background: "transparent"}}>{data.status.replace('_','-')}</span></td>
+                                        <td><INRIcon className="inr-icon" /> {data.to_receive}</td>
+                                    </tr>
+                                </Link>
+                            )}
+
+                        </tbody>
+                        <tr>
+                            <td colSpan="7" className="text-center">
+                            {loading ? <PulseLoader size={15} margin={2} color="#36D7B7" /> : (token!=="" && token!=="[]") && <Button onClick={LoadMoreTrips}>Load More</Button>}
+                            </td>
+                        </tr>
+                    </table>
                 }
                 
             </div>

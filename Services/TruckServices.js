@@ -23,7 +23,7 @@ async function getTruckTypes(){
 async function createTruck(truckDetails){
     let params = {
         container_type: truckDetails.containerType,
-        truck_type: truckDetails.truckType.marketTruck ? 'Market Truck' : 'My Truck',
+        truck_type: truckDetails.truckType,
         truck_number: truckDetails.truckNumber
     }
 

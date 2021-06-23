@@ -16,10 +16,11 @@ export default function TripTable(props) {
     let getTableScaling = () => {
         let tableRows = document.querySelectorAll("tr");
         let table = document.querySelector("#table");
+        let mainContainer = document.querySelector("#main-container")
         if(tableRows !== undefined && table!==null && tableRows.length > 0){
-            if(window.innerWidth < tableRows[0].offsetWidth){
+            if(mainContainer.offsetWidth < tableRows[0].offsetWidth){
                 for(let i=0;i<tableRows.length;i++){
-                    tableRows[i].style.transform = `scale(${(window.innerWidth / tableRows[i].offsetWidth) - 0.03})`
+                    tableRows[i].style.transform = `scale(${(mainContainer.offsetWidth / tableRows[i].offsetWidth) - 0.03})`
                     tableRows[i].style.transformOrigin = "0% 0%";
                     table.style.borderSpacing = "0rem 0rem"
                 }
