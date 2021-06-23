@@ -54,7 +54,7 @@ export default function TripTable(props) {
             :
             <>
             {tripData.length === 0 ? 
-            <h4 className={`text-center mt-5 ${styles['no-trip-found']}`}>No Data Found <SentimentDissatisfiedOutlined /></h4> 
+            <h4 className={`text-center mt-5 no-data-found`}>No Data Found <SentimentDissatisfiedOutlined /></h4> 
                 : 
             <table className={`w-100 rounded-3 position-relative mt-4 ${styles['table']} px-lg-2 px-md-2 px-1 mx-auto`} id="table">
                 <thead>

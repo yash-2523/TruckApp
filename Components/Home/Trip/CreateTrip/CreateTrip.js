@@ -10,7 +10,6 @@ import { GlobalLoadingContext } from '../../../../Context/GlobalLoadingContext';
 import { currentUser } from '../../../../Services/AuthServices';
 import { createTrip, getAllCities } from '../../../../Services/CreateTripService';
 import { getTripDetails } from '../../../../Services/TripDataServices';
-import { getAllTrucks } from '../../../../Services/TruckServices';
 import styles from '../../../../styles/CreateTrip.module.scss';
 import AddTruckModal from './AddTruckModal';
 import AvailableTruckIcon from './svg/AvailableTruck.svg';
