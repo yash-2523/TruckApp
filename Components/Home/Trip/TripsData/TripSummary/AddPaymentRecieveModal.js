@@ -7,7 +7,7 @@ import { currentUser } from '../../../../../Services/AuthServices';
 import { CreateTransactionAdvance } from '../../../../../Services/TripDataServices';
 import styles from '../../../../../styles/TripsData.module.scss';
 import ImageUploader from '../../../../ImageUploader';
-import INRIcon from '../svg/Inr.svg';
+import INRIcon from '../../../svg/InrIcon.svg';
 
 
 
@@ -36,28 +36,46 @@ export default function AddPaymentRecieveModal(props) {
     let ChangeScaling = () => {
         const mainContainer = document.querySelector('#payment-receive-container');
         const mainContainerImages = document.querySelectorAll('#payment-receive-container > div > img')
-        if(window.innerWidth > "830"){
-            mainContainer.style.transform = "scale(1)";
+        // if(window.innerWidth > "830"){
+        //     mainContainer.style.transform = "scale(1)";
 
-            for(let i=0;i<mainContainerImages.length;i++){
-                if(mainContainerImages[i].tagName == "IMG"){
-                    mainContainerImages[i].style.transform = "scale(1)";
-                    mainContainerImages[i].style.transformOrigin = "none";
-                }
-            }
+        //     for(let i=0;i<mainContainerImages.length;i++){
+        //         if(mainContainerImages[i].tagName == "IMG"){
+        //             mainContainerImages[i].style.transform = "scale(1)";
+        //             mainContainerImages[i].style.transformOrigin = "none";
+        //         }
+        //     }
+        // }
+        // else if(window.innerWidth > "500"){
+        //     mainContainer.style.transform = `scale(${window.innerWidth / parseInt(800)})`;
+        //     for(let i=0;i<mainContainerImages.length;i++){
+        //         if(mainContainerImages[i].tagName == "IMG"){
+        //             mainContainerImages[i].style.transform = `scale(${window.innerWidth / parseInt(800)})`;
+        //             mainContainerImages[i].style.transformOrigin = "center 0%";
+        //         }
+        //     }
+        // }
+        // else{
+        //     mainContainer.style.transform = `scale(${window.innerWidth / parseInt(500)})`;
+        // }
+
+        let horizontalScaling, verticalScaling;
+
+        if(window.innerWidth > "830"){
+            horizontalScaling = 1;
+        }else if(window.innerWidth > "500"){
+            horizontalScaling = window.innerWidth / parseInt(800)
+        }else{
+            horizontalScaling = window.innerWidth / parseInt(500)
         }
-        else if(window.innerWidth > "500"){
-            mainContainer.style.transform = `scale(${window.innerWidth / parseInt(800)})`;
-            for(let i=0;i<mainContainerImages.length;i++){
-                if(mainContainerImages[i].tagName == "IMG"){
-                    mainContainerImages[i].style.transform = `scale(${window.innerWidth / parseInt(800)})`;
-                    mainContainerImages[i].style.transformOrigin = "center 0%";
-                }
-            }
+
+        if(window.innerHeight > "630"){
+            verticalScaling = 1;
+        }else{
+            verticalScaling = window.innerHeight / parseInt(600)
         }
-        else{
-            mainContainer.style.transform = `scale(${window.innerWidth / parseInt(500)})`;
-        }
+
+        mainContainer.style.transform = `scale(${Math.min(verticalScaling,horizontalScaling)})`;
     }
 
     let RemoveImageSrc = () => {

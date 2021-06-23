@@ -1,6 +1,5 @@
 import { Accordion, AccordionDetails, AccordionSummary, Button, Fab, Icon, IconButton, Tooltip } from '@material-ui/core';
 import { DeleteOutlined, EditOutlined, ExpandMoreOutlined, KeyboardBackspaceOutlined, LocalShippingOutlined } from '@material-ui/icons';
-import { useConfirm } from 'material-ui-confirm';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
@@ -9,7 +8,8 @@ import { toast } from 'react-toastify';
 import { GlobalLoadingContext } from '../../../../../Context/GlobalLoadingContext';
 import { deleteTrip, getBill, getTripDetails } from '../../../../../Services/TripDataServices';
 import styles from '../../../../../styles/TripsData.module.scss';
-import INRIcon from '../svg/Inr.svg';
+import ConfirmDialog from '../../../../ConfirmDialog';
+import INRIcon from '../../../svg/InrIcon.svg';
 import PDFFileIcon from '../svg/PdfFile.svg';
 import AddPaymentMadeModal from './AddPaymentMadeModal';
 import AddPaymentRecieveModal from './AddPaymentRecieveModal';
@@ -19,9 +19,9 @@ export default function TripSummary() {
     const tripId = router.query.id;
     const {setGlobalLoading} = useContext(GlobalLoadingContext);
     const [tripDetails,setTripDetails] = useState(false)
-    const confirm = useConfirm();
     const [openPaymentReceiveModal,setOpenPaymentReceiveModal] = useState(false);
     const [openPaymentMadeModal,setOpenPaymentMadeModal] = useState(false);
+    const [openConfirmDialog,setOpenConfirmDialog] = useState(false);
     const [paymentsMade,setPaymentsMade] = useState({
         totalPaymentMade: parseInt(0),
         transactions: []
@@ -31,6 +31,11 @@ export default function TripSummary() {
         transactions: [],
     })
     const [settleAmount,setSettleAmount] = useState(false);
+
+    let CloseConfirmDialog = () => {
+        setOpenConfirmDialog(false)
+    }
+
 
     let ClosePaymentReceiveModal = () => {
         setSettleAmount(false);
@@ -102,7 +107,7 @@ export default function TripSummary() {
                             <>
                                 <span className="text-start">{getDate(transaction.date)}</span>
                                 <span className="text-center">{transaction.reason}</span>
-                                <span className="text-end"><INRIcon /> {Math.abs(parseInt(transaction.amount))}</span>
+                                <span className="text-end"><INRIcon className="inr-icon" /> {Math.abs(parseInt(transaction.amount))}</span>
                             </>
                         )
                     }
@@ -112,7 +117,7 @@ export default function TripSummary() {
                             <>
                                 <span className="text-start">{getDate(transaction.date)}</span>
                                 <span className="text-center">{transaction.reason}</span>
-                                <span className="text-end"><INRIcon /> {Math.abs(parseInt(transaction.amount))}</span>
+                                <span className="text-end"><INRIcon className="inr-icon" /> {Math.abs(parseInt(transaction.amount))}</span>
                             </>
                         )
                     }
@@ -143,26 +148,22 @@ export default function TripSummary() {
         if(!tripId){
             router.push({pathname:'/trip'});
         }
-        confirm({description: "This will permanently delete the Trip"}).then(async () => {
-            setGlobalLoading(true);
-            try{
-                let deleteTripResponse = await deleteTrip(tripId);
-                if(deleteTripResponse && deleteTripResponse.success){
-                    router.push({pathname:'/trip'});
-                    toast.success("Trip Deleted");
-                }
-                else{
-                    toast.success("Unable To Delete");
-                }
-                setGlobalLoading(false);
-            }catch(err){
-                toast.success("Unable To Delete");
-                setGlobalLoading(false);
+        CloseConfirmDialog();
+        setGlobalLoading(true);
+        try{
+            let deleteTripResponse = await deleteTrip(tripId);
+            if(deleteTripResponse && deleteTripResponse.success){
+                router.push({pathname:'/trip'});
+                toast.success("Trip Deleted");
             }
-        }).catch(() => {
-
-        })
-        
+            else{
+                toast.success("Unable To Delete");
+            }
+            setGlobalLoading(false);
+        }catch(err){
+            toast.success("Unable To Delete");
+            setGlobalLoading(false);
+        }
     }
 
     let getDate = (milliseconds) => {
@@ -233,14 +234,14 @@ export default function TripSummary() {
                                 </div>
                             </td>
                             <td><span className={styles[tripDetails.status]} style={{background: "transparent"}}>{tripDetails.status.replace('_','-')}</span></td>
-                            <td><Icon className="mx-1"><INRIcon className="mt-1" /></Icon>  {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived))}</td>
+                            <td><Icon className="mx-1"><INRIcon className="mt-1 inr-icon" /></Icon>  {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived))}</td>
                         </tr>
                     </tbody>
 
                     <tr>
                         <td colSpan="7" className="text-start">
                             <Tooltip title="Edit Trip" arrow><IconButton className="mx-1" onClick={HandleEditTrip}><EditOutlined /></IconButton></Tooltip>
-                            <Tooltip title="Delete Trip" arrow><IconButton className="mx-1" onClick={HandleDeleteTip}><DeleteOutlined /></IconButton></Tooltip> 
+                            <Tooltip title="Delete Trip" arrow><IconButton className="mx-1" onClick={() => setOpenConfirmDialog(true)}><DeleteOutlined /></IconButton></Tooltip> 
                             {tripDetails.status!=="settled" && <Button color="default" size="small" style={{padding: '0.2rem'}} onClick={() => {
                                 setSettleAmount(parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived)));
                                 setOpenPaymentReceiveModal(true);
@@ -257,7 +258,7 @@ export default function TripSummary() {
                 <div className={`mt-lg-3 mt-md-2 mt-3 py-4 rounded-3 d-flex align-items-center flex-column ${styles['trip-revenue-details']} px-lg-5 px-md-4 px-2`}>
                     <div className="w-100 d-flex justify-content-between align-items-center px-5">
                         <b>Revenue</b>
-                        <span className="text-primary"><INRIcon /> {tripDetails.freight_amount}</span>
+                        <span className="text-primary"><INRIcon className="inr-icon" /> {tripDetails.freight_amount}</span>
                     </div>
                     
                     {(parseInt(paymentsMade.totalPaymentMade) > 0) && <Accordion className={`w-100 mt-3 mx-0 ${styles['total-charges']} shadow-none`}>
@@ -267,7 +268,7 @@ export default function TripSummary() {
                         id="panel1a-header"
                         className="w-100 m-0"
                         >
-                            <div className="w-100 d-flex justify-content-between align-items-center"><h6><b>Payments Made</b></h6> <span><INRIcon /> {paymentsMade.totalPaymentMade}</span></div>
+                            <div className="w-100 d-flex justify-content-between align-items-center"><h6><b>Payments Made</b></h6> <span><INRIcon className="inr-icon" /> {paymentsMade.totalPaymentMade}</span></div>
                         </AccordionSummary>
                         <AccordionDetails className={styles["transaction-details"]}>{paymentsMade.transactions}</AccordionDetails>
                     </Accordion>}
@@ -278,26 +279,26 @@ export default function TripSummary() {
                         id="panel1a-header"
                         className="w-100 m-0"
                         >
-                            <div className="w-100 d-flex justify-content-between align-items-center"><h6><b>Payments Received</b></h6> <span><INRIcon /> {paymentsReceived.totalPaymentReceived}</span></div>
+                            <div className="w-100 d-flex justify-content-between align-items-center"><h6><b>Payments Received</b></h6> <span><INRIcon className="inr-icon" /> {paymentsReceived.totalPaymentReceived}</span></div>
                         </AccordionSummary>
                         <AccordionDetails className={styles["transaction-details"]}>{paymentsReceived.transactions}</AccordionDetails>
                     </Accordion>}
                     <div className={`w-100 px-1 my-3 ${styles['dashed-border']}`}></div>
                     <div className={`w-100 mt-2 d-flex justify-content-between align-items-center ${styles['revenue-profit']} px-5`}>
                         <b>Profit</b>
-                        <span><INRIcon /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsMade.totalPaymentMade))}</span>
+                        <span><INRIcon className="inr-icon" /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsMade.totalPaymentMade))}</span>
                     </div>
                 </div>
             
                 <div className={`mt-lg-3 mt-md-2 mt-3 py-4 rounded-3 d-flex align-items-center flex-column ${styles['trip-bill-details']} px-lg-5 px-md-4 px-2`}>
                     <div className="w-100 d-flex justify-content-between align-items-center">
                         <p className="col-4 text-start">Freight Amount</p>
-                        <span className="col-4 text-end"><INRIcon /> {tripDetails.freight_amount}</span>
+                        <span className="col-4 text-end"><INRIcon className="inr-icon" /> {tripDetails.freight_amount}</span>
                     </div>
                     <div className={`w-100 px-1 my-3 ${styles['dashed-border']}`}></div>
                     <div className="w-100 d-flex justify-content-between align-items-center">
                         <p className="col-4 text-start">Balance</p>
-                        <span className="col-4 text-end text-primary primary"><INRIcon /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived))}</span>
+                        <span className={`col-4 text-end text-primary ${styles['primary']}`}><INRIcon className={`inr-icon`} /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived))}</span>
                     </div>
 
                     <Button className="mt-5" startIcon={<PDFFileIcon />} color="primary" variant="contained" onClick={HandleGetBill}>View Bill</Button>
@@ -305,6 +306,7 @@ export default function TripSummary() {
             
                 {openPaymentReceiveModal && <AddPaymentRecieveModal settleAmount={settleAmount} UpdateTripDetails={TripDetails} tripDetails={{...tripDetails,trip_id: tripId}} ClosePaymentReceiveModal={ClosePaymentReceiveModal} />}
                 {openPaymentMadeModal && <AddPaymentMadeModal UpdateTripDetails={TripDetails} tripDetails={{...tripDetails,trip_id: tripId}} ClosePaymentMadeModal={ClosePaymentMadeModal} />}
+                <ConfirmDialog open={openConfirmDialog} close={CloseConfirmDialog} action={HandleDeleteTip} />
             </div> }
 
             

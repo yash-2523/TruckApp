@@ -47,7 +47,6 @@ export default function SignUpPage1() {
                     type="text"
                     label="Full Name"
                     required
-                    variant="outlined"
                     className="my-3 p-0"
                     inputRef={fullNameRef}
                 ></TextField>
@@ -55,7 +54,6 @@ export default function SignUpPage1() {
                 <TextField 
                     type="email"
                     label="Emai-Id"
-                    variant="outlined"
                     className="my-3 p-0"
                     inputRef={emailRef}
                     required
