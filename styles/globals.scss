@@ -45,11 +45,6 @@ a{
 ::-webkit-scrollbar{
   display: none !important;
 }
-
-.PrivateNotchedOutline-root-1{
-  top: 8px !important;
-  bottom: 8px !important;
-}
 .global-loader{
   width: 100vw;
   height: 100vh;
@@ -110,6 +105,20 @@ a{
   font-weight: 600;
   color: #9FA2B4;
 }
+.MuiInputLabel-outlined{
+  padding: 0px 3px !important;
+  background-color: white;
+}
+
+.MuiOutlinedInput-root{
+  
+  .MuiOutlinedInput-notchedOutline{
+    top: -2px !important;
+    bottom: 0px !important;
+  }
+}
+
+
 .inr-icon{
   transform: scale(0.7);
   transform-origin: center;

@@ -16,10 +16,7 @@ export default function AddTruckModal(props) {
     const [detailsIsValid,setDetailsIsValid] = useState(false);
     const {setGlobalLoading} = useContext(GlobalLoadingContext)
     const [truckDetails,setTruckDetails] = useState({
-        truckType: {
-            marketTruck: false,
-            myTruck: false
-        },
+        truckType: "Market Truck",
         containerType: "",
         truckNumber: "",
         customerName: ""
@@ -33,10 +30,7 @@ export default function AddTruckModal(props) {
 
     let Init = () => {
         setTruckDetails({
-            truckType: {
-                marketTruck: false,
-                myTruck: false
-            },
+            truckType: "Market Truck",
             containerType: "",
             truckNumber: "",
             customerName: ""
@@ -90,9 +84,6 @@ export default function AddTruckModal(props) {
                 isValid=false;
             }
         })
-        if(!truckDetails.truckType.myTruck  && !truckDetails.truckType.marketTruck){
-            isValid=false;
-        }
         setDetailsIsValid(isValid)
     },[truckDetails])
 
@@ -108,7 +99,7 @@ export default function AddTruckModal(props) {
                             <div className={`d-flex px-2 justify-content-between align-items-center py-1 ${styles[truck.toString().split(' ')[0].toLowerCase()]}`}>
                                 <Icon>{TruckIcons[i]}</Icon>
                                 {truck}
-                                <Radio value={truck} name="truckType" />
+                                <Radio value={truck} name="containerType" />
                             </div>
                         )}
                     </RadioGroup>
@@ -117,6 +108,7 @@ export default function AddTruckModal(props) {
                 <div className="col-lg-6 col-md-6 col-11 mx-auto px-lg-3 px-md-2 px-0">
                     <h3>Registration Number</h3>
                     <TextField 
+                        variant="outlined"
                         className="col-lg-8 col-md-8 col-11 mt-4 mx-auto"
                         label="Vehicle  Registration Number"
                         required
@@ -125,11 +117,10 @@ export default function AddTruckModal(props) {
                     />
 
                     <h5 className="mt-4">Ownership</h5>
-
-                    <FormGroup row>
-                        <FormControlLabel label="Market Truck" control={<Checkbox style={{color: "rgba(231, 104, 50, 1)"}} checked={truckDetails.truckType.marketTruck} onChange={(e) => setTruckDetails({...truckDetails,truckType: {...truckDetails.truckType,marketTruck: e.target.checked,myTruck: false}})} />}></FormControlLabel>
-                        <FormControlLabel label="My Truck" control={<Checkbox style={{color: "rgba(231, 104, 50, 1)"}} checked={truckDetails.truckType.myTruck} onChange={(e) => setTruckDetails({...truckDetails,truckType: {...truckDetails.truckType,myTruck: e.target.checked,marketTruck: false}})} />}></FormControlLabel>
-                    </FormGroup>
+                    <RadioGroup value={truckDetails.truckType} onChange={(e) => setTruckDetails({...truckDetails,truckType: e.target.value})}>
+                        <FormControlLabel label="Market Truck" control={<Radio name="truckType" style={{color: "rgba(231, 104, 50, 1)"}} value="Market Truck" />}></FormControlLabel>
+                        <FormControlLabel label="My Truck" control={<Radio name="truckType" style={{color: "rgba(231, 104, 50, 1)"}} value="My Truck" />}></FormControlLabel>
+                    </RadioGroup>
                     <DialogActions className="mt-4 d-flex align-items-center">
                         <Button variant="outlined" onClick={props.close}>Close</Button>
                         <Button variant="contained" disabled={!detailsIsValid} onClick={HandleCreatetruck} color="primary">Confirm</Button>
