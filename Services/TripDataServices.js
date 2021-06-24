@@ -1,7 +1,7 @@
 import API from "@aws-amplify/api";
 import moment from "moment";
 
-async function getTrips(token,status, from_date = null, to_date = null,customerId=null){
+async function getTrips(token,status, from_date = null, to_date = null,customerId=null,init=false){
     if(from_date===null || from_date==="" || to_date===null || to_date===""){
         
         from_date = null;
@@ -22,9 +22,27 @@ async function getTrips(token,status, from_date = null, to_date = null,customerI
         params['customer_uid'] = customerId;
     }
     try{
-        return await API.post('backend','/get_trips',{
+        let TripsResponse = await API.post('backend','/get_trips',{
             body: params
         });
+        let trips = TripsResponse.trips;
+        let responseToken = TripsResponse.token;
+        if(init){
+            while(trips.length <= 10 && (responseToken !== "[]" && responseToken !== "")){
+                params["token"] = responseToken;
+                try{
+                    let TempTripResponse = await API.post('backend','/get_trips',{
+                        body: params
+                    });
+                    trips = [...trips,...TempTripResponse.trips];
+                    responseToken = TempTripResponse.token;
+                }catch(err){
+                    break;
+                }
+            }
+        }
+
+        return {token: responseToken, trips: trips}
     }catch(err){
         return false;
     }

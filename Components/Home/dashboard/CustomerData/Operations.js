@@ -29,6 +29,7 @@ export default function Operations(props) {
                 <TextField 
                     placeholder="Search Customer"
                     type="search"
+                    variant="outlined"
                     InputProps = {{
                         startAdornment: (
                             <InputAdornment>

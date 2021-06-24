@@ -47,28 +47,6 @@ export default function AddPaymentMadeModal(props) {
     let ChangeScaling = () => {
         const mainContainer = document.querySelector('#payment-made-container');
         const mainContainerImages = document.querySelectorAll('#payment-made-container > div > img')
-        // if(window.innerWidth > "830"){
-        //     mainContainer.style.transform = "scale(1)";
-
-        //     for(let i=0;i<mainContainerImages.length;i++){
-        //         if(mainContainerImages[i].tagName == "IMG"){
-        //             mainContainerImages[i].style.transform = "scale(1)";
-        //             mainContainerImages[i].style.transformOrigin = "none";
-        //         }
-        //     }
-        // }
-        // else if(window.innerWidth > "500"){
-        //     mainContainer.style.transform = `scale(${window.innerWidth / parseInt(800)})`;
-        //     for(let i=0;i<mainContainerImages.length;i++){
-        //         if(mainContainerImages[i].tagName == "IMG"){
-        //             mainContainerImages[i].style.transform = `scale(${window.innerWidth / parseInt(800)})`;
-        //             mainContainerImages[i].style.transformOrigin = "center 0%";
-        //         }
-        //     }
-        // }
-        // else{
-        //     mainContainer.style.transform = `scale(${window.innerWidth / parseInt(500)})`;
-        // }
 
         let horizontalScaling, verticalScaling;
 
@@ -97,6 +75,10 @@ export default function AddPaymentMadeModal(props) {
         e.preventDefault();
         let user = currentUser.value;
         if(user===null || user==="loading"){
+            return;
+        }
+        if(addPaymentMadeDetails.expenseType === "" || addPaymentMadeDetails.expenseMode === ""){
+            toast.error("All the fields are required");
             return;
         }
         setGlobalLoading(true);
@@ -135,6 +117,7 @@ export default function AddPaymentMadeModal(props) {
 
                          <TextField 
                             select
+                            variant="outlined"
                             label = "Reason"
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-3"
                             SelectProps={{
@@ -144,12 +127,14 @@ export default function AddPaymentMadeModal(props) {
                             value={addPaymentMadeDetails.expenseType}
                             onChange={(e) => setAddPaymentMadeDetails({...addPaymentMadeDetails,expenseType: e.target.value})}
                          >
+                             <option value=""></option>
                             {expenseTypes.map(expense => 
                                 <option value={expense}>{expense}</option>
                             )} 
                          </TextField>   
                          <TextField 
                             label="Expense Amount"
+                            variant="outlined"
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-3"
                             InputProps= {{
                                 startAdornment: (
@@ -165,6 +150,7 @@ export default function AddPaymentMadeModal(props) {
                         />
                         <TextField 
                             label="Expense Date"
+                            variant="outlined"
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-3"
                             type="date"
                             focused
@@ -174,6 +160,7 @@ export default function AddPaymentMadeModal(props) {
                         />
                         <TextField 
                             label="Expense Mode"
+                            variant="outlined"
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-3"
                             select
                             SelectProps={{
@@ -184,7 +171,7 @@ export default function AddPaymentMadeModal(props) {
                             focused
                             required
                         >
-
+                            <option value=""></option>
                             <option value="cash">Cash</option>
                             <option value="upi">Upi</option>
                             <option value="bank">Bank</option>

@@ -88,6 +88,10 @@ export default function AddPaymentRecieveModal(props) {
         if(user===null || user==="loading"){
             return;
         }
+        if(addPaymentReceivedDetails.paymentMode === ""){
+            toast.error("All the fields are required");
+            return;
+        }
         setGlobalLoading(true);
         try{
             let CreateTransactionResponse = await CreateTransactionAdvance(props.tripDetails,user.role,addPaymentReceivedDetails);
@@ -123,6 +127,7 @@ export default function AddPaymentRecieveModal(props) {
                      <form onSubmit={(e) => HandleSubmit(e)} className="w-100">
                          <TextField 
                             label="Payment Amount"
+                            variant="outlined"
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-4"
                             InputProps= {{
                                 startAdornment: (
@@ -138,6 +143,7 @@ export default function AddPaymentRecieveModal(props) {
                         />
                         <TextField 
                             label="Payment Date"
+                            variant="outlined"
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-4"
                             type="date"
                             value={addPaymentReceivedDetails.paymentDate}
@@ -147,6 +153,7 @@ export default function AddPaymentRecieveModal(props) {
                         />
                         <TextField 
                             label="Payment Mode"
+                            variant="outlined"
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-4"
                             select
                             SelectProps={{
@@ -157,7 +164,7 @@ export default function AddPaymentRecieveModal(props) {
                             focused
                             required
                         >
-
+                            <option value=""></option>
                             <option value="cash">Cash</option>
                             <option value="upi">Upi</option>
                             <option value="bank">Bank</option>

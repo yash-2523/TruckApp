@@ -1,6 +1,6 @@
 
 import { Accordion, AccordionDetails, AccordionSummary, Button, Icon, InputAdornment, Menu, MenuItem, TextField } from '@material-ui/core';
-import { AddCircleRounded, ArrowBackIosOutlined, CheckOutlined, ExpandMoreOutlined, KeyboardBackspaceOutlined, RoomSharp, SaveOutlined, SpeedOutlined } from '@material-ui/icons';
+import { AddCircleRounded, ArrowBackIosOutlined, CheckOutlined, ExpandMoreOutlined, KeyboardBackspaceOutlined, Person, Phone, RoomSharp, SaveOutlined, SpeedOutlined } from '@material-ui/icons';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
@@ -39,11 +39,11 @@ export default function CreateTrip(props) {
         customerNumber: "",
         driverName: "",
         truckNumber: "",
-        rate: parseInt(0),
-        total: parseInt(0),
+        rate: "",
+        total: "",
         billingType: "fixed",
-        freightAmount: parseInt(0),
-        startKmReading: parseInt(0),
+        freightAmount: "",
+        startKmReading: "",
         startDate: ""
     });
     let TripDetails = async () => {
@@ -59,11 +59,11 @@ export default function CreateTrip(props) {
                     customerNumber: TripDetailsResponse.customer_phone?.slice(-10),
                     driverName: TripDetailsResponse.driver_name,
                     truckNumber: TripDetailsResponse.truck_number,
-                    rate: parseInt(0),
-                    total: parseInt(0),
+                    rate: "",
+                    total: "",
                     billingType: "fixed",
                     freightAmount: TripDetailsResponse.freight_amount,
-                    startKmReading: parseInt(0),
+                    startKmReading: "",
                     startDate: moment(new Date(TripDetailsResponse.trip_start_date * 1000)).format('dd-mm-yyyy')
                 }
                 setTripDetails({...tripDetails,...temp})
@@ -94,7 +94,7 @@ export default function CreateTrip(props) {
     }
 
     let BillingTypeChange = (idx) => {
-        setTripDetails({...tripDetails,billingType: billingTypes[idx],rate: 0,total: 0,freightAmount: 0});
+        setTripDetails({...tripDetails,billingType: billingTypes[idx],rate: "",total: "",freightAmount: ""});
         
     }
 
@@ -181,6 +181,7 @@ export default function CreateTrip(props) {
             <>    
             <div className={`px-lg-3 px-md-2 px-1 mt-5 ${styles['create-trip-container']}`}>
                 <div className={`px-4 rounded-2 py-3 ${styles['route-details']}`}>
+                    
                     <form className="w-100 d-flex flex-column">
                         <div className="d-flex justify-content-between align-items-center">
                             <TextField 
@@ -189,6 +190,7 @@ export default function CreateTrip(props) {
                                 SelectProps={{
                                     native: "true"
                                 }}
+                                variant="outlined"
                                 className="col-lg-5 col-md-5 col-sm-10 col-10"
                                 InputProps={{
                                     startAdornment: (
@@ -200,6 +202,7 @@ export default function CreateTrip(props) {
                                 value={tripDetails.origin}
                                 onChange={(e) => setTripDetails({...tripDetails,origin: e.target.value})}
                             >
+                                <option value=""></option>
                                 {cities.map((city,i) => 
                                     <option key={`origin_city_${city}_${i}`} value={city}>{city}</option>
                                 )}
@@ -208,6 +211,7 @@ export default function CreateTrip(props) {
                             <TextField 
                                 label="Destination"
                                 select
+                                variant="outlined"
                                 SelectProps={{
                                     native: "true"
                                 }}
@@ -224,6 +228,7 @@ export default function CreateTrip(props) {
                                 value={tripDetails.destination}
                                 onChange={(e) => setTripDetails({...tripDetails,destination: e.target.value})}
                             >
+                                <option value=""></option>
                                 {cities.map((city,i) => 
                                     <option key={`destination_city_${city}_${i}`} value={city}>{city}</option>
                                 )}
@@ -233,6 +238,14 @@ export default function CreateTrip(props) {
                         
                         <div className="d-flex justify-content-between align-items-center">
                             <TextField 
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment>
+                                            <Person />
+                                        </InputAdornment>
+                                    )
+                                }}
+                                variant="outlined"
                                 label="Customer Name"
                                 className="col-lg-5 col-md-5 col-sm-10 col-10"
                                 value={tripDetails.customerName} onChange={(e) => setTripDetails({...tripDetails,customerName: e.target.value})}
@@ -241,6 +254,14 @@ export default function CreateTrip(props) {
                                 label="Customer Number"
                                 className="col-lg-5 col-md-5 col-sm-10 col-10"
                                 type="number"
+                                variant="outlined"
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment>
+                                            <Phone />
+                                        </InputAdornment>
+                                    )
+                                }}
                                 value={tripDetails.customerNumber} onChange={(e) => setTripDetails({...tripDetails,customerNumber: `${e.target.value}`})}
                             />
                         </div>
@@ -248,9 +269,11 @@ export default function CreateTrip(props) {
                         <div className="d-flex justify-content-between align-items-center">
                             <TextField 
                                 label="Driver Name"
+                                variant="outlined"
                                 className="col-lg-5 col-md-5 col-sm-10 col-10"
                                 value={tripDetails.driverName} onChange={(e) => setTripDetails({...tripDetails,driverName: e.target.value})}
                             />
+                            
                             <TextField 
                                 label="Truck Registration Number"
                                 className="col-lg-5 col-md-5 col-sm-10 col-10"
@@ -259,6 +282,7 @@ export default function CreateTrip(props) {
                                 value={tripDetails.truckNumber}
                                 onChange={(e) => setTripDetails({...tripDetails,truckNumber: e.target.value})}
                                 onClick={(e) => handleTruckNoAnchorClick(e)}
+                                variant="outlined"
                             />
                             <Menu
                                 anchorEl={truckNoAnchorEl}
@@ -311,6 +335,7 @@ export default function CreateTrip(props) {
                             {tripDetails.billingType !== billingTypes[0] && <div className="d-flex flex-column justify-content-between align-items-center">
                                 {`Rate ${tripDetails.billingType}`}
                                 <TextField 
+                                    variant="outlined"
                                     placeholder={`rate ${tripDetails.billingType}`}
                                     className="w-50 mt-lg-4 mt-md-3 mt-2"
                                     value={tripDetails.rate}
@@ -321,6 +346,7 @@ export default function CreateTrip(props) {
                             {tripDetails.billingType !== billingTypes[0] && <div className="d-flex flex-column justify-content-between align-items-center">
                                 {`Total ${tripDetails.billingType.split('-')[1]}`}
                                 <TextField 
+                                    variant="outlined"
                                     placeholder={`total ${tripDetails.billingType.split('-')[1]}`}
                                     className="w-50 mt-lg-4 mt-md-3 mt-2"
                                     value={tripDetails.total}
@@ -331,6 +357,7 @@ export default function CreateTrip(props) {
                             <div className="d-flex flex-column justify-content-between align-items-center">
                                 Start KM Reading
                                 <TextField 
+                                    variant="outlined"
                                     className="w-50 mt-lg-4 mt-md-3 mt-2"
                                     type="number"
                                     value={tripDetails.startKmReading}
@@ -348,6 +375,7 @@ export default function CreateTrip(props) {
                             <div className="d-flex flex-column justify-content-between align-items-start"> 
                                 Start Date
                                 <TextField
+                                    variant="outlined"
                                     className="mt-lg-4 mt-md-3 mt-2"
                                     type="date"
                                     value={tripDetails.startDate}
