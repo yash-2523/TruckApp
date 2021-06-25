@@ -1,5 +1,5 @@
-import { Accordion, AccordionDetails, AccordionSummary, Button, Fab, Icon, IconButton, Tooltip } from '@material-ui/core';
-import { DeleteOutlined, EditOutlined, ExpandMoreOutlined, KeyboardBackspaceOutlined, LocalShippingOutlined } from '@material-ui/icons';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Fab, Icon,Stepper,Step,StepLabel,withStyles,StepConnector } from '@material-ui/core';
+import { CheckBoxRounded, DeleteOutlined, EditOutlined, ExpandMoreOutlined, LocalShippingOutlined, CheckBoxOutlineBlankRounded } from '@material-ui/icons';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
@@ -22,6 +22,29 @@ export default function TripSummary() {
     const [openPaymentReceiveModal,setOpenPaymentReceiveModal] = useState(false);
     const [openPaymentMadeModal,setOpenPaymentMadeModal] = useState(false);
     const [openConfirmDialog,setOpenConfirmDialog] = useState(false);
+    const TripSteps = [
+        {
+            label: "Started",
+            checked: true,
+            helperText: "05-20-2021" 
+        },
+        {
+            label: "Completed",
+            checked: true
+        },
+        {
+            label: "POD Received",
+            checked: false
+        },
+        {
+            label: "POD Submitted",
+            checked: false
+        },
+        {
+            label: "Setteld",
+            checked: false
+        },
+    ]
     const [paymentsMade,setPaymentsMade] = useState({
         totalPaymentMade: parseInt(0),
         transactions: []
@@ -87,6 +110,30 @@ export default function TripSummary() {
 
         TripDetails()
     },[])
+
+    const QontoConnector = withStyles({
+        alternativeLabel: {
+          top: 10,
+          left: 'calc(-50% + 16px)',
+          right: 'calc(50% + 16px)',
+        },
+        active: {
+          '& $line': {
+            borderTop: "1px solid #784af4",
+            width: "100%"
+          },
+        },
+        completed: {
+          '& $line': {
+            borderColor: '#784af4',
+            borderStyle: 'solid',
+          },
+        },
+        line: {
+          borderTop: "1px dashed #d5d5da",
+          width: "100%" 
+        },
+      })(StepConnector);
 
     let TripDetails = async () => {
         try{
@@ -167,6 +214,14 @@ export default function TripSummary() {
         }
     }
 
+    function StepIcon(props){
+        return (
+            <>
+                {props.checked ? <CheckBoxRounded style={{color: "rgba(71, 73, 160, 1)"}} /> : <CheckBoxOutlineBlankRounded style={{color: "rgba(185, 185, 185, 1)"}} />}
+            </>
+        )
+    }
+
     let getDate = (milliseconds) => {
         return moment(new Date(milliseconds * 1000)).format('DD-MM-YYYY')
     }
@@ -245,9 +300,22 @@ export default function TripSummary() {
                         </tbody>
 
                         <tfoot>
+
                             <tr>
                                 <td colSpan="7" className="text-start">
-                                    {tripDetails.status!=="settled" && <Button color="default" size="small" style={{padding: '0.2rem'}} onClick={() => {
+                                    <Stepper alternativeLabel className={`px-0 pt-lg-3 pt-md-3 pt-0 w-100`} connector={<QontoConnector />}>
+                                        {TripSteps.map(tripState => 
+                                            <Step active={tripState.checked}>
+                                                <StepLabel icon={<StepIcon checked={tripState.checked} />}>{tripState.label} <p className={styles['stepper-helper-text']}>{tripState.helperText && tripState.helperText}</p></StepLabel>
+                                            </Step>
+                                        )}
+                                    </Stepper>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colSpan="7" className="text-end">
+                                    {tripDetails.status!=="settled" && <Button color="default" className={`mx-2`} size="small" style={{padding: '0.2rem'}} onClick={() => {
                                         setSettleAmount(parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived)));
                                         setOpenPaymentReceiveModal(true);
                                     }} variant="outlined">Mark Settled</Button>}

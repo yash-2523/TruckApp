@@ -19,7 +19,7 @@ export default function AddPaymentRecieveModal(props) {
         paymentAmount: props.settleAmount===false ? "" : props.settleAmount,
         paymentDate: "",
         paymentNote: "",
-        paymentMode: "cash",
+        paymentMode: "",
         imageSrc: false
     })
     const {setGlobalLoading} = useContext(GlobalLoadingContext)
@@ -36,28 +36,6 @@ export default function AddPaymentRecieveModal(props) {
     let ChangeScaling = () => {
         const mainContainer = document.querySelector('#payment-receive-container');
         const mainContainerImages = document.querySelectorAll('#payment-receive-container > div > img')
-        // if(window.innerWidth > "830"){
-        //     mainContainer.style.transform = "scale(1)";
-
-        //     for(let i=0;i<mainContainerImages.length;i++){
-        //         if(mainContainerImages[i].tagName == "IMG"){
-        //             mainContainerImages[i].style.transform = "scale(1)";
-        //             mainContainerImages[i].style.transformOrigin = "none";
-        //         }
-        //     }
-        // }
-        // else if(window.innerWidth > "500"){
-        //     mainContainer.style.transform = `scale(${window.innerWidth / parseInt(800)})`;
-        //     for(let i=0;i<mainContainerImages.length;i++){
-        //         if(mainContainerImages[i].tagName == "IMG"){
-        //             mainContainerImages[i].style.transform = `scale(${window.innerWidth / parseInt(800)})`;
-        //             mainContainerImages[i].style.transformOrigin = "center 0%";
-        //         }
-        //     }
-        // }
-        // else{
-        //     mainContainer.style.transform = `scale(${window.innerWidth / parseInt(500)})`;
-        // }
 
         let horizontalScaling, verticalScaling;
 
@@ -122,8 +100,8 @@ export default function AddPaymentRecieveModal(props) {
                         <h3 className="my-4 mx-4">Payment Information</h3>
                         <p className="mb-4 mx-lg-4 mx-md-3 mx-1">The TruckApp is a trucking logistics marketplacethat seeks to bring trust, transparency and efficiency to transport. Apart from workingcapital loans to transporters and fleet-ownerswe offer load factoring, insurance, lease,rental, and more.</p>
                 </div>
-                <div className={`col-lg-6 col-md-6 col-10 py-4 ${styles['payment-receive-form']} px-lg-2 px-md-2 px-5`}>
-                <h3>Add Payment Received</h3>
+                <div className={`col-lg-6 col-md-6 col-10 py-4 ${styles['payment-receive-form']} mx-auto`}>
+                <h3 className="mx-2 mb-2">Add Payment Received</h3>
                      <form onSubmit={(e) => HandleSubmit(e)} className="w-100">
                          <TextField 
                             label="Payment Amount"
@@ -173,8 +151,9 @@ export default function AddPaymentRecieveModal(props) {
                         
                         <InputLabel htmlFor="note" className="mx-5 mt-4" >Note</InputLabel>
                         
-                        <textarea
-                            label="Note"
+                        <TextField
+                            multiline
+                            variant="outlined"
                             id="note"
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-2 border-1"
                             value={addPaymentReceivedDetails.paymentNote}
