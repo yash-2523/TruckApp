@@ -8,11 +8,12 @@ async function getBalance(){
     }
 }
 
-async function getSummary(token){
+async function getSummary(token,query=""){
     try{
         return await API.post('backend','/get_summary',{
             body:{
-                token: token
+                token: token,
+                name: query
             }
         })
     }catch(err){

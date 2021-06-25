@@ -35,7 +35,7 @@ export default function CustomerTable(props) {
 
                             <tbody>
                                 {customerData.map(customer => 
-                                    <Link href={`/dashboard/customer/${customer.from_uid}`}><tr onClick={() => window.sessionStorage.setItem('balance',customer.balance)} key={customer.from_uid}>
+                                    <Link href={`/dashboard/customer/${customer.from_uid}`} key={customer.from_uid}><tr onClick={() => window.sessionStorage.setItem('balance',customer.balance)}>
                                         <td>
                                             <div className="d-flex justify-content-start align-items-center">
                                                 <Avatar className={`${styles['avatar']}`} variant="circle">{customer.from_name.split(' ').map(word => word.charAt(0).toUpperCase())}</Avatar>
@@ -49,11 +49,13 @@ export default function CustomerTable(props) {
                                 )}
                                 
                             </tbody>
-                            <tr>
-                                <td colSpan="7" className="text-center">
-                                {loading ? <PulseLoader size={15} margin={2} color="#36D7B7" /> : (token!=="" && token!=="[]") && <Button onClick={LoadMoreCustomers}>Load More</Button>}
-                                </td>
-                            </tr>
+                            <tfoot>
+                                <tr>
+                                    <td colSpan="7" className="text-center">
+                                    {loading ? <PulseLoader size={15} margin={2} color="#36D7B7" /> : (token!=="" && token!=="[]") && <Button onClick={LoadMoreCustomers}>Load More</Button>}
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     }
                 

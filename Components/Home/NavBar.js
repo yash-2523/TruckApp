@@ -50,7 +50,7 @@ export default function NavBar(props) {
     return (
 
         <AppBar className={`${styles['appBar']} px-2 py-1`}>
-            <div className={`d-flex px-lg-4 px-md-3 px-1 justify-content-between align-items-center ${styles['navbar']}`}>
+            <div className={`d-flex px-lg-4 px-md-3 px-1 py-2 justify-content-between align-items-center ${styles['navbar']}`}>
                 <div className="d-flex align-items-center">
                     <IconButton
                     color="inherit"
@@ -63,8 +63,7 @@ export default function NavBar(props) {
                     </IconButton>
                     <h3>{path==="dashboard" ? "dashboard" : path}</h3>
                 </div>
-                <div className={`d-flex align-items-center ${styles['navbar-user-icon']}`}>
-                    <IconButton><NotificationsOutlined style={{color:"rgba(197, 199, 205, 1)"}} /></IconButton>
+                <div className={`d-flex justify-content-end align-items-center ${styles['navbar-user-icon']}`}>
                     <span className="d-flex align-items-center" onClick={handleClick}>
                         {user.name}
                         <Avatar src={user.profile} className={styles['avatar']} variant="circle">{user && user.name?.split(' ').map(word => word.charAt(0).toUpperCase())}</Avatar>

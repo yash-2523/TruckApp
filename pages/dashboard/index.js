@@ -12,10 +12,11 @@ export default function DashBoard() {
     const [customerData,setCustomerData] = useState("loading");
     const [token,setToken] = useState("")
     const [loading,setLoading] = useState(false);
+    const [searchQuery,setSearchQuery] = useState("");
 
     useEffect(async () => {
         try{
-            let getSummaryResponse = await getSummary(token);
+            let getSummaryResponse = await getSummary(token,searchQuery);
             if(getSummaryResponse){
                 setCustomerData(getSummaryResponse.summary);
                 setToken(getSummaryResponse.token);
@@ -48,11 +49,31 @@ export default function DashBoard() {
         }catch(err){}
     },[])
 
+    let HandleSearch = async (query) => {
+        setSearchQuery(query)
+        setCustomerData("loading");
+        setToken("")
+        try{
+            let getSummaryResponse = await getSummary("",query);
+            if(getSummaryResponse){
+                setCustomerData(getSummaryResponse.summary);
+                setToken(getSummaryResponse.token);
+            }
+            else{
+                setCustomerData([]);
+                setToken("");
+            }
+        }catch(err){
+            setCustomerData([]);
+            setToken("")
+        }
+    }
+
     let RefreshCustomerData = async () => {
         setCustomerData("loading");
         setToken("");
         try{
-            let getSummaryResponse = await getSummary("");
+            let getSummaryResponse = await getSummary("",searchQuery);
             if(getSummaryResponse){
                 setCustomerData(getSummaryResponse.summary);
                 setToken(getSummaryResponse.token);
@@ -82,7 +103,7 @@ export default function DashBoard() {
         <>
         {(user!==null && user!=="loading") && 
             <div className="w-100 h-100 px-lg-3 px-md-2 py-4 px-1">
-                <Operations balance={balance} />
+                <Operations balance={balance} HandleSearch={HandleSearch} />
                 <CustomerTable operations = {{customerData,token,LoadMoreCustomers, RefreshCustomerData, loading}} />
             </div>
         }

@@ -6,6 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
 
     .main-container{
         position: relative;
@@ -13,6 +14,7 @@
         z-index: 1000;
         width: 800px;
         height: 600px;
+        border-radius: 10px;
         background-image: url('../Components/HomeStatic/assets/auth_modal_background.png');
         .close-btn{
             cursor: pointer;
@@ -22,6 +24,7 @@
             z-index: 1000;
         }
         .auth-intro{
+            border-radius: 10px 0px 0px 10px;
             button{
                 background: transparent;
                 outline: none;
@@ -38,9 +41,36 @@
                 border-bottom: 1px solid white;
             }
         }
+        .auth-form{
+            border-radius: 0px 10px 10px 0px;
+            background-color: white;
+            .back-btn{
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 12px;
+                line-height: 14px;
+                color: #888888;
+                cursor: pointer !important;
+                &:hover{
+                    background-color: transparent !important;
+                }
+                padding: 0px !important;
+            }
+        }
     }
 }
 .otp-verification-container{
+    h3{
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 28px;
+
+        color: #3D3D3D;
+
+    }
     p{
         font-family: 'Roboto';
         font-style: normal;
@@ -51,6 +81,42 @@
         color: #9F9F9F;
 
     }
+    .resend-button{
+        color: #1565D8;
+        background-color: transparent !important;
+        padding: 0px !important;
+        &:hover{
+            background-color: transparent !important;
+        }
+    }
+}
+
+.request-otp-text{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+
+    color: #888888;
+}
+
+.request-otp-title{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+
+    color: #3D3D3D;
+
+}
+
+.primary-button{
+    background-color: #1565D8 !important;
+    color: white !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
 }
 
 .otp-box{
@@ -59,20 +125,32 @@
     background: #FFFFFF;
     margin-right: 15px;
     background: #FFFFFF;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+    
     border-radius: 4px;
     display: flex;
     justify-content: center;
     align-items: center;
     
     input{
+        font-size: 14px;
+        border-radius: 4px;
+        width: 100% !important;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         border: none;
         outline: none;
-        color: black;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+        line-height: 21px;
+        color: #1565D8;
 
-        
+        &:focus{
+            border: 1px solid #2C74DC;
+        }
     }
-
-    
-    
 }

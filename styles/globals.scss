@@ -45,6 +45,11 @@ a{
 ::-webkit-scrollbar{
   display: none !important;
 }
+
+select{
+  background-color: transparent !important;
+}
+
 .global-loader{
   width: 100vw;
   height: 100vh;

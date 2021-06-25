@@ -150,7 +150,7 @@ export default function CustomerDetails() {
                                         <td>{data.customer_name}</td>
                                         <td>{data.truck_id}</td>
                                         <td className="d-flex justify-content-center align-items-center">
-                                            <div className="d-flex flex-column justify-content-between align-items-start m-auto">
+                                            <div className="d-flex py-1 flex-column justify-content-between align-items-start m-auto">
                                                 <div className="d-flex align-items-center justify-content-start">
                                                     <span className={tripStyles['dot']} style={{backgroundColor: "rgba(45, 188, 83, 1)"}}></span>
                                                     <span className="mx-1">{data.origin_city}</span>
@@ -162,7 +162,7 @@ export default function CustomerDetails() {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><span className={tripStyles[data.status]} style={{background: "transparent"}}>{data.status.replace('_','-')}</span></td>
+                                        <td><span className={tripStyles[data.status]} style={{background: "transparent"}}><li>{data.status.replace('_',' ')}</li></span></td>
                                         <td><INRIcon className="inr-icon" /> {data.to_receive}</td>
                                     </tr>
                                 </Link>

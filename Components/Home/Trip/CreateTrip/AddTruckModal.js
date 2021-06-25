@@ -96,7 +96,7 @@ export default function AddTruckModal(props) {
 
                     <RadioGroup className={`d-flex flex-column my-2 ${styles['truck-types']}`} value={truckDetails.containerType} onChange={(e) => setTruckDetails({...truckDetails,containerType: e.target.value})}>
                         {truckTypes.length<=0 ? <PulseLoader size={15} margin={2} color="#36D7B7" /> : truckTypes.map((truck,i) => 
-                            <div className={`d-flex px-2 justify-content-between align-items-center py-1 ${styles[truck.toString().split(' ')[0].toLowerCase()]}`}>
+                            <div key={truck} className={`d-flex px-2 justify-content-between align-items-center py-1 ${styles[truck.toString().split(' ')[0].toLowerCase()]}`}>
                                 <Icon>{TruckIcons[i]}</Icon>
                                 {truck}
                                 <Radio value={truck} name="containerType" />
@@ -117,7 +117,7 @@ export default function AddTruckModal(props) {
                     />
 
                     <h5 className="mt-4">Ownership</h5>
-                    <RadioGroup value={truckDetails.truckType} onChange={(e) => setTruckDetails({...truckDetails,truckType: e.target.value})}>
+                    <RadioGroup row value={truckDetails.truckType} onChange={(e) => setTruckDetails({...truckDetails,truckType: e.target.value})}>
                         <FormControlLabel label="Market Truck" control={<Radio name="truckType" style={{color: "rgba(231, 104, 50, 1)"}} value="Market Truck" />}></FormControlLabel>
                         <FormControlLabel label="My Truck" control={<Radio name="truckType" style={{color: "rgba(231, 104, 50, 1)"}} value="My Truck" />}></FormControlLabel>
                     </RadioGroup>
