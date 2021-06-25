@@ -3,11 +3,16 @@
 
     .dp{
         border-radius: 50%;
-        height:5rem;
-        width:5rem;
-        background-image: url('https://assets.website-files.com/5cb8b10a48eebf8ee23d835b/5fa9a5aeb9e58ca6b693cc15_default-profile-picture1.jpg');
+        height:6.5rem;
+        width:6.5rem;
+        margin-bottom: 2rem;
+        background-color: #673AB7;
         background-size: cover;
         background-position: center;
+        color: #fff;
+        overflow: hidden;
+        font-size:2rem;
+        font-weight: bold;
     }
 
     .input{

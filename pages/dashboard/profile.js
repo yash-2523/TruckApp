@@ -8,7 +8,9 @@ import { updateUser } from '../../Services/ProfileServices';
 const Profile = () => {
     const [name,setName] = useState('')
     const [email,setEmail] = useState('')
+    const [companyName,setCompanyName] = useState('')
     const [user,setUser] = useState(currentUser.value);
+    
     const [opacity,setOpacity] = useState(0)       //user details updated successfully 
 
     useEffect(() => {
@@ -16,6 +18,7 @@ const Profile = () => {
             setUser(data);
             setName(data.name)
             setEmail(data.email)
+            setCompanyName(data.business_name)
         })
         
         return () => {
@@ -25,7 +28,7 @@ const Profile = () => {
 
     const handleSubmit = (e)=>{
         e.preventDefault()
-        updateUser(name,email).then(x=>{
+        updateUser(name,email,companyName).then(x=>{
             if (x.success){
                 getUser()
                 setOpacity(1)
@@ -40,21 +43,25 @@ const Profile = () => {
 
 
     return ( 
-        <form onSubmit={e=>handleSubmit(e)} className="w-100 d-flex justify-content-between custom_container p-5">
-            <div className={`d-flex flex-column align-items-center ${styles.col_1}`}>
-                <div className={`${styles.dp}`}></div>
-                <TextField variant="outlined" className={`${styles.input}`} onChange={e=>{setName(e.target.value)}} value={name} required  label="Name" fullWidth/>
-                <TextField variant="outlined" className={`${styles.input}`} onChange={e=>{setEmail(e.target.value)}} value={email} required  label="Email" fullWidth/>
-                <TextField variant="outlined" className={`${styles.input}`}  label="Phone" value={`${user.phone}`}  fullWidth disabled/>
-            </div>
-            <div className={`d-flex flex-column justify-content-end align-items-center ${styles.col_2}`}>
-                <div className={`d-flex flex-column align-items-center mb-5 ${styles.success}`} style={{opacity: opacity}}>
-                    <img src="/success.png" alt="successful" />
-                    <div>User Details updated successfully</div>
+        <div className="w-100 p-3">
+            <form onSubmit={e=>handleSubmit(e)} className="w-100 d-flex justify-content-between custom_container p-5">
+                <div className={`d-flex flex-column align-items-center ${styles.col_1}`}>
+                    <div className={`d-flex justify-content-center align-items-center ${styles.dp}`}>{user && user.name?.split(' ').map(word => word.charAt(0).toUpperCase())}</div>
+                    <TextField className={`${styles.input}`} onChange={e=>{setName(e.target.value)}} variant="outlined" value={name} required  label="Name" fullWidth/>
+                    <TextField className={`${styles.input}`} onChange={e=>{setEmail(e.target.value)}} variant="outlined" value={email} required  label="Email" type="email" fullWidth/>
+                    <TextField className={`${styles.input}`} onChange={e=>{setCompanyName(e.target.value)}} variant="outlined" value={companyName} label="Company Name" fullWidth/>
+                    <TextField className={`${styles.input}`}  label="Phone" value={`${user.phone}`} variant="outlined"  fullWidth disabled/>
                 </div>
-                <Button type="submit" variant="contained" color="primary" size='large'>Update</Button>
-            </div>
-        </form>
+                <div className={`d-flex flex-column justify-content-end align-items-center ${styles.col_2}`}>
+                    <div className={`d-flex flex-column align-items-center mb-5 ${styles.success}`} style={{opacity: opacity}}>
+                        <img src="/success.png" alt="successful" />
+                        <div>User Details updated successfully</div>
+                    </div>
+                    <Button type="submit" variant="contained" color="primary" size='large'>Update</Button>
+                </div>
+            </form>
+        </div>
+
      );
 }
  

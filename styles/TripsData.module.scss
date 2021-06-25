@@ -1,10 +1,11 @@
-
-.no-trip-found{
-    font-family: 'Mulish';
-    font-style: normal;
-    font-weight: 600;
-    color: #9FA2B4;
+.operations{
+    row-gap: 0.8rem;
+    div{
+        column-gap: 1rem;
+        row-gap: 0.7rem;
+    }
 }
+
 .table{
     background-color: white;
     border-collapse: separate; 

@@ -1,5 +1,5 @@
 import { Fab} from '@material-ui/core'
-import { LocalShippingOutlined } from '@material-ui/icons'
+import { LocalShippingOutlined , SentimentDissatisfiedOutlined } from '@material-ui/icons'
 import {useEffect} from 'react'
 import { PulseLoader } from 'react-spinners'
 
@@ -8,10 +8,10 @@ import styles from '../../../styles/Truck.module.scss'
 const TruckTable = ({trucks}) => {
 
     const cssClass={
-        'Mini Truck/LCV': 'mini_truck' ,
+        'Mini truck/ LCV': 'mini_truck' ,
         'Open Body Truck': 'open_body' ,
         'Closed Container' : 'closed_container',
-        'Trailer' : 'trailers'
+        'Full Load Truck' : 'full_load'
     }
     
     return ( 
@@ -22,7 +22,7 @@ const TruckTable = ({trucks}) => {
             <>
             {
                 trucks.length===0?
-                <h4 className={`text-center mt-5 `}>No Data Found <SentimentDissatisfiedOutlined /></h4> :
+                <h4 className={`text-center mt-5 no-data-found`}>No Data Found <SentimentDissatisfiedOutlined /></h4> :
                 <table className={`w-100 px-2 my-3 ${styles.table}`}>
                     <thead>
                         <tr>

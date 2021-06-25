@@ -31,11 +31,11 @@ export default function Truck() {
         getTrucks()
     },[])
 
-    const props = {trucks}
+    const props = {trucks,getTrucks}
     return (
         <>
         {(user!==null && user!=="loading") && 
-            <div className={`w-100 h-100`}>
+            <div className={`w-100 h-100 p-3`}>
                 <Operations {...props}/>
                 <TruckTable {...props}/>
             </div>

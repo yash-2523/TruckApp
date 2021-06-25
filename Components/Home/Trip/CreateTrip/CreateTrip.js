@@ -12,7 +12,7 @@ import { createTrip, getAllCities } from '../../../../Services/CreateTripService
 import { getTripDetails } from '../../../../Services/TripDataServices';
 import { getAllTrucks } from '../../../../Services/TruckServices';
 import styles from '../../../../styles/CreateTrip.module.scss';
-import AddTruckModal from './AddTruckModal';
+import AddTruckModal from '../../AddTruckModal';
 import AvailableTruckIcon from './svg/AvailableTruck.svg';
 import OnMarketTruckIcon from './svg/OnMarketTruck.svg';
 
