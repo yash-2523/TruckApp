@@ -402,8 +402,8 @@ export default function CreateTrip(props) {
                     </AccordionDetails>
                 </Accordion> }
                 <div className="mt-4 pb-4 d-flex align-items-center justify-content-center">
-                    {editTrip ? <Button startIcon={<SaveOutlined />} className="w-75 py-2" variant="contained" color="primary">Save</Button> :
-                    <Button disabled={detailsIsValid} onClick={HandleCreateTrip} className="w-75 py-2" variant="contained" color="primary">Confirm</Button>
+                    {editTrip ? <Button startIcon={<SaveOutlined />} className="w-50 py-2" variant="contained" color="primary">Save</Button> :
+                    <Button disabled={detailsIsValid} onClick={HandleCreateTrip} className="w-50 py-2" variant="contained" color="primary">Confirm</Button>
                     }
                 </div>
             </div>
