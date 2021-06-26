@@ -1,3 +1,4 @@
+import { API } from "aws-amplify";
 import { useEffect, useState } from "react";
 import CustomerTable from "../../Components/Home/dashboard/CustomerData/CustomerTable";
 import Operations from "../../Components/Home/dashboard/CustomerData/Operations";
@@ -13,21 +14,21 @@ export default function DashBoard() {
     const [token,setToken] = useState("")
     const [loading,setLoading] = useState(false);
     const [searchQuery,setSearchQuery] = useState("");
+    let HandleSearchPromise;
 
-    useEffect(async () => {
-        try{
-            let getSummaryResponse = await getSummary(token,searchQuery);
-            if(getSummaryResponse){
-                setCustomerData(getSummaryResponse.summary);
-                setToken(getSummaryResponse.token);
-            }
-            else{
-                setCustomerData([]);
-                setToken("");
-            }
-        }catch(err){
+    useEffect(() => {
+        
+        let promise = getSummary(token,searchQuery).then(getSummaryResponse => {
+            setCustomerData(getSummaryResponse.summary);
+            setToken(getSummaryResponse.token);
+        }).catch(err => {
             setCustomerData([]);
-            setToken("")
+            setToken("");
+        })
+
+        return () => {
+            console.log(promise)
+            API.cancel(promise);
         }
     },[])
 
@@ -49,54 +50,85 @@ export default function DashBoard() {
         }catch(err){}
     },[])
 
+    useEffect(() => {
+        return () => {
+            console.log(HandleSearchPromise)
+            API.cancel(HandleSearchPromise);
+        }
+    })
+
     let HandleSearch = async (query) => {
         setSearchQuery(query)
         setCustomerData("loading");
         setToken("")
-        try{
-            let getSummaryResponse = await getSummary("",query);
-            if(getSummaryResponse){
-                setCustomerData(getSummaryResponse.summary);
-                setToken(getSummaryResponse.token);
+        // console.log(HandleSearchPromise)
+        // if(HandleSearchPromise !== undefined){
+        //     console.log(HandleSearchPromise);
+        //     HandleSearchPromise.cancel();;
+        // }
+
+        HandleSearchPromise = getSummary("",query).then(data => {
+            if(data){
+                setCustomerData(data.summary);
+                setToken(data.token);
             }
             else{
                 setCustomerData([]);
                 setToken("");
             }
-        }catch(err){
-            setCustomerData([]);
-            setToken("")
-        }
+        });
+
+        
+            
+            // 
+        
+
+
+
+        // try{
+        //     let getSummaryResponse = await getSummary("",query);
+            // if(getSummaryResponse){
+            //     setCustomerData(getSummaryResponse.summary);
+            //     setToken(getSummaryResponse.token);
+            // }
+            // else{
+            //     setCustomerData([]);
+            //     setToken("");
+            // }
+        // }catch(err){
+        //     setCustomerData([]);
+        //     setToken("")
+        // }
     }
 
     let RefreshCustomerData = async () => {
-        setCustomerData("loading");
-        setToken("");
-        try{
-            let getSummaryResponse = await getSummary("",searchQuery);
-            if(getSummaryResponse){
-                setCustomerData(getSummaryResponse.summary);
-                setToken(getSummaryResponse.token);
-            }
-            else{
-                setCustomerData([]);
-                setToken("");
-            }
-        }catch(err){
-            setCustomerData([]);
-            setToken("")
-        }
+        // setCustomerData("loading");
+        // setToken("");
+        // try{
+        //     let getSummaryResponse = await getSummary("",searchQuery);
+        //     if(getSummaryResponse){
+        //         setCustomerData(getSummaryResponse.summary);
+        //         setToken(getSummaryResponse.token);
+        //     }
+        //     else{
+        //         setCustomerData([]);
+        //         setToken("");
+        //     }
+        // }catch(err){
+        //     setCustomerData([]);
+        //     setToken("")
+        // }
     }
 
     let LoadMoreCustomers = async () => {
-        setLoading(true);
-        try{
-            let getSummaryResponse = await getSummary(token);
-            if(getSummaryResponse){
-                setCustomerData(prev => [...prev,...getSummaryResponse.summary]);
-                setToken(getSummaryResponse.token);
-            }
-        }catch(err){}
+        // setLoading(true);
+        // try{
+        //     let getSummaryResponse = await getSummary(token);
+        //     if(getSummaryResponse){
+        //         setCustomerData(prev => [...prev,...getSummaryResponse.summary]);
+        //         setToken(getSummaryResponse.token);
+        //     }
+        // }catch(err){}
     }
 
     return (

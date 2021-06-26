@@ -1,4 +1,4 @@
-import {TextField , Button} from '@material-ui/core'
+import {TextField , Button, Avatar} from '@material-ui/core'
 import { useState, useEffect } from 'react'
 
 import styles from '../../styles/Profile.module.scss'
@@ -46,7 +46,7 @@ const Profile = () => {
         <div className="w-100 p-3">
             <form onSubmit={e=>handleSubmit(e)} className="w-100 d-flex justify-content-between custom_container p-5">
                 <div className={`d-flex flex-column align-items-center ${styles.col_1}`}>
-                    <div className={`d-flex justify-content-center align-items-center ${styles.dp}`}>{user && user.name?.split(' ').map(word => word.charAt(0).toUpperCase())}</div>
+                    <Avatar className={`${styles.dp}`}>{user && user.name?.split(' ').map(word => word.charAt(0).toUpperCase())}</Avatar>
                     <TextField className={`${styles.input}`} onChange={e=>{setName(e.target.value)}} variant="outlined" value={name} required  label="Name" fullWidth/>
                     <TextField className={`${styles.input}`} onChange={e=>{setEmail(e.target.value)}} variant="outlined" value={email} required  label="Email" type="email" fullWidth/>
                     <TextField className={`${styles.input}`} onChange={e=>{setCompanyName(e.target.value)}} variant="outlined" value={companyName} label="Company Name" fullWidth/>
