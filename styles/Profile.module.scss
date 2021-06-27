@@ -1,0 +1,26 @@
+.col_1{
+    width: 60%;
+
+    .dp{
+        border-radius: 50%;
+        height:5rem;
+        width:5rem;
+        background-image: url('https://assets.website-files.com/5cb8b10a48eebf8ee23d835b/5fa9a5aeb9e58ca6b693cc15_default-profile-picture1.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .input{
+        margin-top: 1.5rem;
+    }
+}
+
+.col_2{
+
+    .success{
+        transition:all 1s;
+        text-align: center;
+
+    }
+    width: 28%;
+}

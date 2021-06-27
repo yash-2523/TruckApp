@@ -79,7 +79,7 @@ export default function SignInOTP2() {
                     <p className="mx-2">I dont’t recived a code </p> <Button disabled={!resend} onClick={ResendOtp} color="primary">Resend</Button>
                     
                 </div>
-                <Button variant="contained" color="primary" disabled={OTP.length !== 4} className="my-3 mx-auto" type="submit">Send OTP</Button>
+                <Button variant="contained" color="primary" disabled={OTP.length !== 4} className="my-3 mx-auto" type="submit">Verify</Button>
             </form> 
         </div>
         </>

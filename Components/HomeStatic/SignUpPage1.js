@@ -45,17 +45,17 @@ export default function SignUpPage1() {
             <form onSubmit={(e) => HandleSubmit(e)} className="d-flex flex-column">
                 <TextField 
                     type="text"
+                    variant="outlined"
                     label="Full Name"
                     required
-                    variant="outlined"
                     className="my-3 p-0"
                     inputRef={fullNameRef}
                 ></TextField>
 
                 <TextField 
                     type="email"
-                    label="Emai-Id"
                     variant="outlined"
+                    label="Emai-Id"
                     className="my-3 p-0"
                     inputRef={emailRef}
                     required
@@ -63,6 +63,7 @@ export default function SignUpPage1() {
 
                 <TextField 
                     label="Select Role"
+                    variant="outlined"
                     inputProps = {{list: "roles"}}
                     name="roles"
                     inputRef = {roleRef}

@@ -3,7 +3,7 @@ import { Add } from '@material-ui/icons'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import React, { useRef, useState } from 'react'
-import styles from '../../../../styles/TripsData.module.scss'
+import styles from '../../../../styles/Home.module.scss'
 
 export default function Operations(props) {
 
