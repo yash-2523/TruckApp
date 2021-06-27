@@ -14,11 +14,13 @@ export default function DashBoard() {
     const [token,setToken] = useState("")
     const [loading,setLoading] = useState(false);
     const [searchQuery,setSearchQuery] = useState("");
-    let HandleSearchPromise;
+    let RefreshPromise,LoadMorePromise;
 
     useEffect(() => {
         
-        let promise = getSummary(token,searchQuery).then(getSummaryResponse => {
+        let promise = getSummary(token,searchQuery)
+        
+        promise.then(getSummaryResponse => {
             setCustomerData(getSummaryResponse.summary);
             setToken(getSummaryResponse.token);
         }).catch(err => {
@@ -27,10 +29,11 @@ export default function DashBoard() {
         })
 
         return () => {
-            console.log(promise)
             API.cancel(promise);
+            API.cancel(RefreshPromise)
+            API.cancel(LoadMorePromise)
         }
-    },[])
+    },[searchQuery])
 
     useEffect(() => {
         let AuthObservable = currentUser.subscribe((data) => {
@@ -50,85 +53,39 @@ export default function DashBoard() {
         }catch(err){}
     },[])
 
-    useEffect(() => {
-        return () => {
-            console.log(HandleSearchPromise)
-            API.cancel(HandleSearchPromise);
-        }
-    })
-
-    let HandleSearch = async (query) => {
+    let HandleSearch = (query) => {
         setSearchQuery(query)
         setCustomerData("loading");
         setToken("")
-        // console.log(HandleSearchPromise)
-        // if(HandleSearchPromise !== undefined){
-        //     console.log(HandleSearchPromise);
-        //     HandleSearchPromise.cancel();;
-        // }
-
-        HandleSearchPromise = getSummary("",query).then(data => {
-            if(data){
-                setCustomerData(data.summary);
-                setToken(data.token);
-            }
-            else{
-                setCustomerData([]);
-                setToken("");
-            }
-        });
-
-        
-            
-            // 
-        
-
-
-
-        // try{
-        //     let getSummaryResponse = await getSummary("",query);
-            // if(getSummaryResponse){
-            //     setCustomerData(getSummaryResponse.summary);
-            //     setToken(getSummaryResponse.token);
-            // }
-            // else{
-            //     setCustomerData([]);
-            //     setToken("");
-            // }
-        // }catch(err){
-        //     setCustomerData([]);
-        //     setToken("")
-        // }
     }
 
     let RefreshCustomerData = async () => {
-        // setCustomerData("loading");
-        // setToken("");
-        // try{
-        //     let getSummaryResponse = await getSummary("",searchQuery);
-        //     if(getSummaryResponse){
-        //         setCustomerData(getSummaryResponse.summary);
-        //         setToken(getSummaryResponse.token);
-        //     }
-        //     else{
-        //         setCustomerData([]);
-        //         setToken("");
-        //     }
-        // }catch(err){
-        //     setCustomerData([]);
-        //     setToken("")
-        // }
+        setCustomerData("loading");
+        setToken("");
+
+        RefreshPromise = getSummary(token,searchQuery)
+        
+        RefreshPromise.then(getSummaryResponse => {
+            setCustomerData(getSummaryResponse.summary);
+            setToken(getSummaryResponse.token);
+        }).catch(err => {
+            setCustomerData([]);
+            setToken("");
+        })
+
     }
 
-    let LoadMoreCustomers = async () => {
-        // setLoading(true);
-        // try{
-        //     let getSummaryResponse = await getSummary(token);
-        //     if(getSummaryResponse){
-        //         setCustomerData(prev => [...prev,...getSummaryResponse.summary]);
-        //         setToken(getSummaryResponse.token);
-        //     }
-        // }catch(err){}
+    let LoadMoreCustomers = () => {
+        setLoading(true);
+        LoadMorePromise = getSummary(token);
+
+        LoadMorePromise.then(getSummaryResponse => {
+            setCustomerData(prev => [...prev,...getSummaryResponse.summary]);
+            setToken(getSummaryResponse.token);
+            setLoading(false);
+        }).catch(err => {
+            setLoading(false)
+        })
     }
 
     return (
