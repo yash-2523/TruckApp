@@ -49,7 +49,7 @@ export default function TripTable(props) {
 
     return (
         <>
-            <div className="text-end mt-4 mx-2">{<Button onClick={RefreshTrips} startIcon={<RefreshOutlined />} color="">Refresh</Button>}</div>
+            <div className="text-end mt-4 mx-2">{<Button onClick={RefreshTrips} startIcon={<RefreshOutlined />}>Refresh</Button>}</div>
 
             {tripData === "loading" ? <div className="w-100 text-center"><PulseLoader size={15} margin={2} color="#36D7B7" /></div> 
             :

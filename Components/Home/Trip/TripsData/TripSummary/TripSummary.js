@@ -102,13 +102,13 @@ export default function TripSummary() {
         }
     },[])
 
-    useEffect(async () => {
+    useEffect(() => {
         
         if(!tripId){
             router.push({pathname:'/trip'});
+        }else{
+            TripDetails();
         }
-
-        TripDetails()
     },[])
 
     const QontoConnector = withStyles({
@@ -305,7 +305,7 @@ export default function TripSummary() {
                                 <td colSpan="7" className="text-start">
                                     <Stepper alternativeLabel className={`px-0 pt-lg-3 pt-md-3 pt-0 w-100`} connector={<QontoConnector />}>
                                         {TripSteps.map(tripState => 
-                                            <Step active={tripState.checked}>
+                                            <Step key={tripState.label} active={tripState.checked}>
                                                 <StepLabel icon={<StepIcon checked={tripState.checked} />}>{tripState.label} <p className={styles['stepper-helper-text']}>{tripState.helperText && tripState.helperText}</p></StepLabel>
                                             </Step>
                                         )}

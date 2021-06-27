@@ -36,15 +36,15 @@ const TruckTable = ({trucks}) => {
                             trucks.map(
                                 truck=>
                                 <tr className={`w-100 `} key={truck.truck_number}>
-                                    <td className={``}>
+                                    <td className={`mx-1`}>
                                         <div className={`${styles.icon_bg} ${styles[cssClass[truck.container_type]]}`} ><LocalShippingOutlined className={``} /></div>
                                     </td>
 
-                                    <td className={``}>
+                                    <td className={`mx-1`}>
                                         {truck.truck_number}
                                     </td>
 
-                                    <td className={`${styles[cssClass[truck.container_type]+'_text']}`}>
+                                    <td className={`mx-1 ${styles[cssClass[truck.container_type]+'_text']}`}>
                                         {truck.container_type}
                                     </td>
 

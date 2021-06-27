@@ -130,7 +130,7 @@ export default function AddPaymentMadeModal(props) {
                          >
                              <option value=""></option>
                             {expenseTypes.map(expense => 
-                                <option value={expense}>{expense}</option>
+                                <option key={expense} value={expense}>{expense}</option>
                             )} 
                          </TextField>   
                          <TextField 

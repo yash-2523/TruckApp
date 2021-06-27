@@ -37,6 +37,11 @@ export default function NavBar(props) {
         setAnchorEl(null);
     }
 
+    const handleRedirectToProfile = () => {
+        setAnchorEl(null);
+        route.push('/dashboard/profile')
+    }
+
     let handleLogout = async () => {
         setGlobalLoading(true);
         let signOutResponse = await SignOut();
@@ -73,9 +78,11 @@ export default function NavBar(props) {
                         anchorEl={anchorEl}
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
-                        style={{marginTop: "30px"}}
+                        getContentAnchorEl={null}
+                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                        transformOrigin={{ vertical: "top", horizontal: "center" }}
                     >
-                        <Link href='/dashboard/profile'><MenuItem onClick={handleClose}>Profile</MenuItem></Link>
+                        <MenuItem onClick={handleRedirectToProfile}>Profile</MenuItem>
                         <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                 </div>

@@ -169,11 +169,13 @@ export default function CustomerDetails() {
                             )}
 
                         </tbody>
-                        <tr>
-                            <td colSpan="7" className="text-center">
-                            {loading ? <PulseLoader size={15} margin={2} color="#36D7B7" /> : (token!=="" && token!=="[]") && <Button onClick={LoadMoreTrips}>Load More</Button>}
-                            </td>
-                        </tr>
+                        <tfoot>
+                            <tr>
+                                <td colSpan="7" className="text-center">
+                                {loading ? <PulseLoader size={15} margin={2} color="#36D7B7" /> : (token!=="" && token!=="[]") && <Button onClick={LoadMoreTrips}>Load More</Button>}
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 }
                 

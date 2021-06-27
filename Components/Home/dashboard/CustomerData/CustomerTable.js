@@ -12,7 +12,7 @@ export default function CustomerTable(props) {
     return (
         <>
 
-            <div className="text-end mt-4 mx-2">{<Button onClick={RefreshCustomerData} startIcon={<RefreshOutlined />} color="">Refresh</Button>}</div>
+            <div className="text-end mt-4 mx-2">{<Button onClick={RefreshCustomerData} startIcon={<RefreshOutlined />}>Refresh</Button>}</div>
 
             {customerData === "loading" ? <div className="w-100 text-center"><PulseLoader size={15} margin={2} color="#36D7B7" /></div>
                 :

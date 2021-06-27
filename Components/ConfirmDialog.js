@@ -3,7 +3,7 @@ import { DeleteOutlined } from "@material-ui/icons";
 
 export default function ConfirmDialog(props){
     return (
-        <Dialog open={props.open} onClose={props.close} fullWidth className="confirm-dialog">
+        <Dialog open={props.open || false} onClose={props.close} fullWidth className="confirm-dialog">
             <DialogTitle>
                 <div className="d-flex align-items-center confirm-dialog-title">
                     <Fab className="confirm-dialog-title-icon">

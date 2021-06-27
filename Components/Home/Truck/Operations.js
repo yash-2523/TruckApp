@@ -17,8 +17,8 @@ const Operations = ({ trucks ,getTrucks }) => {
 
     return (
         <>
-            <div className={`w-100 d-flex justify-content-between ${styles.operations}`}>
-                <div className={styles.no_of_trucks}>
+            <div className={`w-100 d-flex justify-content-between flex-wrap ${styles.operations}`}>
+                <div className={`mt-lg-2 mt-md-3 mt-4 ${styles.no_of_trucks}`}>
                     My Truck : {Array.isArray(trucks) ? trucks.length : '0'}
                     <div className={`d-flex justify-content-center align-items-center ${styles.truck_image}`}>
                         <img src="/truck.png" alt="" />

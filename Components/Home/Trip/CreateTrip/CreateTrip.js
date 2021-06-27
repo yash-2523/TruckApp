@@ -172,12 +172,11 @@ export default function CreateTrip(props) {
 
     return (
         <>
-            <Button className="mt-4" startIcon={<KeyboardBackspaceOutlined />} onClick={() => router.push({pathname: '/trip'})}>Trips</Button>
 
             {loading ? <div className="w-100 mt-5 py-3 text-center"><PulseLoader size={15} margin={2} color="#36D7B7" /></div> 
                 :
             <>    
-            <div className={`px-lg-3 px-md-2 px-1 mt-3 ${styles['create-trip-container']}`}>
+            <div className={`px-lg-3 px-md-2 px-1 mt-5 ${styles['create-trip-container']}`}>
                 <div className={`px-4 rounded-2 py-3 ${styles['route-details']}`}>
                     
                     <form className="w-100 d-flex flex-column">
@@ -259,7 +258,7 @@ export default function CreateTrip(props) {
                             />
                             
                             <TextField 
-                                label="Truck Registration Number"
+                                label="Truck Number"
                                 className="col-lg-5 col-md-5 col-sm-10 col-10"
                                 inputProps={{list: "trucks"}}
                                 name="trucks"
@@ -272,9 +271,9 @@ export default function CreateTrip(props) {
                                 anchorEl={truckNoAnchorEl}
                                 open={Boolean(truckNoAnchorEl)}
                                 onClose={handleTruckNoAnchorClose}
-                                style={{marginTop: "45px",width: "300px"}}
-                                
-                                InputLabelProps={{ shrink: true }}
+                                getContentAnchorEl={null}
+                                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                                transformOrigin={{ vertical: "top", horizontal: "center" }}
                                 className={styles['truck-number-menu-list']}
                                 PopoverClasses={{paper: styles['menu-paper']}}
                             >
