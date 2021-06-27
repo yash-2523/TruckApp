@@ -45,6 +45,11 @@ a{
 ::-webkit-scrollbar{
   display: none !important;
 }
+
+select{
+  background-color: transparent !important;
+}
+
 .global-loader{
   width: 100vw;
   height: 100vh;
@@ -99,12 +104,6 @@ a{
   cursor: pointer;
 }
 
-.no-data-found{
-  font-family: 'Mulish';
-  font-style: normal;
-  font-weight: 600;
-  color: #9FA2B4;
-}
 .MuiInputLabel-outlined{
   padding: 0px 3px !important;
   background-color: white;
@@ -119,6 +118,12 @@ a{
 }
 
 
+.no-data-found{
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 600;
+  color: #9FA2B4;
+}
 .inr-icon{
   transform: scale(0.7);
   transform-origin: center;

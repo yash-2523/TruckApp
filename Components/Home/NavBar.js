@@ -37,6 +37,11 @@ export default function NavBar(props) {
         setAnchorEl(null);
     }
 
+    const handleRedirectToProfile = () => {
+        setAnchorEl(null);
+        route.push('/dashboard/profile')
+    }
+
     let handleLogout = async () => {
         setGlobalLoading(true);
         let signOutResponse = await SignOut();
@@ -50,7 +55,7 @@ export default function NavBar(props) {
     return (
 
         <AppBar className={`${styles['appBar']} px-2 py-1`}>
-            <div className={`d-flex px-lg-4 px-md-3 px-1 justify-content-between align-items-center ${styles['navbar']}`}>
+            <div className={`d-flex px-lg-4 px-md-3 px-1 py-2 justify-content-between align-items-center ${styles['navbar']}`}>
                 <div className="d-flex align-items-center">
                     <IconButton
                     color="inherit"
@@ -63,8 +68,7 @@ export default function NavBar(props) {
                     </IconButton>
                     <h3>{path==="dashboard" ? "dashboard" : path}</h3>
                 </div>
-                <div className={`d-flex align-items-center ${styles['navbar-user-icon']}`}>
-                    <IconButton><NotificationsOutlined style={{color:"rgba(197, 199, 205, 1)"}} /></IconButton>
+                <div className={`d-flex justify-content-end align-items-center ${styles['navbar-user-icon']}`}>
                     <span className="d-flex align-items-center" onClick={handleClick}>
                         {user.name}
                         <Avatar src={user.profile} className={styles['avatar']} variant="circle">{user && user.name?.split(' ').map(word => word.charAt(0).toUpperCase())}</Avatar>
@@ -74,9 +78,11 @@ export default function NavBar(props) {
                         anchorEl={anchorEl}
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
-                        style={{marginTop: "30px"}}
+                        getContentAnchorEl={null}
+                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                        transformOrigin={{ vertical: "top", horizontal: "center" }}
                     >
-                        <Link href='/dashboard/profile'><MenuItem onClick={handleClose}>Profile</MenuItem></Link>
+                        <MenuItem onClick={handleRedirectToProfile}>Profile</MenuItem>
                         <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                 </div>

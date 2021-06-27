@@ -35,7 +35,7 @@ export default function Truck() {
     return (
         <>
         {(user!==null && user!=="loading") && 
-            <div className={`w-100 h-100 p-3`}>
+            <div className={`w-100 h-100 py-3 px-lg-3 px-md-3 px-1`}>
                 <Operations {...props}/>
                 <TruckTable {...props}/>
             </div>

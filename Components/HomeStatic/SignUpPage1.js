@@ -5,8 +5,9 @@ import { AuthModalContext } from '../../Context/AuthModalContext';
 import { GlobalLoadingContext } from '../../Context/GlobalLoadingContext';
 import { CreateUser } from '../../Services/AuthServices';
 
-export default function SignUpPage1() {
+export default function SignUpPage1(props) {
 
+    const styles = props.styles 
     const {  SignInData } = useContext(AuthModalContext);
     const fullNameRef = useRef("");
     const emailRef = useRef("");
@@ -41,14 +42,14 @@ export default function SignUpPage1() {
         
     }
     return (
-        <div className="mt-4 px-3 py-5">
-            <form onSubmit={(e) => HandleSubmit(e)} className="d-flex flex-column">
+        <div className="mt-4 px-4 py-5">
+            <form onSubmit={(e) => HandleSubmit(e)} className="d-flex flex-column align-items-center">
                 <TextField 
                     type="text"
                     variant="outlined"
                     label="Full Name"
                     required
-                    className="my-3 p-0"
+                    className="my-3 p-0 w-100"
                     inputRef={fullNameRef}
                 ></TextField>
 
@@ -56,9 +57,8 @@ export default function SignUpPage1() {
                     type="email"
                     variant="outlined"
                     label="Emai-Id"
-                    className="my-3 p-0"
+                    className="my-3 p-0 w-100"
                     inputRef={emailRef}
-                    required
                 ></TextField>
 
                 <TextField 
@@ -66,6 +66,7 @@ export default function SignUpPage1() {
                     variant="outlined"
                     inputProps = {{list: "roles"}}
                     name="roles"
+                    className="my-3 p-0 w-100"
                     inputRef = {roleRef}
                     required
                     autoComplete={"off"}
@@ -84,11 +85,14 @@ export default function SignUpPage1() {
                         name="term-and-condition"
                         color="primary"
                         required
+                    
                     />
                     }
-                    label="I agree to Terms & Condition"
+                    
+                    label={<p className={`${styles['request-otp-text']}`}>I agree to <a className="text-primary">Terms & Condition</a></p>}
                 />
-                <Button variant="contained" color="primary" className="my-3 mx-auto" type="submit">Sign Up</Button>
+                
+                <Button variant="contained" color="primary" className={`my-3 w-100 mx-auto ${styles['primary-button']}`} type="submit">Sign Up</Button>
             </form>  
         </div>
     )

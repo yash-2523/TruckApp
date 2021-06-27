@@ -4,7 +4,7 @@ import { AuthModalContext } from '../../Context/AuthModalContext'
 import styles from '../../styles/HomeStatic.module.scss'
 import SignInOTP1 from './SignInOTP1'
 import SignInOTP2 from './SignInOTP2'
-import SignUpPage1 from './SignUpPage1'
+import SignUpPage1 from './SignUpPage1';
 
 export default function AuthDialog(props) {
 
@@ -14,9 +14,9 @@ export default function AuthDialog(props) {
 
     const Component = [
         
-        <SignInOTP1 />,
-        <SignInOTP2 />,
-        <SignUpPage1 />
+        <SignInOTP1 styles={styles} />,
+        <SignInOTP2 styles={styles} />,
+        <SignUpPage1 styles={styles} />
         
     ]
 
@@ -68,7 +68,7 @@ export default function AuthDialog(props) {
                     <p className="mx-4 mt-5 text-light text-bold text-center">Start your Journey with India’s best app for tranporters</p>
                     <img src="/devices.png" className="mt-5 mx-2"></img>
                 </div>
-                <div className="col-6 bg-light">
+                <div className={`col-6 ${styles['auth-form']}`}>
                     {Component[signInStage]}
                 </div>
                 <Cancel onClick={props.CloseAuthModal} className={`position-absolute ${styles['close-btn']}`} />

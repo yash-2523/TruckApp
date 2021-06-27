@@ -45,7 +45,7 @@
 }
 .appBar{
     background-color: rgba(255, 255, 255, 1);
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25) !important;
     padding: 0px !important;
     width: calc(100% - 255px) !important;
     margin-left: 255px !important;
@@ -53,7 +53,7 @@
         display: none;
     }
 
-    @media screen and (max-width: "540px") {
+    @media screen and (max-width: "599px") {
         width: 100% !important;
         margin-left: 0px !important;
         .collapsable-bars{
@@ -70,8 +70,11 @@
 
         font-family: 'Mulish';
         font-style: normal;
+        text-transform: capitalize;
         font-weight: bold;
-        font-variant: small-caps;
+        font-size: 24px;
+        line-height: 30px;
+        letter-spacing: 0.3px;
         color: #252733;
     }
     .navbar-user-icon{

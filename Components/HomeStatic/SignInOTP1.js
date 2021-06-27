@@ -7,8 +7,9 @@ import { AuthModalContext } from '../../Context/AuthModalContext';
 import { GlobalLoadingContext } from '../../Context/GlobalLoadingContext';
 import { SetOtp } from '../../Services/AuthServices';
 
-export default function SignInOTP1() {
+export default function SignInOTP1(props) {
 
+    const styles = props.styles
     const [phoneNo,setPhoneNo] = useState("")
     const { SignInStage, SignInData } = useContext(AuthModalContext);
     const [signInStage,setSignInStage] = SignInStage;
@@ -46,18 +47,24 @@ export default function SignInOTP1() {
     }  
 
     return (
-        <div className="mt-4 px-3 py-5">
-            <p className="text-secondary">Hello, nice to meet you</p>   
-            <h4 className="mt-1 mb-5">Get moving with Truckapp.Ai</h4>
-            <form onSubmit={(e) => HandleSubmit(e)} className="d-flex flex-column align-items-center">
+        <div className="mt-4 px-4 py-5">
+            <p className={`${styles['request-otp-text']}`}>Hello, nice to meet you</p>   
+            <h4 className={`mt-1 mb-5 ${styles['request-otp-title']}`}>Get moving with Truckapp.Ai</h4>
+
+            <p className={`mt-4 mb-3 ${styles['request-otp-text']} text-dark`}>Mobile Number Verification</p>
+            <form onSubmit={(e) => HandleSubmit(e)} className="d-flex flex-column align-items-start">
                 <PhoneInput
                   onlyCountries={["in"]}  
                   country={"in"}
                   onChange={(value,data,event,formattedValue) => handleOnChange(value,data,event,formattedValue)}  
                   inputStyle={{width: '100%'}}
+                  specialLabel=""
+                  
                 />
 
-                <Button variant="contained" color="primary" className="my-3 mx-auto" type="submit">Request OTP</Button>
+                <p className={`my-3 mb-5 ${styles['request-otp-text']}`}>I agree to <a className="text-primary">Terms & Condition</a></p>
+
+                <Button variant="contained" className={`my-3 w-100 mx-auto ${styles['primary-button']}`} type="submit">Request OTP</Button>
             </form> 
         </div>
     )

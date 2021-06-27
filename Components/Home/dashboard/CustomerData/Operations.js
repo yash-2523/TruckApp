@@ -1,5 +1,5 @@
-import { Button, InputAdornment, TextField } from '@material-ui/core'
-import { Add, SearchOutlined } from '@material-ui/icons'
+import { InputAdornment, TextField } from '@material-ui/core'
+import { SearchOutlined } from '@material-ui/icons'
 import homestyles from '../../../../styles/Home.module.scss'
 import INRIcon from '../../svg/InrIcon.svg'
 import ToReceiveIcon from './svg/ToReceive.svg';
@@ -30,6 +30,7 @@ export default function Operations(props) {
                     placeholder="Search Customer"
                     type="search"
                     variant="outlined"
+                    style={{backgroundColor: "white"}}
                     InputProps = {{
                         startAdornment: (
                             <InputAdornment>
@@ -37,8 +38,8 @@ export default function Operations(props) {
                             </InputAdornment>
                         )
                     }}
+                    onChange={(e) => props.HandleSearch(e.target.value)}
                 />
-                {/* <Button startIcon={<Add />} variant="contained" onClick={() => router.push({pathname:'/dashboard/create'})} color="primary">Create Customer</Button> */}
             </div>
         </div>
     )

@@ -111,14 +111,15 @@ export default function AddPaymentMadeModal(props) {
                         <h3 className="my-4 mx-4">Payment Information</h3>
                         <p className="mb-4 mx-lg-4 mx-md-3 mx-1">The TruckApp is a trucking logistics marketplacethat seeks to bring trust, transparency and efficiency to transport. Apart from workingcapital loans to transporters and fleet-ownerswe offer load factoring, insurance, lease,rental, and more.</p>
                 </div>
-                <div className={`col-lg-6 col-md-6 col-10 py-4 ${styles['payment-made-form']} px-lg-2 px-md-2 px-5`}>
-                <h3>Add Payment Made</h3>
+                <div className={`col-lg-6 col-md-6 col-10 py-4 ${styles['payment-made-form']} mx-auto`}>
+                <h3 className="mx-2 mb-2">Add Payment Made</h3>
                      <form onSubmit={(e) => HandleSubmit(e)} className="w-100">
 
                          <TextField 
                             select
                             variant="outlined"
                             label = "Reason"
+                            required
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-3"
                             SelectProps={{
                                 native: true
@@ -129,7 +130,7 @@ export default function AddPaymentMadeModal(props) {
                          >
                              <option value=""></option>
                             {expenseTypes.map(expense => 
-                                <option value={expense}>{expense}</option>
+                                <option key={expense} value={expense}>{expense}</option>
                             )} 
                          </TextField>   
                          <TextField 
@@ -180,8 +181,9 @@ export default function AddPaymentMadeModal(props) {
                         
                         <InputLabel htmlFor="note" className="mx-5 mt-3" >Note</InputLabel>
                         
-                        <textarea
-                            label="Note"
+                        <TextField
+                            multiline
+                            variant="outlined"
                             id="note"
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-2 border-1"
                             rows={5}

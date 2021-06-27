@@ -1,5 +1,5 @@
-import { Accordion, AccordionDetails, AccordionSummary, Button, Fab, Icon, IconButton, Tooltip } from '@material-ui/core';
-import { DeleteOutlined, EditOutlined, ExpandMoreOutlined, KeyboardBackspaceOutlined, LocalShippingOutlined } from '@material-ui/icons';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Fab, Icon,Stepper,Step,StepLabel,withStyles,StepConnector } from '@material-ui/core';
+import { CheckBoxRounded, DeleteOutlined, EditOutlined, ExpandMoreOutlined, LocalShippingOutlined, CheckBoxOutlineBlankRounded } from '@material-ui/icons';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
@@ -22,6 +22,29 @@ export default function TripSummary() {
     const [openPaymentReceiveModal,setOpenPaymentReceiveModal] = useState(false);
     const [openPaymentMadeModal,setOpenPaymentMadeModal] = useState(false);
     const [openConfirmDialog,setOpenConfirmDialog] = useState(false);
+    const TripSteps = [
+        {
+            label: "Started",
+            checked: true,
+            helperText: "05-20-2021" 
+        },
+        {
+            label: "Completed",
+            checked: true
+        },
+        {
+            label: "POD Received",
+            checked: false
+        },
+        {
+            label: "POD Submitted",
+            checked: false
+        },
+        {
+            label: "Setteld",
+            checked: false
+        },
+    ]
     const [paymentsMade,setPaymentsMade] = useState({
         totalPaymentMade: parseInt(0),
         transactions: []
@@ -79,14 +102,38 @@ export default function TripSummary() {
         }
     },[])
 
-    useEffect(async () => {
+    useEffect(() => {
         
         if(!tripId){
             router.push({pathname:'/trip'});
+        }else{
+            TripDetails();
         }
-
-        TripDetails()
     },[])
+
+    const QontoConnector = withStyles({
+        alternativeLabel: {
+          top: 10,
+          left: 'calc(-50% + 16px)',
+          right: 'calc(50% + 16px)',
+        },
+        active: {
+          '& $line': {
+            borderTop: "1px solid #784af4",
+            width: "100%"
+          },
+        },
+        completed: {
+          '& $line': {
+            borderColor: '#784af4',
+            borderStyle: 'solid',
+          },
+        },
+        line: {
+          borderTop: "1px dashed #d5d5da",
+          width: "100%" 
+        },
+      })(StepConnector);
 
     let TripDetails = async () => {
         try{
@@ -167,6 +214,14 @@ export default function TripSummary() {
         }
     }
 
+    function StepIcon(props){
+        return (
+            <>
+                {props.checked ? <CheckBoxRounded style={{color: "rgba(71, 73, 160, 1)"}} /> : <CheckBoxOutlineBlankRounded style={{color: "rgba(185, 185, 185, 1)"}} />}
+            </>
+        )
+    }
+
     let getDate = (milliseconds) => {
         return moment(new Date(milliseconds * 1000)).format('DD-MM-YYYY')
     }
@@ -198,118 +253,136 @@ export default function TripSummary() {
 
     return (
         <>
-            <Button className="mt-4" startIcon={<KeyboardBackspaceOutlined />} onClick={() => router.push({pathname:'/trip'})}>Trips</Button>
+            
             {tripDetails===false ? <div className="w-100 mt-5 py-3 text-center"><PulseLoader size={15} margin={2} color="#36D7B7" /></div> 
                 :
-             <div className="w-100 px-lg-3 px-md-2 px-lg-1 px-md-1 px-1 mx-auto pb-3">
-                <table className={`w-100 rounded-3 position-relative mt-4 ${styles['table']} ${styles['trip-summary-table']} px-lg-2 px-md-2 px-1`} id="table">
-                    <thead>
-                        <tr>
-                            <th style={{width: "1%"}}></th>
-                            <th>Start Date</th>
-                            <th>Party Name</th>
-                            <th>Truck No</th>
-                            <th>Route</th>
-                            <th>Status</th>
-                            <th>Balance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr> 
-                            <td style={{width: "1%"}}><Fab className={styles[tripDetails.status]} ><LocalShippingOutlined className={styles[tripDetails.status]} /></Fab></td>
-                            <td>{getDate(tripDetails.trip_start_date)}</td>
-                            <td>{tripDetails.customer_name}</td>
-                            <td>{tripDetails.truck_number}</td>
-                            <td className="d-flex justify-content-center align-items-center">
+             <> 
+                <div className={`d-flex mb-3 mt-lg-1 mt-md-1 mt-4 px-lg-3 px-md-3 px-2 justify-content-end align-items-center`}>
+                    <Button className={`mx-1 ${styles['edit-button']}`} onClick={HandleEditTrip} variant="contained" endIcon={<EditOutlined />}>Edit</Button>
+                    <Button className={`mx-1 ${styles['delete-button']}`} onClick={() => setOpenConfirmDialog(true)} variant="contained" endIcon={<DeleteOutlined />}>Delete</Button>
+                </div>  
+                <div className="w-100 px-lg-3 px-md-2 px-lg-1 px-md-1 px-1 mx-auto pb-3">
+                    <table className={`w-100 rounded-3 position-relative mt-4 ${styles['table']} ${styles['trip-summary-table']} px-lg-2 px-md-2 px-1`} id="table">
+                        <thead>
+                            <tr>
+                                <th style={{width: "1%"}}></th>
+                                <th>Start Date</th>
+                                <th>Party Name</th>
+                                <th>Truck No</th>
+                                <th>Route</th>
+                                <th>Status</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr> 
+                                <td style={{width: "1%"}}><Fab className={styles[tripDetails.status]} ><LocalShippingOutlined className={styles[tripDetails.status]} /></Fab></td>
+                                <td>{getDate(tripDetails.trip_start_date)}</td>
+                                <td>{tripDetails.customer_name}</td>
+                                <td>{tripDetails.truck_number}</td>
+                                <td className="d-flex justify-content-center align-items-center">
 
-                                <div className="d-flex flex-column justify-content-between align-items-start m-auto">
-                                    <div className="d-flex align-items-center justify-content-start">
-                                        <span className={styles["dot"]} style={{backgroundColor: "rgba(45, 188, 83, 1)"}}></span>
-                                        <span className="mx-1">{tripDetails.origin_city}</span>
+                                    <div className="d-flex py-1 flex-column justify-content-between align-items-start m-auto">
+                                        <div className="d-flex align-items-center justify-content-start">
+                                            <span className={styles["dot"]} style={{backgroundColor: "rgba(45, 188, 83, 1)"}}></span>
+                                            <span className="mx-1">{tripDetails.origin_city}</span>
+                                        </div>
+                                        <span className={styles["vertical-line"]}></span>
+                                        <div className="d-flex align-items-center justify-content-start">
+                                            <span className={styles["dot"]} style={{backgroundColor: "rgba(231, 104, 50, 1)"}}></span>
+                                            <span className="mx-1">{tripDetails.destination_city}</span>
+                                        </div>
                                     </div>
-                                    <span className={styles["vertical-line"]}></span>
-                                    <div className="d-flex align-items-center justify-content-start">
-                                        <span className={styles["dot"]} style={{backgroundColor: "rgba(231, 104, 50, 1)"}}></span>
-                                        <span className="mx-1">{tripDetails.destination_city}</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span className={styles[tripDetails.status]} style={{background: "transparent"}}>{tripDetails.status.replace('_','-')}</span></td>
-                            <td><Icon className="mx-1"><INRIcon className="mt-1 inr-icon" /></Icon>  {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived))}</td>
-                        </tr>
-                    </tbody>
+                                </td>
+                                <td><span className={styles[tripDetails.status]} style={{background: "transparent"}}><li>{tripDetails.status.replace('_',' ')}</li></span></td>
+                                <td><Icon className="mx-1"><INRIcon className="mt-1 inr-icon" /></Icon>  {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived))}</td>
+                            </tr>
+                        </tbody>
 
-                    <tr>
-                        <td colSpan="7" className="text-start">
-                            <Tooltip title="Edit Trip" arrow><IconButton className="mx-1" onClick={HandleEditTrip}><EditOutlined /></IconButton></Tooltip>
-                            <Tooltip title="Delete Trip" arrow><IconButton className="mx-1" onClick={() => setOpenConfirmDialog(true)}><DeleteOutlined /></IconButton></Tooltip> 
-                            {tripDetails.status!=="settled" && <Button color="default" size="small" style={{padding: '0.2rem'}} onClick={() => {
-                                setSettleAmount(parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived)));
-                                setOpenPaymentReceiveModal(true);
-                            }} variant="outlined">Mark Settled</Button>}
-                        </td>
-                    </tr>
-                </table>
-                
-                <div className={`mt-lg-3 mt-md-2 mt-1 py-4 px-2 rounded-3 d-flex align-items-center flex-wrap ${styles['payment-methods-container']}`}>
-                    <Button variant="outlined" className="mr-3" color="primary" onClick={() => setOpenPaymentMadeModal(true)}>Add Payment Made</Button>
-                    <Button variant="outlined" color="primary" onClick={() => setOpenPaymentReceiveModal(true)}>Add Payment Received</Button>
-                </div>
+                        <tfoot>
 
-                <div className={`mt-lg-3 mt-md-2 mt-3 py-4 rounded-3 d-flex align-items-center flex-column ${styles['trip-revenue-details']} px-lg-5 px-md-4 px-2`}>
-                    <div className="w-100 d-flex justify-content-between align-items-center px-5">
-                        <b>Revenue</b>
-                        <span className="text-primary"><INRIcon className="inr-icon" /> {tripDetails.freight_amount}</span>
-                    </div>
+                            <tr>
+                                <td colSpan="7" className="text-start">
+                                    <Stepper alternativeLabel className={`px-0 pt-lg-3 pt-md-3 pt-0 w-100`} connector={<QontoConnector />}>
+                                        {TripSteps.map(tripState => 
+                                            <Step key={tripState.label} active={tripState.checked}>
+                                                <StepLabel icon={<StepIcon checked={tripState.checked} />}>{tripState.label} <p className={styles['stepper-helper-text']}>{tripState.helperText && tripState.helperText}</p></StepLabel>
+                                            </Step>
+                                        )}
+                                    </Stepper>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colSpan="7" className="text-end">
+                                    {tripDetails.status!=="settled" && <Button color="default" className={`mx-2`} size="small" style={{padding: '0.2rem'}} onClick={() => {
+                                        setSettleAmount(parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived)));
+                                        setOpenPaymentReceiveModal(true);
+                                    }} variant="outlined">Mark Settled</Button>}
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
                     
-                    {(parseInt(paymentsMade.totalPaymentMade) > 0) && <Accordion className={`w-100 mt-3 mx-0 ${styles['total-charges']} shadow-none`}>
-                        <AccordionSummary
-                        expandIcon={<ExpandMoreOutlined />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                        className="w-100 m-0"
-                        >
-                            <div className="w-100 d-flex justify-content-between align-items-center"><h6><b>Payments Made</b></h6> <span><INRIcon className="inr-icon" /> {paymentsMade.totalPaymentMade}</span></div>
-                        </AccordionSummary>
-                        <AccordionDetails className={styles["transaction-details"]}>{paymentsMade.transactions}</AccordionDetails>
-                    </Accordion>}
-                    {(parseInt(paymentsReceived.totalPaymentReceived) > 0) && <Accordion className={`w-100 mx-0 ${styles['total-charges']} shadow-none`}>
-                        <AccordionSummary
-                        expandIcon={<ExpandMoreOutlined />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                        className="w-100 m-0"
-                        >
-                            <div className="w-100 d-flex justify-content-between align-items-center"><h6><b>Payments Received</b></h6> <span><INRIcon className="inr-icon" /> {paymentsReceived.totalPaymentReceived}</span></div>
-                        </AccordionSummary>
-                        <AccordionDetails className={styles["transaction-details"]}>{paymentsReceived.transactions}</AccordionDetails>
-                    </Accordion>}
-                    <div className={`w-100 px-1 my-3 ${styles['dashed-border']}`}></div>
-                    <div className={`w-100 mt-2 d-flex justify-content-between align-items-center ${styles['revenue-profit']} px-5`}>
-                        <b>Profit</b>
-                        <span><INRIcon className="inr-icon" /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsMade.totalPaymentMade))}</span>
-                    </div>
-                </div>
-            
-                <div className={`mt-lg-3 mt-md-2 mt-3 py-4 rounded-3 d-flex align-items-center flex-column ${styles['trip-bill-details']} px-lg-5 px-md-4 px-2`}>
-                    <div className="w-100 d-flex justify-content-between align-items-center">
-                        <p className="col-4 text-start">Freight Amount</p>
-                        <span className="col-4 text-end"><INRIcon className="inr-icon" /> {tripDetails.freight_amount}</span>
-                    </div>
-                    <div className={`w-100 px-1 my-3 ${styles['dashed-border']}`}></div>
-                    <div className="w-100 d-flex justify-content-between align-items-center">
-                        <p className="col-4 text-start">Balance</p>
-                        <span className={`col-4 text-end text-primary ${styles['primary']}`}><INRIcon className={`inr-icon`} /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived))}</span>
+                    <div className={`mt-lg-3 mt-md-2 mt-1 py-4 px-2 rounded-3 d-flex align-items-center flex-wrap ${styles['payment-methods-container']}`}>
+                        <Button variant="outlined" className="mr-3" onClick={() => setOpenPaymentMadeModal(true)}>Add Payment Made</Button>
+                        <Button variant="outlined" onClick={() => setOpenPaymentReceiveModal(true)}>Add Payment Received</Button>
                     </div>
 
-                    <Button className="mt-5" startIcon={<PDFFileIcon />} color="primary" variant="contained" onClick={HandleGetBill}>View Bill</Button>
-                </div>
-            
-                {openPaymentReceiveModal && <AddPaymentRecieveModal settleAmount={settleAmount} UpdateTripDetails={TripDetails} tripDetails={{...tripDetails,trip_id: tripId}} ClosePaymentReceiveModal={ClosePaymentReceiveModal} />}
-                {openPaymentMadeModal && <AddPaymentMadeModal UpdateTripDetails={TripDetails} tripDetails={{...tripDetails,trip_id: tripId}} ClosePaymentMadeModal={ClosePaymentMadeModal} />}
-                <ConfirmDialog open={openConfirmDialog} close={CloseConfirmDialog} action={HandleDeleteTip} />
-            </div> }
+                    <div className={`mt-lg-3 mt-md-2 mt-3 py-4 rounded-3 d-flex align-items-center flex-column ${styles['trip-revenue-details']} px-lg-5 px-md-4 px-2`}>
+                        <div className="w-100 d-flex justify-content-between align-items-center px-5">
+                            <b>Revenue</b>
+                            <span className="text-primary"><INRIcon className="inr-icon" /> {tripDetails.freight_amount}</span>
+                        </div>
+                        
+                        {(parseInt(paymentsMade.totalPaymentMade) > 0) && <Accordion className={`w-100 mt-3 mx-0 ${styles['total-charges']} shadow-none`}>
+                            <AccordionSummary
+                            expandIcon={<ExpandMoreOutlined />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                            className="w-100 m-0"
+                            >
+                                <div className="w-100 d-flex justify-content-between align-items-center"><h6><b>Payments Made</b></h6> <span><INRIcon className="inr-icon" /> {paymentsMade.totalPaymentMade}</span></div>
+                            </AccordionSummary>
+                            <AccordionDetails className={styles["transaction-details"]}>{paymentsMade.transactions}</AccordionDetails>
+                        </Accordion>}
+                        {(parseInt(paymentsReceived.totalPaymentReceived) > 0) && <Accordion className={`w-100 mx-0 ${styles['total-charges']} shadow-none`}>
+                            <AccordionSummary
+                            expandIcon={<ExpandMoreOutlined />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                            className="w-100 m-0"
+                            >
+                                <div className="w-100 d-flex justify-content-between align-items-center"><h6><b>Payments Received</b></h6> <span><INRIcon className="inr-icon" /> {paymentsReceived.totalPaymentReceived}</span></div>
+                            </AccordionSummary>
+                            <AccordionDetails className={styles["transaction-details"]}>{paymentsReceived.transactions}</AccordionDetails>
+                        </Accordion>}
+                        <div className={`w-100 px-1 my-3 ${styles['dashed-border']}`}></div>
+                        <div className={`w-100 mt-2 d-flex justify-content-between align-items-center ${styles['revenue-profit']} px-5`}>
+                            <b>Profit</b>
+                            <span><INRIcon className="inr-icon" /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsMade.totalPaymentMade))}</span>
+                        </div>
+                    </div>
+                
+                    <div className={`mt-lg-3 mt-md-2 mt-3 py-4 rounded-3 d-flex align-items-center flex-column ${styles['trip-bill-details']} px-lg-5 px-md-4 px-2`}>
+                        <div className="w-100 d-flex justify-content-between align-items-center">
+                            <p className="col-4 text-start">Freight Amount</p>
+                            <span className="col-4 text-end"><INRIcon className="inr-icon" /> {tripDetails.freight_amount}</span>
+                        </div>
+                        <div className={`w-100 px-1 my-3 ${styles['dashed-border']}`}></div>
+                        <div className="w-100 d-flex justify-content-between align-items-center">
+                            <p className="col-4 text-start">Balance</p>
+                            <span className={`col-4 text-end text-primary ${styles['primary']}`}><INRIcon className={`inr-icon`} /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived))}</span>
+                        </div>
 
+                        <Button className="mt-5 w-50 px-lg-0 px-md-0 px-2 py-lg-3 py-md-3 px-1" startIcon={<PDFFileIcon />} color="primary" variant="contained" onClick={HandleGetBill}>View Bill</Button>
+                    </div>
+                
+                    {openPaymentReceiveModal && <AddPaymentRecieveModal settleAmount={settleAmount} UpdateTripDetails={TripDetails} tripDetails={{...tripDetails,trip_id: tripId}} ClosePaymentReceiveModal={ClosePaymentReceiveModal} />}
+                    {openPaymentMadeModal && <AddPaymentMadeModal UpdateTripDetails={TripDetails} tripDetails={{...tripDetails,trip_id: tripId}} ClosePaymentMadeModal={ClosePaymentMadeModal} />}
+                    <ConfirmDialog open={openConfirmDialog} close={CloseConfirmDialog} action={HandleDeleteTip} />
+                </div> 
+             </>}
             
         </>
     )

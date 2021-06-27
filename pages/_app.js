@@ -1,5 +1,5 @@
 import '../styles/globals.scss'
-import GlobalLoadingContextProvider, { GlobalLoadingContext } from '../Context/GlobalLoadingContext'
+import GlobalLoadingContextProvider from '../Context/GlobalLoadingContext'
 import { ConfirmProvider } from 'material-ui-confirm';
 import Amplify from 'aws-amplify'
 import config from '../Components/aws-exports.js'
@@ -12,6 +12,7 @@ import Home from '../Components/Home/Home';
 import { useRouter } from 'next/router';
 import GlobalLoader from '../Components/GlobalLoader';
 import ConfirmDialog from '../Components/ConfirmDialog';
+import { ThemeProvider,createMuiTheme } from '@material-ui/core';
 
 function MyApp({ Component, pageProps }) {
   Amplify.configure(config);
@@ -27,6 +28,15 @@ function MyApp({ Component, pageProps }) {
     draggable:false,
     pauseOnHover:false,
   });
+
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#367BF5',
+        dark: 'rgba(44, 113, 235, 1)'
+      }
+    }
+  })
 
   const [user,setUser] = useState("loading");
   const router = useRouter();
@@ -48,18 +58,20 @@ function MyApp({ Component, pageProps }) {
   return (
     <GlobalLoadingContextProvider>
       <ConfirmProvider>
-        <>
-          <HeadTags />
-          <ConfirmDialog />
-          {user==="loading" && <GlobalLoader />}
-          {(user==="loading" || user===null) ?
+        <ThemeProvider theme={theme}>
+          <>
+            <HeadTags />
+            <ConfirmDialog />
+            {user==="loading" && <GlobalLoader />}
+            {(user==="loading" || user===null) ?
+              
+              <Component {...pageProps} />
+            : 
+              <Home Component={Component} pageProps={pageProps} />
             
-            <Component {...pageProps} />
-          : 
-            <Home Component={Component} pageProps={pageProps} />
-          
-          } 
-        </>
+            } 
+          </>
+        </ThemeProvider>
       </ConfirmProvider>
     </GlobalLoadingContextProvider>
   )
