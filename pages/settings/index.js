@@ -13,7 +13,6 @@ import { currentUser, getUser } from '../../Services/AuthServices';
 export default function Settings() {
 
     const { setGlobalLoading } = useContext(GlobalLoadingContext)
-    const [user, setUser] = useState(currentUser.value);
 
     let handleLogout = async () => {
         setGlobalLoading(true);
@@ -24,21 +23,22 @@ export default function Settings() {
             toast.error("Unable to Logout")
         }
     }
+
     return (
         <div className="w-100 p-3">
             <div className="custom_container p-4">
                 <div className="d-flex flex-wrap justify-content-between mb-5">
                     <SettingsCard href='/dashboard/profile' bg="#0B1B32">
                         <div className="d-flex w-100 h-100 justify-content-between align-items-center">
-                            <div className={`d-flex justify-content-center align-items-center ${styles.dp}`}>{currentUser.value?.name?.split(' ').map(word => word.charAt(0).toUpperCase())}</div>
+                            <div className={`d-flex justify-content-center align-items-center ${styles.dp}`}>{currentUser?.value?.name?.split(' ').slice(0, 2).map(word => word.charAt(0).toUpperCase())}</div>
                             <div className="d-flex flex-column flex-grow-1 mx-3" style={{ color: '#fff' }}>
-                                <div style={{ fontWeight: 600 }}>{currentUser.value?.name}</div>
-                                <div style={{ fontSize: '.7rem' }}>{currentUser.value?.phone}</div>
+                                <div style={{ fontWeight: 600 }}>{currentUser?.value?.name}</div>
+                                <div style={{ fontSize: '.7rem' }}>{currentUser?.value?.phone}</div>
                             </div>
                         </div>
                     </SettingsCard>
 
-                    <SettingsCard href='' bg="#251F47">
+                    <SettingsCard href='/settings/report' bg="#251F47">
                         <div className="d-flex w-100 h-100 justify-content-between align-items-center">
                             <div className="report_text" style={{ width: '44%' }}>
                                 <div style={{ color: '#fff' }}>Daily Profit and Loss</div>
