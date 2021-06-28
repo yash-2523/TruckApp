@@ -17,15 +17,21 @@ async function createTrip(tripDetails,role){
         role : role,
         billing_type : tripDetails.billingType.replace('-','_'),
         freight_amount: parseInt(tripDetails.freightAmount),
-        trip_start_date: (new Date(tripDetails.startDate).getTime()) / 1000,
-        start_km_reading: parseInt(tripDetails.startKmReading),
-        truck_id: tripDetails.truckNumber,
-        driver_name: tripDetails.driverName
+        trip_start_date: (new Date(tripDetails.startDate).getTime()) / 1000
     }
     if(tripDetails.billingType !== "fixed"){
         params[`${tripDetails.billingType.split('-')[1]}`] = parseInt(tripDetails.total);
         params[`rate_${tripDetails.billingType.replace('-','_')}`] = parseInt(tripDetails.rate);
         
+    }
+    if(tripDetails.startKmReading !== ""){
+        params[`start_km_reading`] = parseInt(tripDetails.startKmReading)
+    }
+    if(tripDetails.truckNumber !== ""){
+        params[`truck_number`] = tripDetails.truckNumber
+    }
+    if(tripDetails.startKmReading !== ""){
+        params[`driver_name`] = tripDetails.driverName
     }
     try{
         return await API.post('backend','/create_trip',{

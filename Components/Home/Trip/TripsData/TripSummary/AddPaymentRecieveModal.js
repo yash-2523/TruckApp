@@ -106,6 +106,7 @@ export default function AddPaymentRecieveModal(props) {
                          <TextField 
                             label="Payment Amount"
                             variant="outlined"
+                            error={addPaymentReceivedDetails.paymentAmount === ""}
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-4"
                             InputProps= {{
                                 startAdornment: (
@@ -122,6 +123,7 @@ export default function AddPaymentRecieveModal(props) {
                         <TextField 
                             label="Payment Date"
                             variant="outlined"
+                            error={addPaymentReceivedDetails.paymentDate === ""}
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-4"
                             type="date"
                             value={addPaymentReceivedDetails.paymentDate}
@@ -134,6 +136,7 @@ export default function AddPaymentRecieveModal(props) {
                             variant="outlined"
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-4"
                             select
+                            error={addPaymentReceivedDetails.paymentMode === ""}
                             SelectProps={{
                                 native: true
                             }}

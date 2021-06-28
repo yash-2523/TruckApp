@@ -112,6 +112,7 @@ export default function AddTruckModal(props) {
                         className="col-lg-8 col-md-8 col-11 mt-4 mx-auto"
                         label="Vehicle  Registration Number"
                         required
+                        error={truckDetails.truckNumber === ""}
                         value={truckDetails.truckNumber}
                         onChange={(e) => setTruckDetails({...truckDetails,truckNumber: e.target.value})}
                     />

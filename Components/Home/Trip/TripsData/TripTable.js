@@ -76,7 +76,7 @@ export default function TripTable(props) {
                                 <td style={{width: "1%"}}><Fab className={styles[data.status.toString()]} ><LocalShippingOutlined className={styles[data.status.toString()]} /></Fab></td>
                                 <td>{getDate(data.trip_start_date)}</td>
                                 <td>{data.customer_name}</td>
-                                <td>{data.truck_id}</td>
+                                <td>{data.truck_id === "" ? <p className="text-danger">NA</p> : data.truck_id}</td>
                                 <td className="d-flex justify-content-center align-items-center">
                                     <div className="d-flex flex-column py-1 justify-content-between align-items-start m-auto">
                                         <div className="d-flex align-items-center justify-content-start">
