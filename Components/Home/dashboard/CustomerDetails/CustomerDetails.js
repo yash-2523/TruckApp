@@ -18,7 +18,7 @@ export default function CustomerDetails() {
     const [customerTrips,setCustomerTrips] = useState("loading")
     const [token,setToken] = useState("");
     const [loading,setLoading] = useState(false);
-    const balance = window.sessionStorage.getItem('balance') || null
+    const customerData = JSON.parse(window.sessionStorage.getItem('customer')) || null
 
     useEffect(() => {
         getTripContainerScaling();
@@ -31,7 +31,7 @@ export default function CustomerDetails() {
     },[]) 
 
     useEffect(async () => {
-        if(balance === null || balance===undefined){
+        if(customerData === null || customerData===undefined){
             router.push('/dashboard');
             return;
         }
@@ -50,7 +50,7 @@ export default function CustomerDetails() {
         }
 
         return () => {
-            window.sessionStorage.removeItem('balance')
+            window.sessionStorage.removeItem('customer')
         }
     },[])
     
@@ -121,7 +121,7 @@ export default function CustomerDetails() {
                 <span id="total-balance" className={`d-flex justify-content-center align-items-center px-5 py-1 position-relative rounded-3 ${balanceInfoStyles['balance-info']}`}>
                     <i className={`position-absolute ${balanceInfoStyles['balance-info-icon']}`}><TotalBalanceIcon /></i>
                     <span className={`d-flex justify-content-between flex-column align-items-center mx-2`}>
-                        <span><INRIcon className="mb-1" /> {`${balance}/-`}</span>
+                        <span><INRIcon className="mb-1" /> {`${customerData.balance}/-`}</span>
                         <p>Total Balance</p>
                     </span>
                 </span>

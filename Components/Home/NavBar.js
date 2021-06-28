@@ -16,7 +16,7 @@ export default function NavBar(props) {
     const [user,setUser] = useState("loading");
     const [anchorEl, setAnchorEl] = useState(null);
     const route = useRouter();
-    const path = route.pathname.split('/')[1];
+    const path = route.pathname.split('/');
     const { setGlobalLoading } = useContext(GlobalLoadingContext)
 
 
@@ -66,7 +66,7 @@ export default function NavBar(props) {
                     >
                         <MenuOutlined style={{color:"rgba(197, 199, 205, 1)"}} />
                     </IconButton>
-                    <h3>{path==="dashboard" ? "dashboard" : path}</h3>
+                    <h3>{path[1]==="dashboard" ? (path[2] === "profile" ? "profile" : (path[2] === "customer" ? JSON.parse(window.sessionStorage.getItem('customer'))?.name || "dashboard" : "dashboard")) : path[1]}</h3>
                 </div>
                 <div className={`d-flex justify-content-end align-items-center ${styles['navbar-user-icon']}`}>
                     <span className="d-flex align-items-center" onClick={handleClick}>
