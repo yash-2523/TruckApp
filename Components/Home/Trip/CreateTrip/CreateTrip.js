@@ -155,15 +155,27 @@ export default function CreateTrip(props) {
 
     useEffect(() => {
         let isValid=true;
+        console.log(tripDetails)
         Object.keys(tripDetails).map(key => {
-            if(tripDetails[key] === ""){
-                isValid=false;
+            console.log(key,tripDetails[key]);
+            if(key === "rate" || key==="total"){
+                console.log("entered")
+                if(tripDetails[key] === "" && tripDetails['billingType']!=="fixed"){
+                    isValid=false;
+                }
             }
+            else{
+                if(tripDetails[key] === ""){
+                    console.log(tripDetails[key],key)
+                    isValid=false;
+                }
+            }
+            
         })
         if(tripDetails.customerNumber?.length !== 10){
             isValid=false;
         }
-
+        console.log(isValid)
         setDetailsIsValid(isValid);
 
     },[tripDetails])
@@ -402,7 +414,7 @@ export default function CreateTrip(props) {
                 </Accordion> }
                 <div className="mt-4 pb-4 d-flex align-items-center justify-content-center">
                     {editTrip ? <Button startIcon={<SaveOutlined />} className="w-50 py-2" variant="contained" color="primary">Save</Button> :
-                    <Button disabled={detailsIsValid} onClick={HandleCreateTrip} className="w-50 py-2" variant="contained" color="primary">Confirm</Button>
+                    <Button disabled={!detailsIsValid} onClick={HandleCreateTrip} className="w-50 py-2" variant="contained" color="primary">Confirm</Button>
                     }
                 </div>
             </div>
