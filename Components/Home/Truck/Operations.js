@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import { Button, TextField } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import AddTruckModal from '../AddTruckModal';
@@ -7,9 +7,9 @@ import Link from 'next/link'
 import styles from '../../../styles/Truck.module.scss'
 
 
-const Operations = ({ trucks ,getTrucks }) => {
+const Operations = ({ trucks, getTrucks }) => {
 
-    const [addTruckModalOpen,setAddTruckModalOpen] = useState(false)
+    const [addTruckModalOpen, setAddTruckModalOpen] = useState(false)
 
     let AddTruckModalClose = () => {
         setAddTruckModalOpen(false);
@@ -18,16 +18,16 @@ const Operations = ({ trucks ,getTrucks }) => {
     return (
         <>
             <div className={`w-100 d-flex justify-content-between flex-wrap ${styles.operations}`}>
-                <div className={`mt-lg-2 mt-md-3 mt-4 ${styles.no_of_trucks}`}>
+                <div className={`${styles.no_of_trucks}`}>
                     My Truck : {Array.isArray(trucks) ? trucks.length : '0'}
                     <div className={`d-flex justify-content-center align-items-center ${styles.truck_image}`}>
                         <img src="/truck.png" alt="" />
                     </div>
                 </div>
 
-                <Button onClick={() => setAddTruckModalOpen(true)}  startIcon={<AddIcon />} variant='contained' color="primary">Add New Truck</Button>
+                <Button onClick={() => setAddTruckModalOpen(true)} startIcon={<AddIcon />} variant='contained' color="primary">Add New Truck</Button>
             </div>
-            <AddTruckModal open={addTruckModalOpen} truckListUpdate={getTrucks} close={AddTruckModalClose} /> 
+            <AddTruckModal open={addTruckModalOpen} truckListUpdate={getTrucks} close={AddTruckModalClose} />
         </>
 
     );

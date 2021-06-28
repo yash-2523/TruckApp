@@ -4,4 +4,35 @@
     padding:1rem;
     margin-bottom: 1.5rem;
     min-height: 7rem;
+    border:none;
+    text-align: left;
+    font-size: .9rem;
+
+    .dp{
+        width:3rem;
+        height:3rem;
+        border-radius: 50%;
+        background-color:#fff;
+        color: #0B1B32;
+        font-weight: 800;
+    }
+
+    .content{
+        width:90%;
+    }
+
+    .right_div{
+        width:8%;
+    }
+
+    .right{
+        color:#ffffff;
+        font-size: 2rem;
+        font-weight: 200;
+    }
+
+    @media (max-width:768px){
+        width:100%;
+    }
+
 }
