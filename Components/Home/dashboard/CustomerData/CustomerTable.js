@@ -20,7 +20,7 @@ export default function CustomerTable(props) {
                 <>
                     {customerData.length === 0 ?
 
-                        <h4 className={`text-center mt-5 ${styles['no-trip-found']}`}>No Data Found <SentimentDissatisfiedOutlined /></h4>
+                        <h4 className={`text-center mt-5 no-data-found`}>No Data Found <SentimentDissatisfiedOutlined /></h4>
                         
                         :
 

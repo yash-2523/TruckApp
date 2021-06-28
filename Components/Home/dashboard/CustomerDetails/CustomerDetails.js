@@ -126,7 +126,7 @@ export default function CustomerDetails() {
                     </span>
                 </span>
 
-                {customerTrips.length === 0 ? <h4 className={`text-center mt-5 ${tripStyles['no-trip-found']}`}>No Data Found <SentimentDissatisfiedOutlined /></h4>
+                {customerTrips.length === 0 ? <h4 className={`text-center mt-5 no-data-found`}>No Data Found <SentimentDissatisfiedOutlined /></h4>
                     :
 
                     <table className={`w-100 rounded-3 position-relative mt-4 ${tripStyles['table']} px-lg-2 px-md-2 px-1 mx-auto`} id="table">

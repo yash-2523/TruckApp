@@ -9,9 +9,9 @@ export default function SignUpPage1(props) {
 
     const styles = props.styles 
     const {  SignInData } = useContext(AuthModalContext);
-    const fullNameRef = useRef("");
-    const emailRef = useRef("");
-    const roleRef = useRef("")
+    const [fullName,setFullName] = useState("");
+    const [email,setEmail] = useState("");
+    const [role,setRole] = useState("")
     const [termsAndConditions,setTermsAndConditon] = useState(false);
     const [signInData,setSignInData] = SignInData;
     const { setGlobalLoading } = useContext(GlobalLoadingContext)
@@ -24,14 +24,14 @@ export default function SignUpPage1(props) {
 
     let HandleSubmit = async (e) => {
         e.preventDefault();
-        if(roleRef.current.value===""){
+        if(role===""){
             toast.error("All Fields are neccessary")
             return
         }
         
         setGlobalLoading(true)
 
-        let createUserResponse = await CreateUser(fullNameRef.current.value, signInData.phoneNumber,roleMapping[roleRef.current.value],emailRef.current.value || "");
+        let createUserResponse = await CreateUser(fullName, signInData.phoneNumber,roleMapping[role],email || "");
 
         if(!createUserResponse){
             toast.error("Something Went Wrong, Please Try Again !")
@@ -49,8 +49,10 @@ export default function SignUpPage1(props) {
                     variant="outlined"
                     label="Full Name"
                     required
+                    error={fullName === ""}
                     className="my-3 p-0 w-100"
-                    inputRef={fullNameRef}
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
                 ></TextField>
 
                 <TextField 
@@ -58,7 +60,8 @@ export default function SignUpPage1(props) {
                     variant="outlined"
                     label="Emai-Id"
                     className="my-3 p-0 w-100"
-                    inputRef={emailRef}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 ></TextField>
 
                 <TextField 
@@ -67,9 +70,12 @@ export default function SignUpPage1(props) {
                     inputProps = {{list: "roles"}}
                     name="roles"
                     className="my-3 p-0 w-100"
-                    inputRef = {roleRef}
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
                     required
+                    error={role === ""}
                     autoComplete={"off"}
+
                 />
 
                 <datalist id="roles">
