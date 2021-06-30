@@ -25,7 +25,7 @@ export default function Settings() {
     }
 
     return (
-        <div className="w-100 p-3">
+        <div className="w-100 py-md-1 px-md-2 py-4 px-2 ">
             <div className="custom_container p-4">
                 <div className="d-flex flex-wrap justify-content-between mb-5">
                     <SettingsCard href='/dashboard/profile' bg="#0B1B32">

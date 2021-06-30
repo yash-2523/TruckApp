@@ -22,23 +22,24 @@ function Home(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  
+
 
   const container = window !== undefined ? () => window().document.body : undefined;
-  const {globalLoading } = useContext(GlobalLoadingContext)
-  const [user,setUser] = useState(currentUser.value);
+  const { globalLoading } = useContext(GlobalLoadingContext)
+  const [user, setUser] = useState(currentUser.value);
   useEffect(() => {
     const AuthObservable = currentUser.subscribe((data) => {
       setUser(data);
+      console.log(data)
     })
 
     return () => {
       AuthObservable.unsubscribe();
     }
-  },[])
-  
-  if(user===null){
-    router.push({pathname: "/"})
+  }, [])
+
+  if (user === null) {
+    router.push({ pathname: "/" })
   }
 
   return (
@@ -77,10 +78,10 @@ function Home(props) {
             </Drawer>
           </Hidden>
         </nav>
-        
+
         <main className={classes.content}>
           <div className={`w-100 h-100 mt-lg-5 mt-md-5 mt-4 pt-lg-4 pt-md-4 pt-4 ${styles['main-container']}`} id="main-container">
-            <Component {...pageProps} /> 
+            <Component {...pageProps} />
           </div>
         </main>
       </div>
