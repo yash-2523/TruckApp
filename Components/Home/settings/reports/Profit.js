@@ -48,7 +48,7 @@ const Profit = () => {
         <>
             <div className={`d-flex justify-content-between align-items-center p-3 mb-4 ${styles.profit}`}>
                 <div className={` d-flex `}>
-                    <IoCaretUpCircle className="me-2" style={{ fontSize: '2.4rem', color: '#4CD080' }} />
+                    <IoCaretUpCircle className="me-2" style={{ fontSize: '2.4rem', color: `${report.profit < 0 ? '#E76832' : '#4CD080'}`, transform: `${report.profit < 0 ? 'rotate(180deg)' : 'rotate(0deg)'}` }} />
                     <div>
                         <p style={{ fontWeight: 700, fontSize: '1.1rem' }}>₹ {report.profit}</p>
                         <p style={{ color: '#828282', fontSize: '.8rem' }}>{report.profit < 0 ? 'loss' : 'profit'}</p>
