@@ -21,6 +21,7 @@ const Profit = () => {
 
     useEffect(async () => {
         var reportData = await getReport(date)
+        console.log(reportData)
         setReport(reportData.report)
     }, [date])
 

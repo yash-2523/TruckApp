@@ -16,6 +16,8 @@ const getReport = async (date) => {
     var begin = Math.floor(date.startOf('month').valueOf() / 1000)
     var end = Math.ceil(date.endOf('month').valueOf() / 1000)
 
+    console.log(begin, end) // printing: 1622485800 1625077800
+
     try {
         reportResponse = await API.post('backend', '/get_report', {
             body: {
