@@ -7,9 +7,11 @@ import balanceInfoStyles from '../../../../styles/CustomerBalanceInfo.module.scs
 import INRIcon from '../../svg/InrIcon.svg'
 import TotalBalanceIcon from './svg/TotalBalance.svg'
 import { Button,Fab } from '@material-ui/core'
+import { VscFilePdf } from "react-icons/vsc";
 import tripStyles from '../../../../styles/TripsData.module.scss'
 import Link from 'next/link'
 import moment from 'moment'
+import TripPdfModal from './TripPdfModal'
 
 export default function CustomerDetails() {
 
@@ -19,6 +21,7 @@ export default function CustomerDetails() {
     const [token,setToken] = useState("");
     const [loading,setLoading] = useState(false);
     const customerData = JSON.parse(window.sessionStorage.getItem('customer')) || null
+    const [tripPdfModalOpen, setTripPdfModalOpen] = useState(false)
 
     useEffect(() => {
         getTripContainerScaling();
@@ -118,13 +121,21 @@ export default function CustomerDetails() {
         {customerTrips==="loading" ? <div className="mt-5 text-center"><PulseLoader margin={2} size={15} color="#36D7B7" /></div>
             :
             <div id="customer-details">
-                <span id="total-balance" className={`d-flex justify-content-center align-items-center px-5 py-1 position-relative rounded-3 ${balanceInfoStyles['balance-info']}`}>
-                    <i className={`position-absolute ${balanceInfoStyles['balance-info-icon']}`}><TotalBalanceIcon /></i>
-                    <span className={`d-flex justify-content-between flex-column align-items-center mx-2`}>
-                        <span><INRIcon className="mb-1" /> {`${customerData.balance}/-`}</span>
-                        <p>Total Balance</p>
+                <div className="d-flex">
+                    <span id="total-balance" className={`d-flex justify-content-center align-items-center px-5 py-1 position-relative rounded-3 ${balanceInfoStyles['balance-info']}`}>
+                        <i className={`position-absolute ${balanceInfoStyles['balance-info-icon']}`}><TotalBalanceIcon /></i>
+                        <span className={`d-flex justify-content-between flex-column align-items-center mx-2`}>
+                            <span><INRIcon className="mb-1" /> {`${customerData.balance}/-`}</span>
+                            <p>Total Balance</p>
+                        </span>
                     </span>
-                </span>
+                    <button onClick={() => setTripPdfModalOpen(true)} className={`ms-2 ${balanceInfoStyles.card_button}`} style={{ background: '#FFF1E0', border: '1px solid #FFAF4E', color: '#FFAF4E' }}>
+                        <VscFilePdf size={28} />
+                        <p>PDF</p>
+                    </button>
+                </div>
+
+
 
                 {customerTrips.length === 0 ? <h4 className={`text-center mt-5 no-data-found`}>No Data Found <SentimentDissatisfiedOutlined /></h4>
                     :
@@ -181,6 +192,8 @@ export default function CustomerDetails() {
                 
             </div>
         }
+
+            <TripPdfModal open={tripPdfModalOpen} onClose={() => setTripPdfModalOpen(false)} customerName={customerTrips[0].customer_name} />
         </>
     )
 }

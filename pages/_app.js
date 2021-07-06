@@ -11,6 +11,10 @@ import Home from '../Components/Home/Home';
 import { useRouter } from 'next/router';
 import GlobalLoader from '../Components/GlobalLoader';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+
+// pick a date util library
+import MomentUtils from '@date-io/moment';
 
 function MyApp({ Component, pageProps }) {
   Amplify.configure(config);
@@ -56,18 +60,20 @@ function MyApp({ Component, pageProps }) {
   return (
     <GlobalLoadingContextProvider>
       <ThemeProvider theme={theme}>
-        <>
-          <HeadTags />
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <>
+            <HeadTags />
 
-          {user === "loading" && <GlobalLoader />}
-          {(user === "loading" || user === null) ?
+            {user === "loading" && <GlobalLoader />}
+            {(user === "loading" || user === null) ?
 
-            <Component {...pageProps} />
-            :
-            <Home Component={Component} pageProps={pageProps} />
+              <Component {...pageProps} />
+              :
+              <Home Component={Component} pageProps={pageProps} />
 
-          }
-        </>
+            }
+          </>
+        </MuiPickersUtilsProvider>
       </ThemeProvider>
     </GlobalLoadingContextProvider>
   )
