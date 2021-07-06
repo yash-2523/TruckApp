@@ -155,18 +155,14 @@ export default function CreateTrip(props) {
 
     useEffect(() => {
         let isValid=true;
-        console.log(tripDetails)
         Object.keys(tripDetails).map(key => {
-            console.log(key,tripDetails[key]);
             if(key === "rate" || key==="total"){
-                console.log("entered")
                 if(tripDetails[key] === "" && tripDetails['billingType']!=="fixed"){
                     isValid=false;
                 }
             }
             else{
-                if(tripDetails[key] === ""){
-                    console.log(tripDetails[key],key)
+                if(key !== "startKmReading" && key !== "driverName" && key !== "truckNumber" && tripDetails[key] === ""){
                     isValid=false;
                 }
             }
@@ -175,7 +171,6 @@ export default function CreateTrip(props) {
         if(tripDetails.customerNumber?.length !== 10){
             isValid=false;
         }
-        console.log(isValid)
         setDetailsIsValid(isValid);
 
     },[tripDetails])
@@ -199,6 +194,8 @@ export default function CreateTrip(props) {
                                 SelectProps={{
                                     native: "true"
                                 }}
+                                error={tripDetails.origin === ""}
+                                required
                                 variant="outlined"
                                 className="col-lg-5 col-md-5 col-sm-10 col-10"
                                 InputProps={{
@@ -220,6 +217,8 @@ export default function CreateTrip(props) {
                             <TextField 
                                 label="Destination"
                                 select
+                                error={tripDetails.destination === ""}
+                                required
                                 variant="outlined"
                                 SelectProps={{
                                     native: "true"
@@ -249,6 +248,8 @@ export default function CreateTrip(props) {
                             <TextField 
                                 variant="outlined"
                                 label="Customer Name"
+                                error={tripDetails.customerName === ""}
+                                required
                                 className="col-lg-5 col-md-5 col-sm-10 col-10"
                                 value={tripDetails.customerName} onChange={(e) => setTripDetails({...tripDetails,customerName: e.target.value})}
                             />
@@ -256,6 +257,8 @@ export default function CreateTrip(props) {
                                 label="Customer Number"
                                 className="col-lg-5 col-md-5 col-sm-10 col-10"
                                 type="number"
+                                error={tripDetails.customerNumber === "" || tripDetails.customerNumber.length !== 10}
+                                required
                                 variant="outlined"
                                 value={tripDetails.customerNumber} onChange={(e) => setTripDetails({...tripDetails,customerNumber: `${e.target.value}`})}
                             />
@@ -347,9 +350,10 @@ export default function CreateTrip(props) {
                                 />
                             </div>  
                             <div className="d-flex flex-column justify-content-between align-items-start"> 
-                                Start Date
+                                Start Date*
                                 <TextField
                                     variant="outlined"
+                                    error={tripDetails.startDate === ""}
                                     className="mt-lg-4 mt-md-3 mt-2 text-right"
                                     type="date"
                                     value={tripDetails.startDate}
@@ -363,11 +367,12 @@ export default function CreateTrip(props) {
 
                         <div className="w-100 mt-5 d-flex justify-content-evely align-items-center flex-wrap">
                             {tripDetails.billingType !== billingTypes[0] && <div className="d-flex flex-column justify-content-between align-items-center">
-                                {`Rate ${tripDetails.billingType}`}
+                                {`Rate ${tripDetails.billingType}*`}
                                 <TextField 
                                     variant="outlined"
                                     placeholder={`rate ${tripDetails.billingType}`}
                                     className="w-75 mt-3 mb-2"
+                                    error={tripDetails.rate === ""}
                                     type="number"
                                     InputProps={{
                                         startAdornment: (
@@ -382,24 +387,26 @@ export default function CreateTrip(props) {
                             </div>
                             }
                             {tripDetails.billingType !== billingTypes[0] && <div className="d-flex flex-column justify-content-between align-items-center">
-                                {`Total ${tripDetails.billingType.split('-')[1]}`}
+                                {`Total ${tripDetails.billingType.split('-')[1]}*`}
                                 <TextField 
                                     variant="outlined"
                                     placeholder={`total ${tripDetails.billingType.split('-')[1]}`}
                                     className="w-75 mt-3 mb-2"
                                     type="number"
+                                    error={tripDetails.total === ""}
                                     value={tripDetails.total}
                                     onChange={(e) => setTripDetails({...tripDetails,total: e.target.value,freightAmount: e.target.value * (tripDetails.rate)})}
                                 />
                             </div>
                             }
                             <div className="d-flex flex-column justify-content-between align-items-center">
-                                Total Freight Amount
+                                Total Freight Amount*
                                 <TextField variant="outlined" 
                                 value={tripDetails.freightAmount}
                                 onChange={(e) => setTripDetails({...tripDetails,freightAmount: e.target.value})}
                                 disabled={tripDetails.billingType !== billingTypes[0]}
                                 type="number"
+                                error={tripDetails.freightAmount === ""}
                                 InputProps={{
                                     startAdornment: (
                                       <InputAdornment position="start">
@@ -413,8 +420,8 @@ export default function CreateTrip(props) {
                     </AccordionDetails>
                 </Accordion> }
                 <div className="mt-4 pb-4 d-flex align-items-center justify-content-center">
-                    {editTrip ? <Button startIcon={<SaveOutlined />} className="w-50 py-2" variant="contained" color="primary">Save</Button> :
-                    <Button disabled={!detailsIsValid} onClick={HandleCreateTrip} className="w-50 py-2" variant="contained" color="primary">Confirm</Button>
+                    {editTrip ? <Button startIcon={<SaveOutlined />} className="w-25 py-3" variant="contained" color="primary">Save</Button> :
+                    <Button disabled={!detailsIsValid} onClick={HandleCreateTrip} className="w-25 py-3" variant="contained" color="primary">Confirm</Button>
                     }
                 </div>
             </div>

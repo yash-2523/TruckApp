@@ -279,7 +279,7 @@ export default function TripSummary() {
                                 <td style={{width: "1%"}}><Fab className={styles[tripDetails.status]} ><LocalShippingOutlined className={styles[tripDetails.status]} /></Fab></td>
                                 <td>{getDate(tripDetails.trip_start_date)}</td>
                                 <td>{tripDetails.customer_name}</td>
-                                <td>{tripDetails.truck_number}</td>
+                                <td>{tripDetails.truck_number === "" ? <p className="text-danger">NA</p> : tripDetails.truck_number}</td>
                                 <td className="d-flex justify-content-center align-items-center">
 
                                     <div className="d-flex py-1 flex-column justify-content-between align-items-start m-auto">

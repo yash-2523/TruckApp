@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { toast } from 'react-toastify';
 import moment from 'moment'
 
-import { getCustomerTripPdf } from '../../../../Services/TripDataServices';
+import { getCustomerTripPdf } from '../../../../Services/CustomerDataServices';
 import { GlobalLoadingContext } from '../../../../Context/GlobalLoadingContext';
 
 const TruckPdfModal = ({ open, onClose, customerName }) => {

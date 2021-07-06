@@ -46,11 +46,11 @@ const Profile = () => {
         <div className="w-100 p-md-3 p-4">
             <form onSubmit={e => handleSubmit(e)} className="w-100 d-flex justify-content-between custom_container p-5">
                 <div className={`d-flex flex-column align-items-center ${styles.col_1}`}>
-                    <Avatar className={`${styles.dp}`}>{user && user.name?.split(' ').slice(0, 2).map(word => word.charAt(0).toUpperCase())}</Avatar>
-                    <TextField className={`${styles.input}`} onChange={e => { setName(e.target.value) }} variant="outlined" value={name} required label="Name" fullWidth />
-                    <TextField className={`${styles.input}`} onChange={e => { setEmail(e.target.value) }} variant="outlined" value={email} required label="Email" type="email" fullWidth />
-                    <TextField className={`${styles.input}`} onChange={e => { setCompanyName(e.target.value) }} variant="outlined" value={companyName} label="Company Name" fullWidth />
-                    <TextField className={`${styles.input}`} label="Phone" value={`${user.phone}`} variant="outlined" fullWidth disabled />
+                    <Avatar className={`${styles.dp}`}>{user && user.name?.split(' ').map(word => word.charAt(0).toUpperCase())}</Avatar>
+                    <TextField className={`${styles.input}`} onChange={e=>{setName(e.target.value)}} variant="outlined" error={name === ""} value={name} required  label="Name" fullWidth/>
+                    <TextField className={`${styles.input}`} onChange={e=>{setEmail(e.target.value)}} variant="outlined" error={email === ""} value={email} required  label="Email" type="email" fullWidth/>
+                    <TextField className={`${styles.input}`} onChange={e=>{setCompanyName(e.target.value)}} variant="outlined" value={companyName} label="Company Name" fullWidth/>
+                    <TextField className={`${styles.input}`}  label="Phone" value={`${user.phone}`} variant="outlined"  fullWidth disabled/>
                 </div>
                 <div className={`d-flex flex-column justify-content-end align-items-center ${styles.col_2}`}>
                     <div className={`d-flex flex-column align-items-center mb-5 ${styles.success}`} style={{ opacity: opacity }}>

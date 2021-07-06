@@ -120,6 +120,7 @@ export default function AddPaymentMadeModal(props) {
                             variant="outlined"
                             label = "Reason"
                             required
+                            error={addPaymentMadeDetails.expenseType === ""}
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-3"
                             SelectProps={{
                                 native: true
@@ -136,6 +137,7 @@ export default function AddPaymentMadeModal(props) {
                          <TextField 
                             label="Expense Amount"
                             variant="outlined"
+                            error={addPaymentMadeDetails.expenseAmount === ""}
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-3"
                             InputProps= {{
                                 startAdornment: (
@@ -154,6 +156,7 @@ export default function AddPaymentMadeModal(props) {
                             variant="outlined"
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-3"
                             type="date"
+                            error={addPaymentMadeDetails.expenseDate === ""}
                             focused
                             required
                             value={addPaymentMadeDetails.expenseDate}
@@ -164,6 +167,7 @@ export default function AddPaymentMadeModal(props) {
                             variant="outlined"
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-3"
                             select
+                            error={addPaymentMadeDetails.expenseMode === ""}
                             SelectProps={{
                                 native: true
                             }}

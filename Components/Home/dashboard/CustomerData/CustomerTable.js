@@ -20,7 +20,7 @@ export default function CustomerTable(props) {
                 <>
                     {customerData.length === 0 ?
 
-                        <h4 className={`text-center mt-5 ${styles['no-trip-found']}`}>No Data Found <SentimentDissatisfiedOutlined /></h4>
+                        <h4 className={`text-center mt-5 no-data-found`}>No Data Found <SentimentDissatisfiedOutlined /></h4>
                         
                         :
 
@@ -35,7 +35,7 @@ export default function CustomerTable(props) {
 
                             <tbody>
                                 {customerData.map(customer => 
-                                    <Link href={`/dashboard/customer/${customer.from_uid}`} key={customer.from_uid}><tr onClick={() => window.sessionStorage.setItem('balance',customer.balance)}>
+                                    <Link href={`/dashboard/customer/${customer.from_uid}`} key={customer.from_uid}><tr onClick={() => window.sessionStorage.setItem('customer',JSON.stringify({balance: customer.balance,name: customer.from_name}))}>
                                         <td>
                                             <div className="d-flex justify-content-start align-items-center">
                                                 <Avatar className={`${styles['avatar']}`} variant="circle">{customer.from_name.split(' ').map(word => word.charAt(0).toUpperCase())}</Avatar>
