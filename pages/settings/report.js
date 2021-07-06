@@ -1,12 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import moment from "moment";
+import { PulseLoader } from 'react-spinners'
 
 import Profit from '../../Components/Home/settings/reports/Profit'
 import Balance from '../../Components/Home/settings/reports/Balance'
 import styles from '../../styles/Reports.module.scss'
+import { getReport } from '../../Services/ReportServices'
 
 const Reports = () => {
 
     const [currentTab, setCurrentTab] = useState('profit')
+    const [date, setDate] = useState(moment())
+    const [report, setReport] = useState({})
+
+
+    useEffect(async () => {
+        var reportData = await getReport(date)
+        setReport(reportData.report)
+    }, [date])
 
     return (
         <div className="w-100 py-md-1 px-md-3 py-4 px-2">
@@ -26,20 +37,27 @@ const Reports = () => {
                 <hr className={styles.hr} />
 
                 <div className="p-4">
-                    {(() => {
+                    {
+                        (Object.keys(report).length == 0) ?
+                            <div className="w-100 text-center"><PulseLoader size={15} margin={2} color="#36D7B7" /></div> :
+                            (() => {
 
-                        switch (currentTab) {
-                            case 'profit':
-                                return <Profit />
-                            case 'balance':
-                                return <Balance />
-                            default:
-                                return (
-                                    <div>this route doesnot exists</div>
-                                )
-                        }
+                                switch (currentTab) {
+                                    case 'profit':
+                                        return <Profit report={report} date={date} setDate={setDate} />
+                                    case 'balance':
+                                        return <Balance report={report} date={date} setDate={setDate} />
+                                    default:
+                                        return (
+                                            <div>this route doesnot exists</div>
+                                        )
+                                }
 
-                    })()}
+                            })()
+
+                    }
+
+
                 </div>
             </div>
         </div>

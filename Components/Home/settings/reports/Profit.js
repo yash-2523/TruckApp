@@ -3,7 +3,7 @@ import { Button } from "@material-ui/core";
 import { IoCaretUpCircle } from "react-icons/io5";
 import { VscFilePdf } from "react-icons/vsc";
 import { DatePicker } from "@material-ui/pickers";
-import moment from "moment";
+
 import Link from 'next/link'
 import { toast } from 'react-toastify';
 
@@ -12,18 +12,13 @@ import styles from '../../../../styles/Reports.module.scss'
 import { GlobalLoadingContext } from '../../../../Context/GlobalLoadingContext';
 
 
-const Profit = () => {
+const Profit = ({ report, date, setDate }) => {
 
 
-    const [date, setDate] = useState(moment())
-    const [report, setReport] = useState({})
+
     const { setGlobalLoading } = useContext(GlobalLoadingContext);
 
-    useEffect(async () => {
-        var reportData = await getReport(date)
-        console.log(reportData)
-        setReport(reportData.report)
-    }, [date])
+
 
     const handleViewPdf = async () => {
         setGlobalLoading(true);
@@ -57,7 +52,7 @@ const Profit = () => {
                 <DatePicker
                     variant="inline"
                     inputVariant="outlined"
-                    openTo="year"
+                    openTo="month"
                     views={["year", "month"]}
                     label="Year and Month"
                     value={date}

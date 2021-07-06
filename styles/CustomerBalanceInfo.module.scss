@@ -1,6 +1,18 @@
 .balance-info-container{
     row-gap: 22px !important;
 }
+
+.card_button{
+    width:4rem;
+    height:4rem;
+    border-radius:4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size:.7rem;
+}
+
 .balance-info{
     width: min-content;
     background-color: white;

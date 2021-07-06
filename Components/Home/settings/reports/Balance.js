@@ -2,24 +2,16 @@ import { useState, useEffect, useContext } from 'react'
 import { Button } from "@material-ui/core";
 import { VscFilePdf } from "react-icons/vsc";
 import { DatePicker } from "@material-ui/pickers";
-import moment from "moment";
 import Link from 'next/link'
 import { toast } from 'react-toastify';
 
-import { getReport, getReportPdf } from '../../../../Services/ReportServices'
+import { getReportPdf } from '../../../../Services/ReportServices'
 import styles from '../../../../styles/Reports.module.scss'
 import { GlobalLoadingContext } from '../../../../Context/GlobalLoadingContext';
 
-const Balance = () => {
+const Balance = ({ report, date, setDate }) => {
 
-    const [date, setDate] = useState(moment())
-    const [report, setReport] = useState({})
     const { setGlobalLoading } = useContext(GlobalLoadingContext);
-
-    useEffect(async () => {
-        var reportData = await getReport(date)
-        setReport(reportData.report)
-    }, [date])
 
     const handleViewPdf = async () => {
         setGlobalLoading(true);
@@ -47,7 +39,7 @@ const Balance = () => {
                 <DatePicker
                     variant="inline"
                     inputVariant="outlined"
-                    openTo="year"
+                    openTo="month"
                     views={["year", "month"]}
                     label="Year and Month"
                     value={date}
