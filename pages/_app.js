@@ -37,6 +37,19 @@ function MyApp({ Component, pageProps }) {
         main: '#367BF5',
         dark: 'rgba(44, 113, 235, 1)'
       }
+    },
+    overrides: {
+      MuiStepIcon: {
+        root: {
+          color: "rgba(96, 98, 110, 1)"
+        },
+        active: {
+          color: "rgba(49, 41, 104, 1) !important"
+        },
+        completed: {
+          color: "rgba(45, 188, 83, 1) !important"
+        }
+      }
     }
   })
 
