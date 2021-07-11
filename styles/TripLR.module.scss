@@ -69,6 +69,39 @@
         color: #312968;
     }
 
+    .vertical-stepper{
+        .generate-lr-btn{
+            background-color: #2DBC53;
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 4px;
+            font-family: 'Lato';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 18px;
+            color: #FFFFFF;
+
+            &:hover{
+                background-color: #2DBC53;
+                color: #FFFFFF;
+            }
+        }
+        .vertical-stepper-icon{
+            
+            width: 22px;
+            height: 22px;
+            background-color: rgba(49, 41, 104, 1);
+            font-weight: 500;
+            font-size: 10.6667px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            border-radius: 50%;
+            
+        }
+    }
+    
+
     .insurance-signature-form{
         .add-insurance-form-fields{
             row-gap: 1rem;
@@ -102,6 +135,38 @@
             column-gap: 0.7rem;
             row-gap: 1rem;
 
+            .accept-and-sign-btn{
+                background-color: rgba(34, 134, 82, 1);
+                color: white;
+                &:hover{
+                    background-color: rgba(34, 134, 82, 1);
+                    color: white;
+                }
+            }
+
+            .image-upload-method{
+                column-gap: 0.7rem;
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 12px;
+                color: #B9B9B9;
+                border-bottom: 1px solid #E4E4E4;
+                width: 90%;
+                span{
+                    cursor: pointer;
+                }
+
+                .active{
+                    font-family: 'Roboto';
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 12px;
+                    color: #312968;
+                    border-bottom: 2px solid #228652;
+                }
+            }
+
             .image-upload-container{
                 background: #FFFFFF;
                 border: 1px dashed #EEEFF0;
@@ -113,12 +178,6 @@
                     max-height: 120px;
                 }
 
-                svg{
-                    top: -7px;
-                    right: -7px;
-                    cursor: pointer;
-                }
-
                 span{
                     font-family: 'Roboto';
                     font-style: normal;
@@ -126,7 +185,11 @@
                     font-size: 14px;
                     color: #212529;
                 }
-
+                .signature-img-container{
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 4px;
+                }
                 input{
                     visibility: hidden;
                     width: 0px;

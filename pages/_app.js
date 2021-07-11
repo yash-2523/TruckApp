@@ -64,6 +64,7 @@ function MyApp({ Component, pageProps }) {
       AuthObservable.unsubscribe()
     }
   }, [])
+  console.log(user)
   if (user === null && router.pathname !== "/") {
     router.push({ pathname: "/" })
   }
