@@ -140,6 +140,7 @@ export default function TripSummary() {
             let TripDetailsResponse = await getTripDetails(tripId);
             
             if(TripDetailsResponse){
+                console.log(TripDetailsResponse)
                 setTripDetails(TripDetailsResponse);
                 getTableScaling()
                 let tempTotalPaymentMade = parseInt(0);

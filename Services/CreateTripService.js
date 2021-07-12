@@ -34,7 +34,7 @@ async function createTrip(tripDetails,role){
         params[`driver_name`] = tripDetails.driverName
     }
     try{
-        return await API.post('backend','/create_trip',{
+        return await API.post('dev','/create_trip',{
             body: params
         })
     }catch(err){

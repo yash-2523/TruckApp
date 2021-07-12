@@ -93,7 +93,7 @@ export default function TripLR(){
 
             try{
                 let TripDetailsResponse = await getTripDetails(tripId);
-                
+                console.log(TripDetailsResponse)
                 if(TripDetailsResponse){
                     if(TripDetailsResponse.lr_created){
                         router.push(`/trip/${tripId}`);
@@ -358,7 +358,7 @@ export default function TripLR(){
                         value={companyFormDetails.company_state}
                         onChange={(e) => setCompanyFormDetails({...companyFormDetails,company_state: e.target.value})}
                     >
-                        <option value="">Select State</option>
+                        <option value=""></option>
                         {states.map(state => 
                             <option key={`company_state_${state}`} value={state}>{state}</option>
                         )}
@@ -378,7 +378,7 @@ export default function TripLR(){
 
         const [showExtraAddressField,setShowExtraAddressField] = useState(false);
         const [consignorFormDetails,setConsignorFormDetails] = useState(lrDetails.consignorDetails ? lrDetails.consignorDetails : {
-            lr_number: tripDetails.lr_number,
+            lr_number: tripDetails.lr_number || "12345",
             lr_date: moment().format('YYYY-MM-DD'),
             consignor_name: "",
             consignor_gstin_number: "",
@@ -510,7 +510,7 @@ export default function TripLR(){
                             value={consignorFormDetails.consignor_state}
                             onChange={(e) => setConsignorFormDetails({...consignorFormDetails,consignor_state: e.target.value})}
                         >
-                            <option value="">Select State</option>
+                            <option value=""></option>
                             {states.map(state => 
                                 <option key={`consignor_state_${state}`} value={state}>{state}</option>
                             )}
@@ -534,11 +534,10 @@ export default function TripLR(){
         const [showExtraAddressField,setShowExtraAddressField] = useState(false);
 
         const [consigneeFormDetails,setConsigneeFormDetails] = useState(lrDetails.consigneeDetails ? lrDetails.consigneeDetails : {
-            lr_number: tripDetails.lr_number,
+            lr_number: tripDetails.lr_number || "12345",
             lr_date: moment().format('YYYY-MM-DD'),
             consignee_name: "",
             consignee_gstin_number: "",
-            consignee_eway_number: "",
             consignee_address: "",
             consignee_address_2: "",
             consignee_pin_code: "",
@@ -609,13 +608,6 @@ export default function TripLR(){
                         onChange={(e) => setConsigneeFormDetails({...consigneeFormDetails,consignee_gstin_number: e.target.value})}
                         error={consigneeFormDetails.consignee_gstin_number === ""}  
                     />
-                    <TextField 
-                        label="E-way Bill Number"
-                        className={`col-lg-5 col-md-6 col-10`}
-                        variant="outlined"  
-                        value={consigneeFormDetails.consignee_eway_number}
-                        onChange={(e) => setConsigneeFormDetails({...consigneeFormDetails,consignee_eway_number: e.target.value})}
-                    />
                 </div>
 
                 <div className={`mt-4 mb-3 ${styles['form-index']}`}>
@@ -646,7 +638,6 @@ export default function TripLR(){
                          variant="outlined"
                          value={consigneeFormDetails.consignee_address_2}
                          onChange={(e) => setConsigneeFormDetails({...consigneeFormDetails,consignee_address_2: e.target.value})}
-                         error={consigneeFormDetails.consignee_address_2 === ""}
                         />
                     }
 
@@ -669,7 +660,7 @@ export default function TripLR(){
                             value={consigneeFormDetails.consignee_state}
                             onChange={(e) => setConsigneeFormDetails({...consigneeFormDetails,consignee_state: e.target.value})}
                         >
-                            <option value="">Select State</option>
+                            <option value=""></option>
                             {states.map(state => 
                                 <option key={`consignee_state_${state}`} value={state}>{state}</option>
                             )}
@@ -702,10 +693,10 @@ export default function TripLR(){
             goods_invoice_number: "",
             invoice_value: "",
             signature_link: "",
-            isInsured: true
+            is_insured: true
         })
 
-
+        console.log(insuranceFormDetails)
 
         let Save = (dataURL) => {
             setSignatureSrc(dataURL)
@@ -724,12 +715,12 @@ export default function TripLR(){
                 <div className={`mt-4 mb-3 ${styles['form-index']}`}>
                     Insured
                 </div>
-                <RadioGroup row className="ms-4" value={insuranceDetails.isInsured} onChange={(e) => setInsuranceFormDetails({...insuranceFormDetails,isInsured: e.target.value})} name="is-insured">
+                <RadioGroup row className="ms-4" value={insuranceFormDetails.is_insured} onChange={(e) => setInsuranceFormDetails({...insuranceFormDetails,is_insured: e.target.value === "true"})} name="is-insured">
                     <FormControlLabel value={true} control={<Radio style={{color: 'rgba(49, 41, 104, 1)'}} />} label="Yes" />
                     <FormControlLabel value={false} control={<Radio style={{color: 'rgba(49, 41, 104, 1)'}} />} label="No" />
                 </RadioGroup>
 
-                {isInsured===true && 
+                {insuranceFormDetails.is_insured===true && 
                 <>
                 <div className={`mt-4 mb-3 ${styles['form-index']}`}>
                     <div>1</div> Add Insurance
@@ -914,7 +905,7 @@ export default function TripLR(){
                         required
                         error={goodsFormDetails.packaging_type === ""}
                     >
-                        <option value="">Select Packaging Type</option>
+                        <option value=""></option>
                         {packaginTypes.map(pacakageType => 
                             <option key={`${pacakageType}`} value={pacakageType}>{pacakageType}</option>
                         )}
@@ -1055,17 +1046,21 @@ export default function TripLR(){
                     )}
                 </Stepper>
                 <div className="mt-4 d-flex justify-content-center align-items-center">            
-                <Button variant="contained" onClick={createLR} className={`w-50 px-lg-0 px-md-0 px-2 py-lg-3 py-md-3 px-1 ${styles['generate-lr-btn']}`}>Generate receipt</Button>
+                <Button variant="contained" onClick={CreateLR} className={`w-50 px-lg-0 px-md-0 px-2 py-lg-3 py-md-3 px-1 ${styles['generate-lr-btn']}`}>Generate receipt</Button>
                 </div>
             </div>
         )
     }
 
     async function CreateLR(){
+        
+        
         setGlobalLoading(true);
         try{
             let createLRResponse = await createLR(lrDetails);
-            if(createLRResponse){
+            console.log(createLRResponse)
+            if(createLRResponse && createLRResponse.success){
+                
                 window.open(createLRResponse.link,'_blank')
                 setGlobalLoading(false)
             }
