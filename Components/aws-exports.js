@@ -6,6 +6,12 @@ const awsmobile = {
         "region": "ap-south-1",
         "authenticationFlowType": "USER_SRP_AUTH"
     },
+    Storage: {
+        AWSS3: {
+            bucket: 'data-truckapp', //REQUIRED -  Amazon S3 bucket name
+            region: 'ap-south-1', //OPTIONAL -  Amazon service region
+        }
+    },
     "API": {
         "endpoints": [
             {
