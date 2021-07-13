@@ -1,26 +1,21 @@
-import { API } from "aws-amplify";
+import { API,Storage } from "aws-amplify";
 
 async function getStates() {
     try {
-        return await API.post('dev', '/get_states', {});
+        return await API.post('backend', '/get_states', {});
     } catch (err) {
         return false;
     }
 }
 async function getPackagingType() {
     try {
-        return await API.post('dev', '/get_packaging_types', {});
+        return await API.post('backend', '/get_packaging_types', {});
     } catch (err) {
         return false;
     }
 }
 
 async function createLR(lrDetails){
-    console.log(lrDetails.companyDetails)
-    
-
-    
-
     let params = {}
     let detailsIsValid = true;
     Object.keys(lrDetails).map(key => {
@@ -54,7 +49,7 @@ async function createLR(lrDetails){
     }
     console.log(params)
     try {
-        return await API.post('dev', '/create_lr', {
+        return await API.post('backend', '/create_lr', {
             body: params
         });
     } catch (err) {
@@ -63,5 +58,26 @@ async function createLR(lrDetails){
 
 }
 
-export { getStates, getPackagingType, createLR }
+
+async function uploadSignature(blob,progressCallback){
+    console.log(blob);
+    const response = await Storage.put(blob.name, blob, {
+        contentType: blob.type,
+        customPrefix: {
+            private: `prod/private/`
+        },
+        level: 'private'
+    });
+
+    const signedURL = await Storage.get(response.key, {
+        level: 'private',
+        customPrefix: {
+            private: `prod/private/`
+        },
+        expires: 600000
+    });
+    return signedURL
+}
+
+export { getStates, getPackagingType, createLR, uploadSignature }
 

@@ -142,6 +142,10 @@
                     background-color: rgba(34, 134, 82, 1);
                     color: white;
                 }
+                &:disabled{
+                    background-color: rgba(0, 0, 0, 0.26);
+                    color: rgba(0, 0, 0, 0.26);
+                }
             }
 
             .image-upload-method{
@@ -172,6 +176,13 @@
                 border: 1px dashed #EEEFF0;
                 border-radius: 4px;
                 height: 135px;
+
+
+                .uploading-loder{
+                    background-color: rgba(0, 0, 0, 0.75);
+                    z-index: 100;
+                    color: white;
+                }
 
                 img{
                     max-width: 100%;

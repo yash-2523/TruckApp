@@ -1,7 +1,7 @@
 import { Step, Stepper, StepLabel, FormControlLabel, RadioGroup, Radio, TextField, Avatar, InputLabel } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { Button,Fab,Icon } from '@material-ui/core';
-import { LocalShippingOutlined, CachedOutlined, AddOutlined, RemoveOutlined, Cancel, EditOutlined, CheckCircleSharp } from '@material-ui/icons'
+import { LocalShippingOutlined, CachedOutlined, AddOutlined, RemoveOutlined, Cancel, EditOutlined, CheckCircleSharp, CloudUploadOutlined } from '@material-ui/icons'
 import TripsDataStyles from '../../../../styles/TripsData.module.scss';
 import styles from '../../../../styles/TripLR.module.scss'
 import { useRouter } from "next/router";
@@ -13,7 +13,7 @@ import INRIcon from '../../svg/InrIcon.svg';
 import {currentUser} from '../../../../Services/AuthServices';
 import SignaturePadDialog from '../../../SignaturePadDialog'
 import { IconButton } from "@material-ui/core";
-import { getStates,getPackagingType, createLR } from "../../../../Services/TripLRService";
+import { getStates,getPackagingType, createLR, uploadSignature } from "../../../../Services/TripLRService";
 import { GlobalLoadingContext } from "../../../../Context/GlobalLoadingContext";
 
 export default function TripLR(){
@@ -95,10 +95,10 @@ export default function TripLR(){
                 let TripDetailsResponse = await getTripDetails(tripId);
                 console.log(TripDetailsResponse)
                 if(TripDetailsResponse){
-                    if(TripDetailsResponse.lr_created){
-                        router.push(`/trip/${tripId}`);
-                        return;
-                    }
+                    // if(TripDetailsResponse.lr_created){
+                    //     router.push(`/trip/${tripId}`);
+                    //     return;
+                    // }
                     setTripDetails(TripDetailsResponse);
                     getStepperDisplay()
                 }
@@ -132,6 +132,19 @@ export default function TripLR(){
         }else{
             Stepper.style.display = "flex"
         }
+    }
+
+    let checkGstNumber = (idx) => {
+        let gstRegex = new RegExp('^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[0-9A-Z]{1}$')
+        return gstRegex.test(idx);
+    }
+    let checkPanNumber = (idx) => {
+        let PanRegex = new RegExp('^[A-Z]{5}[0-9]{4}[A-Z]{1}$')
+        return PanRegex.test(idx);
+    }
+    let checkEwayNumber = (idx) => {
+        let ewayRegex = new RegExp('^[0-9]{12}$')
+        return ewayRegex.test(idx);
     }
 
     let getDate = (milliseconds) => {
@@ -272,6 +285,9 @@ export default function TripLR(){
                     isValid=false;
                 }
             })
+            if(isValid){
+                isValid = checkGstNumber(companyFormDetails.company_gstin_number);
+            }
             setCompanyFormDetailsIsValid(isValid);
         },[companyFormDetails])
 
@@ -298,7 +314,8 @@ export default function TripLR(){
                         value={companyFormDetails.company_gstin_number}
                         onChange={(e) => setCompanyFormDetails({...companyFormDetails,company_gstin_number: e.target.value})}
                         required
-                        error={companyFormDetails.company_gstin_number === ""}
+                        helperText="Eg. 07AZTPJ7932L1ZX"
+                        error={!checkGstNumber(companyFormDetails.company_gstin_number)}
                     />
                     <TextField 
                         label="Phone"
@@ -316,6 +333,8 @@ export default function TripLR(){
                         variant="outlined"
                         value={companyFormDetails.company_pan_number}
                         onChange={(e) => setCompanyFormDetails({...companyFormDetails,company_pan_number: e.target.value})}
+                        error={!checkPanNumber(companyFormDetails.company_pan_number)}
+                        helperText={"Eg. AZTPJ7932L"}
                     />
                     <TextField 
                         label="Email"
@@ -323,13 +342,6 @@ export default function TripLR(){
                         variant="outlined"
                         value={companyFormDetails.company_email}
                         onChange={(e) => setCompanyFormDetails({...companyFormDetails,company_email: e.target.value})}
-                    />
-                    <TextField 
-                        label="City"
-                        className={`col-lg-5 col-md-6 col-10`}
-                        variant="outlined"
-                        // value={companyFormDetails.comapny}
-                        // onChange={(e) => setCompanyFormDetails({...companyFormDetails,comapny: e.target.value})}
                     />
                     <TextField 
                         label="Address"
@@ -398,6 +410,10 @@ export default function TripLR(){
                     isValid=false;
                 }
             })
+            if(isValid){
+                isValid = checkGstNumber(consignorFormDetails.consignor_gstin_number)
+            }
+
             setConsignorFormDetailsIsValid(isValid);
         },[consignorFormDetails])
 
@@ -450,13 +466,16 @@ export default function TripLR(){
                         variant="outlined"    
                         value={consignorFormDetails.consignor_gstin_number}
                         onChange={(e) => setConsignorFormDetails({...consignorFormDetails,consignor_gstin_number: e.target.value})}
-                        error={consignorFormDetails.consignor_gstin_number === ""}
+                        helperText={"Eg. 07AZTPJ7932L1ZX"}
+                        error={!checkGstNumber(consignorFormDetails.consignor_gstin_number)}
                     />
                     <TextField 
                         label="E-way Bill Number"
                         className={`col-lg-5 col-md-6 col-10`}
                         variant="outlined"  
                         value={consignorFormDetails.consignor_eway_number}
+                        error={!checkEwayNumber(consignorFormDetails.consignor_eway_number)}
+                        helperText={"Eg. 1800 0001 3456"}
                         onChange={(e) => setConsignorFormDetails({...consignorFormDetails,consignor_eway_number: e.target.value})}
                     />
                 </div>
@@ -554,6 +573,10 @@ export default function TripLR(){
                     isValid=false;
                 }
             })
+
+            if(isValid){
+                isValid = checkGstNumber(consigneeFormDetails.consignee_gstin_number);
+            }
             setConsigneeFormDetailsIsValid(isValid);
         },[consigneeFormDetails])
 
@@ -606,7 +629,8 @@ export default function TripLR(){
                         variant="outlined"  
                         value={consigneeFormDetails.consignee_gstin_number}
                         onChange={(e) => setConsigneeFormDetails({...consigneeFormDetails,consignee_gstin_number: e.target.value})}
-                        error={consigneeFormDetails.consignee_gstin_number === ""}  
+                        error={!checkGstNumber(consigneeFormDetails.consignee_gstin_number)}
+                        helperText={"Eg. 07AZTPJ7932L1ZX"}  
                     />
                 </div>
 
@@ -683,7 +707,7 @@ export default function TripLR(){
         const [signatureSrc,setSignatureSrc] = useState(false);
         const [imageUploadMethod,setImageUploadMethod] = useState(0);
         const [openSignaturePad,setOpenSignaturePad] = useState(false);
-
+        const [uploadLoader,setUploadLoader] = useState(false)
         const [insuranceFormDetails,setInsuranceFormDetails] = useState(lrDetails.insuranceDetails ? lrDetails.insuranceDetails : {
             insurance_provider: "", 
             insurance_policy_number: "",
@@ -707,6 +731,55 @@ export default function TripLR(){
         let Cancel = () => {
             setImageSrc(false);
             setSignatureSrc(false);
+            setInsuranceFormDetails({...insuranceFormDetails,signature_link: ""})
+        }
+
+        function dataURItoBlob(dataURI) {
+            // convert base64/URLEncoded data component to raw binary data held in a string
+            var byteString;
+            if (dataURI.split(',')[0].indexOf('base64') >= 0)
+                byteString = atob(dataURI.split(',')[1]);
+            else
+                byteString = unescape(dataURI.split(',')[1]);
+        
+            // separate out the mime component
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+        
+            // write the bytes of the string to a typed array
+            var ia = new Uint8Array(byteString.length);
+            for (var i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+        
+            return new Blob([ia], {type:mimeString});
+        }
+
+        let UploadSignature = async () => {
+            if(signatureSrc !== false){
+                setUploadLoader(true)
+                try{
+                    
+                    let imageLink = await uploadSignature(dataURItoBlob(signatureSrc));
+                    setInsuranceFormDetails({...insuranceFormDetails,signature_link: imageLink})
+                    setUploadLoader(false)
+                }catch(err){
+                    toast.error("Unable to Upload Image")
+                    setUploadLoader(false)
+                }
+            }else if(imageSrc !== false){
+                setUploadLoader(true)
+                try{
+                    
+                    let imageLink = await uploadSignature(imageSrc);
+                    console.log(imageLink)
+                    setInsuranceFormDetails({...insuranceFormDetails,signature_link: imageLink})
+                    setUploadLoader(false)
+                }catch(err){
+                    toast.error("Unable to Upload Image")
+                    setUploadLoader(false)
+                }
+                
+            }
         }
 
         return (
@@ -796,7 +869,7 @@ export default function TripLR(){
                                 <span onClick={() => setImageUploadMethod(0)} className={`px-2 py-1 ${imageUploadMethod===0 && styles['active']}`}>Draw</span>
                                 <span onClick={() => setImageUploadMethod(1)} className={`px-2 py-1 ${imageUploadMethod===1 && styles['active']}`}>Upload</span>
                             </div>
-                            <div className={`col-12 d-flex flex-column justify-content-center align-items-center ${styles['image-upload-container']}`}>
+                            <div className={`col-12 position-relative d-flex flex-column justify-content-center align-items-center ${styles['image-upload-container']}`}>
 
                                 {imageUploadMethod===1 ? 
                                 <>
@@ -804,12 +877,12 @@ export default function TripLR(){
                                         <>
                                             <span className={`mb-4`}>Upload a signature or scan</span>
                                             <Button variant="contained" onClick={() => document.getElementById('signature-input').click()}>Select Image</Button>
-                                            <input type="file" id="signature-input" onChange={(e) => {setImageSrc(URL.createObjectURL(e.target.files[0]));setSignatureSrc(false)}} />
+                                            <input type="file" id="signature-input" onChange={(e) => {setImageSrc(e.target.files[0]);setSignatureSrc(false)}} />
                                         </>
 
                                     :   
                                         <>
-                                                <img src={imageSrc}></img>
+                                                <img src={URL.createObjectURL(imageSrc)}></img>
                                         </>
                                 
                                     }
@@ -831,14 +904,21 @@ export default function TripLR(){
                                 </>
                                 
                                 }
+
+                                {uploadLoader && <div className={`position-absolute w-100 h-100 d-flex justify-content-center align-items-center ${styles['uploading-loder']}`}>
+                                    <div className="d-flex flex-column align-items-center">
+                                        <CloudUploadOutlined />
+                                        Uploading...
+                                    </div>
+                                </div>}
                                 
                             </div>
 
                             <p className={`mt-4 ${styles['upload-image-info-text']}`}>By signing this document with an electronic signature. I agree that such signature will be as valid as handwritten signature to the extent allowed by local law</p>
 
                             <div className="mt-4 d-flex justify-content-around align-items-center">
-                                <Button variant="contained" color="default" onClick={Cancel}>Cancel</Button>
-                                <Button variant="contained" className={styles['accept-and-sign-btn']}>Accept & Sign</Button>
+                                <Button variant="contained" disabled={uploadLoader} color="default" onClick={Cancel}>Cancel</Button>
+                                <Button variant="contained" onClick={UploadSignature} className={styles['accept-and-sign-btn']} disabled={uploadLoader || insuranceFormDetails.signature_link !== ""}>Accept & Sign</Button>
                             </div>
                         </div>
                     </div>

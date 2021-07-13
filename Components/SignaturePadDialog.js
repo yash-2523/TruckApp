@@ -10,7 +10,7 @@ export default function SignaturePadDialog(props){
 
     return (
         <Dialog open={props.open} onClose={props.close} fullWidth maxWidth="lg" className="signature-pad-dialog">
-            <DialogActions><Cancel onClick={props.close} /></DialogActions>
+            <DialogActions><Cancel style={{cursor: "pointer"}} onClick={props.close} /></DialogActions>
             <DialogTitle>Draw Your Signature</DialogTitle>
             <DialogContent>
                 <SignaturePad ref={sigCanvas} backgroundColor="rgba(245, 245, 245, 1)" canvasProps={{className: "signature-pad"}}  />

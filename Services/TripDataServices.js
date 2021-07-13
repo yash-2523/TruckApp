@@ -22,7 +22,7 @@ async function getTrips(token, status, from_date = null, to_date = null, custome
         params['customer_uid'] = customerId;
     }
     try {
-        let TripsResponse = await API.post('dev', '/get_trips', {
+        let TripsResponse = await API.post('backend', '/get_trips', {
             body: params
         });
         let trips = TripsResponse.trips;
@@ -62,7 +62,7 @@ async function deleteTrip(id) {
 
 async function getTripDetails(id) {
     try {
-        return await API.post('dev', '/get_trip_details', {
+        return await API.post('backend', '/get_trip_details', {
             body: {
                 trip_id: id
             }

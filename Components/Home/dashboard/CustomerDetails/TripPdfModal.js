@@ -19,7 +19,7 @@ const TruckPdfModal = ({ open, onClose, customerName }) => {
 
     useEffect(() => {
         if (toDate.diff(fromDate, 'months') > 2)
-            setInputValid('date range should be less then or equal to 3 months')
+            setInputValid('Date range should be less then or equal to 3 months')
         else
             setInputValid('')
         console.log(customerName)
@@ -51,16 +51,17 @@ const TruckPdfModal = ({ open, onClose, customerName }) => {
 
                 <h4 className='mb-4' style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Get Trip Details PDF</h4>
 
-                <div className="flex mb-2">
+                <div className="d-flex flex-column flex-sm-row ">
                     <DatePicker
-                        className='me-2'
+                        className='me-sm-2'
                         openTo="month"
                         variant="inline"
                         views={["year", "month"]}
                         inputVariant="outlined"
-                        label="from Date"
+                        label="From Date"
                         value={fromDate}
                         onChange={(d) => setFromDate(d)}
+                        fullWidth
                         autoOk
                     />
 
@@ -72,6 +73,7 @@ const TruckPdfModal = ({ open, onClose, customerName }) => {
                         label="To Date"
                         value={toDate}
                         onChange={(d) => setToDate(d)}
+                        fullWidth
                         autoOk
                     />
                 </div>
