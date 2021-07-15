@@ -26,25 +26,12 @@ export default function TripSummary() {
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     const TripSteps = [
         {
-            label: "Started",
-            checked: true,
-            helperText: "05-20-2021"
-        },
-        {
-            label: "Completed",
-            checked: true
-        },
-        {
-            label: "POD Received",
-            checked: false
-        },
-        {
             label: "POD Submitted",
-            checked: false
+            checked: tripDetails?.pod_submitted || false
         },
         {
-            label: "Setteld",
-            checked: false
+            label: "Settled",
+            checked: tripDetails?.status === "settled" || false
         },
     ]
     const [paymentsMade, setPaymentsMade] = useState({
@@ -158,7 +145,7 @@ export default function TripSummary() {
                             <>
                                 <span className="text-start">{getDate(transaction.date)}</span>
                                 <span className="text-center">{transaction.reason}</span>
-                                <span className="text-end"><INRIcon className="inr-icon" /> {Math.abs(parseInt(transaction.amount))}</span>
+                                <span className="text-end pe-5"><INRIcon className="inr-icon" /> {Math.abs(parseInt(transaction.amount))}</span>
                             </>
                         )
                     }
@@ -168,7 +155,7 @@ export default function TripSummary() {
                             <>
                                 <span className="text-start">{getDate(transaction.date)}</span>
                                 <span className="text-center">{transaction.reason}</span>
-                                <span className="text-end"><INRIcon className="inr-icon" /> {Math.abs(parseInt(transaction.amount))}</span>
+                                <span className="text-end pe-5"><INRIcon className="inr-icon" /> {Math.abs(parseInt(transaction.amount))}</span>
                             </>
                         )
                     }
@@ -274,7 +261,6 @@ export default function TripSummary() {
                                         <th>Party Name</th>
                                         <th>Truck No</th>
                                         <th>Route</th>
-                                        <th>Status</th>
                                         <th>Balance</th>
                                     </tr>
                                 </thead>
@@ -298,7 +284,6 @@ export default function TripSummary() {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><span className={styles[tripDetails.status]} style={{ background: "transparent" }}><li>{tripDetails.status.replace('_', ' ')}</li></span></td>
                                         <td><Icon className="mx-1"><INRIcon className="mt-1 inr-icon" /></Icon>  {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived))}</td>
                                     </tr>
                                 </tbody>
@@ -307,7 +292,7 @@ export default function TripSummary() {
 
                                     <tr>
                                         <td colSpan="7" className="text-start">
-                                            <Stepper alternativeLabel className={`px-0 pt-lg-3 pt-md-3 pt-0 w-100`} connector={<QontoConnector />}>
+                                            <Stepper alternativeLabel className={`px-0 pt-lg-3 pt-md-3 pt-0 w-100 align-items-start`} connector={<QontoConnector />}>
                                                 {TripSteps.map(tripState =>
                                                     <Step key={tripState.label} active={tripState.checked}>
                                                         <StepLabel icon={<StepIcon checked={tripState.checked} />}>{tripState.label} <p className={styles['stepper-helper-text']}>{tripState.helperText && tripState.helperText}</p></StepLabel>
@@ -343,9 +328,10 @@ export default function TripSummary() {
                         </div>
 
                         <div className={`mt-lg-3 mt-md-2 mt-3 py-4 rounded-3 d-flex align-items-center flex-column ${styles['trip-revenue-details']} px-lg-5 px-md-4 px-2`}>
+                            <h3 className={`mb-4 align-self-start ${styles['amount-summary-title']}`}>Amount Summary</h3>
                             <div className="w-100 d-flex justify-content-between align-items-center px-5">
-                                <b>Revenue</b>
-                                <span className="text-primary"><INRIcon className="inr-icon" /> {tripDetails.freight_amount}</span>
+                                Revenue
+                                <span><INRIcon className="inr-icon" /> {tripDetails.freight_amount}</span>
                             </div>
 
                             {(parseInt(paymentsMade.totalPaymentMade) > 0) && <Accordion className={`w-100 mt-3 mx-0 ${styles['total-charges']} shadow-none`}>
@@ -355,7 +341,7 @@ export default function TripSummary() {
                                     id="panel1a-header"
                                     className="w-100 m-0"
                                 >
-                                    <div className="w-100 d-flex justify-content-between align-items-center"><h6><b>Payments Made</b></h6> <span><INRIcon className="inr-icon" /> {paymentsMade.totalPaymentMade}</span></div>
+                                    <div className="w-100 d-flex justify-content-between align-items-center"><h6>Payments Made</h6> <span><INRIcon className="inr-icon" /> {paymentsMade.totalPaymentMade}</span></div>
                                 </AccordionSummary>
                                 <AccordionDetails className={styles["transaction-details"]}>{paymentsMade.transactions}</AccordionDetails>
                             </Accordion>}
@@ -366,30 +352,33 @@ export default function TripSummary() {
                                     id="panel1a-header"
                                     className="w-100 m-0"
                                 >
-                                    <div className="w-100 d-flex justify-content-between align-items-center"><h6><b>Payments Received</b></h6> <span><INRIcon className="inr-icon" /> {paymentsReceived.totalPaymentReceived}</span></div>
+                                    <div className="w-100 d-flex justify-content-between align-items-center"><h6>Payments Received</h6> <span><INRIcon className="inr-icon" /> {paymentsReceived.totalPaymentReceived}</span></div>
                                 </AccordionSummary>
-                                <AccordionDetails className={styles["transaction-details"]}>{paymentsReceived.transactions}</AccordionDetails>
+                                <AccordionDetails className={`${styles["transaction-details"]}`}>{paymentsReceived.transactions}</AccordionDetails>
                             </Accordion>}
-                            <div className={`w-100 px-1 my-3 ${styles['dashed-border']}`}></div>
+                            
                             <div className={`w-100 mt-2 d-flex justify-content-between align-items-center ${styles['revenue-profit']} px-5`}>
-                                <b>Profit</b>
+                                Profit
                                 <span><INRIcon className="inr-icon" /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsMade.totalPaymentMade))}</span>
                             </div>
+                            <div className={`w-100 px-1 my-3 ${styles['dashed-border']}`}></div>
+                            <div className={`w-100 d-flex justify-content-between align-items-center px-5 ${styles['trip-balance-details']}`}>
+                                <p className="col-4 text-start"><b>Balance</b></p>
+                                <span className={`col-4 text-end text-primary ${styles['primary']}`}><INRIcon className={`inr-icon`} /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived))}</span>
+                            </div>
+                            <Button className="mt-5 w-50 px-lg-0 px-md-0 px-2 py-lg-3 py-md-3 px-1" startIcon={<PDFFileIcon className={styles['view-bill-icon']} />} color="primary" variant="contained" onClick={HandleGetBill}>View Bill</Button>
                         </div>
 
-                        <div className={`mt-lg-3 mt-md-2 mt-3 py-4 rounded-3 d-flex align-items-center flex-column ${styles['trip-bill-details']} px-lg-5 px-md-4 px-2`}>
+                        {/* <div className={`mt-lg-3 mt-md-2 mt-3 py-4 rounded-3 d-flex align-items-center flex-column ${styles['trip-bill-details']} px-lg-5 px-md-4 px-2`}>
                             <div className="w-100 d-flex justify-content-between align-items-center">
                                 <p className="col-4 text-start">Freight Amount</p>
                                 <span className="col-4 text-end"><INRIcon className="inr-icon" /> {tripDetails.freight_amount}</span>
                             </div>
                             <div className={`w-100 px-1 my-3 ${styles['dashed-border']}`}></div>
-                            <div className="w-100 d-flex justify-content-between align-items-center">
-                                <p className="col-4 text-start">Balance</p>
-                                <span className={`col-4 text-end text-primary ${styles['primary']}`}><INRIcon className={`inr-icon`} /> {parseInt(parseInt(tripDetails.freight_amount) - parseInt(paymentsReceived.totalPaymentReceived))}</span>
-                            </div>
+                            
 
-                            <Button className="mt-5 w-50 px-lg-0 px-md-0 px-2 py-lg-3 py-md-3 px-1" startIcon={<PDFFileIcon />} color="primary" variant="contained" onClick={HandleGetBill}>View Bill</Button>
-                        </div>
+                            
+                        </div> */}
 
                         {openPaymentReceiveModal && <AddPaymentRecieveModal settleAmount={settleAmount} UpdateTripDetails={TripDetails} tripDetails={{ ...tripDetails, trip_id: tripId }} ClosePaymentReceiveModal={ClosePaymentReceiveModal} />}
                         {openPaymentMadeModal && <AddPaymentMadeModal UpdateTripDetails={TripDetails} tripDetails={{ ...tripDetails, trip_id: tripId }} ClosePaymentMadeModal={ClosePaymentMadeModal} />}

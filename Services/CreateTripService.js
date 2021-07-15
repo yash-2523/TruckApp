@@ -28,13 +28,13 @@ async function createTrip(tripDetails,role){
         params[`start_km_reading`] = parseInt(tripDetails.startKmReading)
     }
     if(tripDetails.truckNumber !== ""){
-        params[`truck_number`] = tripDetails.truckNumber
+        params[`truck_id`] = tripDetails.truckNumber
     }
     if(tripDetails.startKmReading !== ""){
         params[`driver_name`] = tripDetails.driverName
     }
     try{
-        return await API.post('backend','/create_trip',{
+        return await API.post('dev','/create_trip',{
             body: params
         })
     }catch(err){

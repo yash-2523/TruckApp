@@ -17,7 +17,7 @@ export default function AddPaymentMadeModal(props) {
         expenseAmount: "",
         expenseDate: "",
         expenseNote: "",
-        expenseMode: "cash",
+        expenseMode: "",
         imageSrc: false
     })
 

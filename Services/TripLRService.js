@@ -2,14 +2,14 @@ import { API,Storage } from "aws-amplify";
 
 async function getStates() {
     try {
-        return await API.post('backend', '/get_states', {});
+        return await API.post('dev', '/get_states', {});
     } catch (err) {
         return false;
     }
 }
 async function getPackagingType() {
     try {
-        return await API.post('backend', '/get_packaging_types', {});
+        return await API.post('dev', '/get_packaging_types', {});
     } catch (err) {
         return false;
     }
@@ -35,9 +35,10 @@ async function createLR(lrDetails){
     params.freight_amount = parseInt(params.freight_amount)
     params.weight = parseInt(params.weight)
     params.rate = parseInt(params.rate)
+    
     params.company_phone = `+91${(params.company_phone).toString()}`
-    params.lr_date = (new Date(params.lr_date).getTime()) / 1000;
-    params.lr_date = (new Date(params.lr_date).getTime()) / 1000;
+    params.lr_date = parseInt((new Date(params.lr_date).getTime()) / 1000);
+    params.lr_number = params.lr_number.toString()
     if(params.insurance_value && params.insurance_value !== ""){
         params.insurance_value = parseInt(params.insurance_value)
     }
@@ -49,7 +50,7 @@ async function createLR(lrDetails){
     }
     console.log(params)
     try {
-        return await API.post('backend', '/create_lr', {
+        return await API.post('dev', '/create_lr', {
             body: params
         });
     } catch (err) {

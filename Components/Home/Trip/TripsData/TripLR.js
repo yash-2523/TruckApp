@@ -390,7 +390,7 @@ export default function TripLR(){
 
         const [showExtraAddressField,setShowExtraAddressField] = useState(false);
         const [consignorFormDetails,setConsignorFormDetails] = useState(lrDetails.consignorDetails ? lrDetails.consignorDetails : {
-            lr_number: tripDetails.lr_number || "12345",
+            lr_number: tripDetails.lr_number || "",
             lr_date: moment().format('YYYY-MM-DD'),
             consignor_name: "",
             consignor_gstin_number: "",
@@ -475,7 +475,7 @@ export default function TripLR(){
                         variant="outlined"  
                         value={consignorFormDetails.consignor_eway_number}
                         error={!checkEwayNumber(consignorFormDetails.consignor_eway_number)}
-                        helperText={"Eg. 1800 0001 3456"}
+                        helperText={"Eg. 180000013456"}
                         onChange={(e) => setConsignorFormDetails({...consignorFormDetails,consignor_eway_number: e.target.value})}
                     />
                 </div>
@@ -553,7 +553,7 @@ export default function TripLR(){
         const [showExtraAddressField,setShowExtraAddressField] = useState(false);
 
         const [consigneeFormDetails,setConsigneeFormDetails] = useState(lrDetails.consigneeDetails ? lrDetails.consigneeDetails : {
-            lr_number: tripDetails.lr_number || "12345",
+            lr_number: tripDetails.lr_number || "",
             lr_date: moment().format('YYYY-MM-DD'),
             consignee_name: "",
             consignee_gstin_number: "",
@@ -716,7 +716,7 @@ export default function TripLR(){
             insurance_value: "",
             goods_invoice_number: "",
             invoice_value: "",
-            signature_link: "",
+            signature_s3_key: "",
             is_insured: true
         })
 
@@ -731,7 +731,7 @@ export default function TripLR(){
         let Cancel = () => {
             setImageSrc(false);
             setSignatureSrc(false);
-            setInsuranceFormDetails({...insuranceFormDetails,signature_link: ""})
+            setInsuranceFormDetails({...insuranceFormDetails,signature_s3_key: ""})
         }
 
         function dataURItoBlob(dataURI) {
@@ -760,7 +760,7 @@ export default function TripLR(){
                 try{
                     
                     let imageLink = await uploadSignature(dataURItoBlob(signatureSrc));
-                    setInsuranceFormDetails({...insuranceFormDetails,signature_link: imageLink})
+                    setInsuranceFormDetails({...insuranceFormDetails,signature_s3_key: imageLink})
                     setUploadLoader(false)
                 }catch(err){
                     toast.error("Unable to Upload Image")
@@ -772,7 +772,7 @@ export default function TripLR(){
                     
                     let imageLink = await uploadSignature(imageSrc);
                     console.log(imageLink)
-                    setInsuranceFormDetails({...insuranceFormDetails,signature_link: imageLink})
+                    setInsuranceFormDetails({...insuranceFormDetails,signature_s3_key: imageLink})
                     setUploadLoader(false)
                 }catch(err){
                     toast.error("Unable to Upload Image")
@@ -918,7 +918,7 @@ export default function TripLR(){
 
                             <div className="mt-4 d-flex justify-content-around align-items-center">
                                 <Button variant="contained" disabled={uploadLoader} color="default" onClick={Cancel}>Cancel</Button>
-                                <Button variant="contained" onClick={UploadSignature} className={styles['accept-and-sign-btn']} disabled={uploadLoader || insuranceFormDetails.signature_link !== ""}>Accept & Sign</Button>
+                                <Button variant="contained" onClick={UploadSignature} className={styles['accept-and-sign-btn']} disabled={uploadLoader || insuranceFormDetails.signature_s3_key !== ""}>Accept & Sign</Button>
                             </div>
                         </div>
                     </div>
@@ -1143,6 +1143,7 @@ export default function TripLR(){
                 
                 window.open(createLRResponse.link,'_blank')
                 setGlobalLoading(false)
+                setActiveStep(7)
             }
             else{
                 toast.error("Unable to Create LR");
@@ -1167,9 +1168,9 @@ export default function TripLR(){
                     )}
                 </Stepper>
 
-                <h4 className={`mt-4 mx-lg-3 mx-md-2 mx-1 mb-2 ${styles['active-form-label']}`}>{LRSteps[activeStep].label}</h4>                        
+                <h4 className={`mt-4 mx-lg-3 mx-md-2 mx-1 mb-2 ${styles['active-form-label']}`}>{LRSteps[(activeStep < 6) ? activeStep : 6].label}</h4>                        
                 <div className={`w-100 border-3 px-lg-3 px-md-2 px-1 py-3 ${styles['active-form-container']}`}>
-                    {LRSteps[activeStep].content}
+                    {LRSteps[(activeStep < 6) ? activeStep : 6].content}
                 </div>
             </div> }   
         </>

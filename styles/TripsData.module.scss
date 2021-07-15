@@ -141,11 +141,10 @@
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
-    line-height: 16px;
-    display: flex;
-    align-items: center;
+    color: #404040;
+
     svg > path{
-        fill: rgba(54, 123, 245, 1) !important;
+        fill: rgba(83, 83, 83, 1) !important;
     }
     color: #404040;
 
@@ -157,7 +156,13 @@
         row-gap: 0.5rem;
     }
 
-
+    .amount-summary-title{
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        color: #404040;
+    }
     .total-charges{
         font-family: 'Lato';
         font-style: normal;
@@ -186,14 +191,33 @@
             opacity: 0;
         }
     }
-
+    .trip-balance-details{
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        color: #404040;
+        svg > path{
+            fill: rgba(54, 123, 245, 1);
+        }
+    }
     .revenue-expense{
         svg > path{
             fill: black !important;
         }
     }
+    .view-bill-icon{
+        path{
+            fill: white !important;
+        }
+        
+    }
     
-
+    .primary{
+        svg > path{
+            fill: rgba(54, 123, 245, 1) !important;
+        }    
+    }
     .revenue-profit{
         span{
             color: rgba(45, 188, 83, 1);
@@ -231,11 +255,7 @@
             fill: #ADADAD !important;
         }    
     }
-    .primary{
-        svg > path{
-            fill: rgba(54, 123, 245, 1) !important;
-        }    
-    }
+    
 }
 
 .payment-receive-modal{
