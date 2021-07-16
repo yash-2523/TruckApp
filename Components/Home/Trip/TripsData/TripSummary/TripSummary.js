@@ -6,7 +6,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { GlobalLoadingContext } from '../../../../../Context/GlobalLoadingContext';
-import { deleteTrip, getBill, getTripDetails } from '../../../../../Services/TripDataServices';
+import { deleteTrip, getBill, getShortLivedUrl, getTripDetails } from '../../../../../Services/TripDataServices';
 import styles from '../../../../../styles/TripsData.module.scss';
 import ConfirmDialog from '../../../../ConfirmDialog';
 import PodModal from './PodModal'
@@ -241,6 +241,23 @@ export default function TripSummary() {
         }
     }
 
+    let HandleViewLR = async () => {
+        setGlobalLoading(true);
+        try{
+            let lr_short_lived_url = await getShortLivedUrl(tripDetails.lr_s3_key,"lr")
+            if (lr_short_lived_url && lr_short_lived_url.success) {
+                window.open(lr_short_lived_url.link, '_blank')
+                setGlobalLoading(false)
+            } else {
+                setGlobalLoading(false)
+                toast.error("Unable to get LR Details");
+            }
+        }catch(err){
+            setGlobalLoading(false)
+            toast.error("Unable to get LR Details");
+        }
+    }
+
     return (
         <>
 
@@ -324,7 +341,10 @@ export default function TripSummary() {
 
                         <div className={`mt-lg-3 mt-md-2 mt-1 py-4 px-2 rounded-3 d-flex align-items-center flex-wrap ${styles['payment-methods-container']}`}>
                             <Button variant="outlined" className="mr-3" onClick={() => setOpenPaymentMadeModal(true)}>Add Payment Made</Button>
-                            <Button variant="outlined" onClick={() => setOpenPaymentReceiveModal(true)}>Add Payment Received</Button>
+                            <Button variant="outlined" className="mr-3" onClick={() => setOpenPaymentReceiveModal(true)}>Add Payment Received</Button>
+                            {tripDetails.lr_created ? <Button variant="outlined" onClick={HandleViewLR}>View LR</Button>
+                            :
+                            <Button variant="outlined" onClick={() => window.location = `trip/lr/${tripId}`}>Create LR</Button> }
                         </div>
 
                         <div className={`mt-lg-3 mt-md-2 mt-3 py-4 rounded-3 d-flex align-items-center flex-column ${styles['trip-revenue-details']} px-lg-5 px-md-4 px-2`}>
@@ -368,17 +388,6 @@ export default function TripSummary() {
                             </div>
                             <Button className="mt-5 w-50 px-lg-0 px-md-0 px-2 py-lg-3 py-md-3 px-1" startIcon={<PDFFileIcon className={styles['view-bill-icon']} />} color="primary" variant="contained" onClick={HandleGetBill}>View Bill</Button>
                         </div>
-
-                        {/* <div className={`mt-lg-3 mt-md-2 mt-3 py-4 rounded-3 d-flex align-items-center flex-column ${styles['trip-bill-details']} px-lg-5 px-md-4 px-2`}>
-                            <div className="w-100 d-flex justify-content-between align-items-center">
-                                <p className="col-4 text-start">Freight Amount</p>
-                                <span className="col-4 text-end"><INRIcon className="inr-icon" /> {tripDetails.freight_amount}</span>
-                            </div>
-                            <div className={`w-100 px-1 my-3 ${styles['dashed-border']}`}></div>
-                            
-
-                            
-                        </div> */}
 
                         {openPaymentReceiveModal && <AddPaymentRecieveModal settleAmount={settleAmount} UpdateTripDetails={TripDetails} tripDetails={{ ...tripDetails, trip_id: tripId }} ClosePaymentReceiveModal={ClosePaymentReceiveModal} />}
                         {openPaymentMadeModal && <AddPaymentMadeModal UpdateTripDetails={TripDetails} tripDetails={{ ...tripDetails, trip_id: tripId }} ClosePaymentMadeModal={ClosePaymentMadeModal} />}

@@ -145,7 +145,7 @@ async function getShortLivedUrl(s3_key,type){
     }
 }
 
-async function getCustomerTripPdf(fromDate, toDate, customerUid, customerName) {
+async function getCustomerTripPdf(from_date,to_date, customerUid, customerName) {
     try {
         const fromDateUnix = Math.ceil(fromDate.startOf('month').valueOf() / 1000);
         const toDateUnix = Math.ceil(toDate.endOf('month').valueOf() / 1000);

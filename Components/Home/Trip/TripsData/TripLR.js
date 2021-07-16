@@ -15,6 +15,7 @@ import SignaturePadDialog from '../../../SignaturePadDialog'
 import { IconButton } from "@material-ui/core";
 import { getStates,getPackagingType, createLR, uploadSignature } from "../../../../Services/TripLRService";
 import { GlobalLoadingContext } from "../../../../Context/GlobalLoadingContext";
+import { DatePicker } from "@material-ui/pickers";
 
 export default function TripLR(){
 
@@ -95,10 +96,10 @@ export default function TripLR(){
                 let TripDetailsResponse = await getTripDetails(tripId);
                 console.log(TripDetailsResponse)
                 if(TripDetailsResponse){
-                    // if(TripDetailsResponse.lr_created){
-                    //     router.push(`/trip/${tripId}`);
-                    //     return;
-                    // }
+                    if(TripDetailsResponse.lr_created){
+                        router.push(`/trip/${tripId}`);
+                        return;
+                    }
                     setTripDetails(TripDetailsResponse);
                     getStepperDisplay()
                 }
@@ -432,15 +433,16 @@ export default function TripLR(){
                         value={consignorFormDetails.lr_number}
                         error={consignorFormDetails.lr_number === ""}
                     />
-                    <TextField 
+                    <DatePicker 
                         label="Date"
-                        type="date"
-                        variant="outlined"
-                        focused
+                        inputVariant="outlined"
                         required
                         className={`col-lg-5 col-md-6 col-10`}
-                        value={consignorFormDetails.lr_date}
+                        value={consignorFormDetails.lr_date === "" ? null : consignorFormDetails.lr_date}
                         error={consignorFormDetails.lr_date === ""}
+                        format="DD-MM-YYYY"
+                        readOnly
+                        helperText=""
                     />
                 </div>
             
@@ -595,15 +597,16 @@ export default function TripLR(){
                         value={consigneeFormDetails.lr_number}
                         error={consigneeFormDetails.lr_number === ""}
                     />
-                    <TextField 
+                    <DatePicker 
                         label="Date"
-                        type="date"
-                        variant="outlined"
-                        focused
+                        inputVariant="outlined"
                         required
                         className={`col-lg-5 col-md-6 col-10`}
-                        value={consigneeFormDetails.lr_date}
+                        value={consigneeFormDetails.lr_date === "" ? null : consigneeFormDetails.lr_date}
                         error={consigneeFormDetails.lr_date === ""}
+                        format="DD-MM-YYYY"
+                        readOnly
+                        helperText=""
                     />
                 </div>
             
@@ -814,14 +817,16 @@ export default function TripLR(){
                         value={insuranceFormDetails.insurance_policy_number}
                         onChange={(e) => setInsuranceFormDetails({...insuranceFormDetails,insurance_policy_number: e.target.value})}
                     />
-                    <TextField 
+                    <DatePicker 
                         label="Date"
-                        focused
-                        type="date"
+                        inputVariant="outlined"
+                        required
                         className={`col-lg-5 col-md-6 col-10`}
-                        variant="outlined"
-                        value={insuranceFormDetails.insured_on_date}
-                        onChange={(e) => setInsuranceFormDetails({...insuranceFormDetails,insured_on_date: e.target.value})}
+                        value={insuranceFormDetails.insured_on_date === "" ? null : insuranceFormDetails.insured_on_date}
+                        error={insuranceFormDetails.insured_on_date === ""}
+                        onChange={(e) => setInsuranceFormDetails({...insuranceFormDetails,insured_on_date: e})}
+                        format="DD-MM-YYYY"
+                        helperText=""
                     />
 
                     <div class={`col-lg-5 col-md-6 col-10 d-flex flex-column justify-cotent-between ${styles['risk-types']}`}>

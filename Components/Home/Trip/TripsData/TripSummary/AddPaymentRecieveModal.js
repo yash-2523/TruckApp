@@ -1,5 +1,6 @@
 import { Button, InputAdornment, InputLabel, TextField } from '@material-ui/core';
 import { ArrowRightAltOutlined, Cancel } from '@material-ui/icons';
+import { DatePicker } from '@material-ui/pickers';
 import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { GlobalLoadingContext } from '../../../../../Context/GlobalLoadingContext';
@@ -120,16 +121,17 @@ export default function AddPaymentRecieveModal(props) {
                             type="number"
                             required
                         />
-                        <TextField 
+                        <DatePicker 
                             label="Payment Date"
                             variant="outlined"
                             error={addPaymentReceivedDetails.paymentDate === ""}
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-4"
-                            type="date"
-                            value={addPaymentReceivedDetails.paymentDate}
-                            onChange={(e) => setAddPaymentReceivedDetails({...addPaymentReceivedDetails,paymentDate: e.target.value})}
-                            focused
+                            value={addPaymentReceivedDetails.paymentDate==="" ? null : addPaymentReceivedDetails.paymentDate}
+                            onChange={(e) => setAddPaymentReceivedDetails({...addPaymentReceivedDetails,paymentDate: e})}
                             required
+                            format="DD-MM-YYYY"
+                            helperText=""
+                            autoOk
                         />
                         <TextField 
                             label="Payment Mode"
