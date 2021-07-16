@@ -5,10 +5,11 @@ import AddTruckModal from '../AddTruckModal';
 import Link from 'next/link'
 
 import styles from '../../../styles/Truck.module.scss'
+import { useTranslation } from 'react-i18next';
 
 
 const Operations = ({ trucks, getTrucks }) => {
-
+    const { t } = useTranslation()
     const [addTruckModalOpen, setAddTruckModalOpen] = useState(false)
 
     let AddTruckModalClose = () => {
@@ -19,7 +20,7 @@ const Operations = ({ trucks, getTrucks }) => {
         <>
             <div className={`w-100 d-flex justify-content-between flex-wrap ${styles.operations}`}>
                 <div className={`${styles.no_of_trucks}`}>
-                    My Truck : {Array.isArray(trucks) ? trucks.length : '0'}
+                    {t('my truck')} : {Array.isArray(trucks) ? trucks.length : '0'}
                     <div className={`d-flex justify-content-center align-items-center ${styles.truck_image}`}>
                         <img src="/truck.png" alt="" />
                     </div>

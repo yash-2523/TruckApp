@@ -10,6 +10,7 @@ import GlobalLoader from '../GlobalLoader';
 import { useStyles } from './MaterialStyles';
 import NavBar from './NavBar';
 import SideNavBar from './SideNavBar';
+import '../i18n'
 
 function Home(props) {
   const { window } = props;
