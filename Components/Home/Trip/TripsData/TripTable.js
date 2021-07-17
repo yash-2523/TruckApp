@@ -78,7 +78,7 @@ export default function TripTable(props) {
                                 <td>{data.customer_name}</td>
                                 <td>{data.truck_id === "" ? <p className="text-danger">NA</p> : data.truck_id}</td>
                                 <td className="d-flex justify-content-start align-items-center text-start">
-                                    <div className="d-flex flex-column py-1 justify-content-between align-items-start m-auto">
+                                    <div className={`d-flex flex-column py-1 justify-content-between align-items-start m-auto`}>
                                         <div className="d-flex align-items-center justify-content-start">
                                             <span className={styles['dot']} style={{backgroundColor: "rgba(45, 188, 83, 1)"}}></span>
                                             <span className="mx-1">{data.origin_city}</span>

@@ -153,12 +153,12 @@ export default function CustomerDetails() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {customerTrips.map(data =>
+                                {customerTrips.length && customerTrips.map(data =>
                                     <Link href={`/trip/${data.trip_id}`} key={data.trip_id}>
                                         <tr style={{ cursor: "pointer" }} >
                                             <td style={{ width: "1%" }}><Fab className={tripStyles[data.status]} ><LocalShippingOutlined className={tripStyles[data.status]} /></Fab></td>
                                             <td>{getDate(data.trip_start_date)}</td>
-                                            <td>{data.customer_name}</td>
+                                            <td>{data?.customer_name || ""}</td>
                                             <td>{data.truck_id === "" ? <p className="text-danger">NA</p> : data.truck_id}</td>
                                             <td className="d-flex justify-content-center align-items-center">
                                                 <div className="d-flex py-1 flex-column justify-content-between align-items-start m-auto">

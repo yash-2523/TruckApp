@@ -22,7 +22,7 @@ async function getTrips(token, status, from_date = null, to_date = null, custome
         params['customer_uid'] = customerId;
     }
     try {
-        let TripsResponse = await API.post('backend', '/get_trips', {
+        let TripsResponse = await API.post('dev', '/get_trips', {
             body: params
         });
         let trips = TripsResponse.trips;
@@ -62,7 +62,7 @@ async function deleteTrip(id) {
 
 async function getTripDetails(id) {
     try {
-        return await API.post('backend', '/get_trip_details', {
+        return await API.post('dev', '/get_trip_details', {
             body: {
                 trip_id: id
             }
@@ -84,7 +84,7 @@ async function CreateTransactionAdvance(tripDetails, role, paymentDetails) {
         advance_note: paymentDetails.paymentNote
     }
     try {
-        return await API.post('backend', '/create_transaction', {
+        return await API.post('dev', '/create_transaction', {
             body: params
         });
     } catch (err) {
@@ -104,7 +104,7 @@ async function CreateTransactionExpense(tripDetails, role, expenseDetails) {
         expense_note: expenseDetails.expenseNote
     }
     try {
-        return await API.post('backend', '/create_transaction', {
+        return await API.post('dev', '/create_transaction', {
             body: params
         });
     } catch (err) {
@@ -132,8 +132,20 @@ async function getBill(idx) {
     }
 }
 
+async function getShortLivedUrl(s3_key,type){
+    try{
+        return await API.post('dev','/get_short_lived_url',{
+            body: {
+                s3_key: s3_key,
+                type: type
+            }
+        })
+    }catch(err){
+        return false;
+    }
+}
 
-async function getCustomerTripPdf(fromDate, toDate, customerUid, customerName) {
+async function getCustomerTripPdf(from_date,to_date, customerUid, customerName) {
     try {
         const fromDateUnix = Math.ceil(fromDate.startOf('month').valueOf() / 1000);
         const toDateUnix = Math.ceil(toDate.endOf('month').valueOf() / 1000);
@@ -151,4 +163,4 @@ async function getCustomerTripPdf(fromDate, toDate, customerUid, customerName) {
     }
 }
 
-export { getTrips, deleteTrip, getTripDetails, CreateTransactionAdvance, getExpense, CreateTransactionExpense, getBill, getCustomerTripPdf }
+export { getTrips, deleteTrip, getTripDetails, CreateTransactionAdvance, getExpense, CreateTransactionExpense, getBill, getCustomerTripPdf, getShortLivedUrl }

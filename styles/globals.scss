@@ -118,6 +118,21 @@ select{
   }
 }
 
+.signature-pad-dialog{
+  .signature-pad{
+    border: 1px solid black;
+    width: 100%;
+    min-height: 350px;
+  }
+  .save-btn{
+    background-color: rgba(34, 134, 82, 1);
+    color: white;
+    &:hover{
+      background-color: rgba(34, 134, 82, 1);
+      color: white;
+    }
+  }
+}
 
 .no-data-found{
   font-family: 'Mulish';

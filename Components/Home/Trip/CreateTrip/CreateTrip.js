@@ -1,6 +1,7 @@
 
 import { Accordion, AccordionDetails, AccordionSummary, Button, Icon, InputAdornment, Menu, MenuItem, TextField } from '@material-ui/core';
 import { AddCircleRounded, ArrowBackIosOutlined, CheckOutlined, ExpandMoreOutlined, KeyboardBackspaceOutlined, Person, Phone, RoomSharp, SaveOutlined, SpeedOutlined } from '@material-ui/icons';
+import { DatePicker } from '@material-ui/pickers';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
@@ -331,7 +332,7 @@ export default function CreateTrip(props) {
                                 <Button className={tripDetails.billingType === billingTypes[3] ? styles["active"] : ""} variant={tripDetails.billingType === billingTypes[3] ? "contained" : "outlined"} onClick={() => BillingTypeChange(3)} endIcon={tripDetails.billingType === billingTypes[3] && <CheckOutlined />}>{billingTypes[3].replace('-',' ')}</Button>
                             </div>   
                             
-                            <div className="d-flex flex-column justify-content-between align-items-center">
+                            <div className="d-flex flex-column justify-content-between align-items-start">
                                 Start KM Reading
                                 <TextField 
                                     variant="outlined"
@@ -351,16 +352,16 @@ export default function CreateTrip(props) {
                             </div>  
                             <div className="d-flex flex-column justify-content-between align-items-start"> 
                                 Start Date*
-                                <TextField
-                                    variant="outlined"
+                                <DatePicker 
+                                    inputVariant="outlined"
                                     error={tripDetails.startDate === ""}
+                                    helperText=""
                                     className="mt-lg-4 mt-md-3 mt-2 text-right"
-                                    type="date"
-                                    value={tripDetails.startDate}
-                                    onChange={(e) => setTripDetails({...tripDetails,startDate: e.target.value})}
-                                    InputLabelProps={{
-                                    shrink: true,
-                                    }}
+                                    value={tripDetails.startDate==="" ? null : tripDetails.startDate}
+                                    autoOk
+                                    format="DD-MM-YYYY"
+                                    emptyLabel="Enter Start Date"
+                                    onChange={(e) => setTripDetails({...tripDetails,startDate: e})}
                                 />
                             </div>
                         </div>

@@ -18,6 +18,11 @@ const awsmobile = {
                 "name": "backend",
                 "endpoint": "https://2hhp6ajw7b.execute-api.ap-south-1.amazonaws.com/prod",
                 "region": "ap-south-1"
+            },
+            {
+                "name": "dev",
+                "endpoint": "https://ilxpildqpd.execute-api.ap-south-1.amazonaws.com/dev",
+                "region": "ap-south-1"
             }
         ]
     },
