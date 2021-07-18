@@ -36,7 +36,7 @@ const S3Upload = async (blob, progressCallback) => {
 
 const SubmitPod = (tripId, date, link) => {
     try {
-        return API.post('dev', '/submit_pod', {
+        return API.post('backend', '/submit_pod', {
             body: {
                 "trip_id": tripId,
                 "date": Math.floor(date.valueOf() / 1000),
