@@ -140,6 +140,7 @@ export default function CreateTrip(props) {
             }
             
         }catch(err){
+            console.log(err)
             setGlobalLoading(false);
         }
 

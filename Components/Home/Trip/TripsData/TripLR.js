@@ -96,10 +96,10 @@ export default function TripLR(){
                 let TripDetailsResponse = await getTripDetails(tripId);
                 console.log(TripDetailsResponse)
                 if(TripDetailsResponse){
-                    if(TripDetailsResponse.lr_created){
-                        router.push(`/trip/${tripId}`);
-                        return;
-                    }
+                    // if(TripDetailsResponse.lr_created){
+                    //     router.push(`/trip/${tripId}`);
+                    //     return;
+                    // }
                     setTripDetails(TripDetailsResponse);
                     getStepperDisplay()
                 }

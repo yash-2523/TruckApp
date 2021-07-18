@@ -1,4 +1,5 @@
 import { API,Storage } from "aws-amplify";
+import moment from "moment";
 
 async function getStates() {
     try {
@@ -37,16 +38,16 @@ async function createLR(lrDetails){
     params.rate = parseInt(params.rate)
     
     params.company_phone = `+91${(params.company_phone).toString()}`
-    params.lr_date = parseInt((new Date(params.lr_date).getTime()) / 1000);
+    params.lr_date = parseInt((new Date(moment(params.lr_date).format("YYYY-MM-DD")).getTime()) / 1000);
     params.lr_number = params.lr_number.toString()
     if(params.insurance_value && params.insurance_value !== ""){
         params.insurance_value = parseInt(params.insurance_value)
     }
     if(params.insured_on_date && params.insured_on_date !== ""){
-        params.insured_on_date = (new Date(params.insured_on_date).getTime()) / 1000
+        params.insured_on_date = (new Date(moment(params.insured_on_date).format("YYYY-MM-DD")).getTime()) / 1000
     }
     if(params.invoice_value && params.invoice_value !== ""){
-        params.invoice_value = (new Date(params.invoice_value).getTime()) / 1000
+        params.invoice_value = (new Date(moment(params.invoice_value).format("YYYY-MM-DD")).getTime()) / 1000
     }
     console.log(params)
     try {

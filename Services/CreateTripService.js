@@ -1,4 +1,5 @@
 import API from "@aws-amplify/api";
+import moment from "moment";
 
 async function getAllCities(){
     try{
@@ -17,7 +18,7 @@ async function createTrip(tripDetails,role){
         role : role,
         billing_type : tripDetails.billingType.replace('-','_'),
         freight_amount: parseInt(tripDetails.freightAmount),
-        trip_start_date: (new Date(tripDetails.startDate).getTime()) / 1000
+        trip_start_date: (new Date(moment(tripDetails.startDate).format("YYYY-MM-DD")).getTime()) / 1000
     }
     if(tripDetails.billingType !== "fixed"){
         params[`${tripDetails.billingType.split('-')[1]}`] = parseInt(tripDetails.total);

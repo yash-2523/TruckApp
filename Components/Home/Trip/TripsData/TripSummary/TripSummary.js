@@ -344,7 +344,7 @@ export default function TripSummary() {
                             <Button variant="outlined" className="mr-3" onClick={() => setOpenPaymentReceiveModal(true)}>Add Payment Received</Button>
                             {tripDetails.lr_created ? <Button variant="outlined" onClick={HandleViewLR}>View LR</Button>
                             :
-                            <Button variant="outlined" onClick={() => window.location = `trip/lr/${tripId}`}>Create LR</Button> }
+                            <Button variant="outlined" onClick={() => router.push({pathname :"/trip/lr/" + tripId})}>Create LR</Button> }
                         </div>
 
                         <div className={`mt-lg-3 mt-md-2 mt-3 py-4 rounded-3 d-flex align-items-center flex-column ${styles['trip-revenue-details']} px-lg-5 px-md-4 px-2`}>
