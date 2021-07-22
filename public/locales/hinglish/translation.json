@@ -1,0 +1,29 @@
+{
+
+    "Home":"Home",
+    "To Receive":"Aapko milenge",
+    "To Pay":"Aap denge",
+    "Search Customer": "Grahak khoje",
+    "Customer Name":"Customer ka naam",
+    "Balance":"Balance",
+    
+    "Trip":"Trips",
+    "Search Trips": "Search Trips",
+    "Create Trip":"Trip jodein",
+    "All": "Sabhi",
+    "Settled": "Settled",
+    "Not Settled": "Non Settled",
+
+
+    "Truck":"Trucks",
+    "my truck": "Meri Truck",
+    "Add Truck": "Create Truck",
+    "Mini truck/ LCV": "Chhoti Halki Gaadi",
+    "Full Load Truck": "Puri Load Gaadi",
+    "Closed Container": "Band Gaadi ",
+    "Open Body Truck": "Khuli Body Gaadi",
+    "Select the language of the application": "App Ki Bhasha Chunein",
+
+    "Settings" : "Settings",
+    "Logout": "Logout"
+}

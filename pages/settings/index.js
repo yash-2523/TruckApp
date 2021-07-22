@@ -7,11 +7,12 @@ import styles from '../../styles/Settings.module.scss'
 import { SignOut } from '../../Services/AuthServices'
 import { GlobalLoadingContext } from '../../Context/GlobalLoadingContext';
 import { currentUser, getUser } from '../../Services/AuthServices';
+import { useTranslation } from 'react-i18next';
 
 
 
 export default function Settings() {
-
+    const { t } = useTranslation()
     const { setGlobalLoading } = useContext(GlobalLoadingContext)
 
     let handleLogout = async () => {
@@ -47,11 +48,20 @@ export default function Settings() {
                             <img style={{ width: '55%' }} src="./settings/report.svg" alt="" />
                         </div>
                     </SettingsCard>
+
+                    <SettingsCard href='/settings/language' bg="#FFA98C">
+                        <div className="d-flex w-100 h-100 justify-content-between align-items-center">
+                            <div className="report_text" style={{ width: '44%' }}>
+                                <div style={{ color: '#fff' }}>Change Language</div>
+                            </div>
+                            <img style={{ width: '55%' }} src="./settings/report.svg" alt="" />
+                        </div>
+                    </SettingsCard>
                 </div>
 
                 <div className='d-flex justify-content-between'>
                     <Button startIcon={<FiLogOut />} onClick={handleLogout} style={{ fontWeight: 'bold' }}>
-                        Logout
+                        {t('Logout')}
                     </Button>
                     <div className="d-flex flex-column" style={{ fontSize: '.8rem', textAlign: 'right' }}>
                         <div style={{ color: '#8F91A2' }}><img className="mx-1" src='./settings/safe.svg' />100% Safe and Secure</div>

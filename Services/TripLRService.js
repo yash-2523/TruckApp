@@ -17,11 +17,11 @@ async function getPackagingType() {
     }
 }
 
-async function createLR(lrDetails){
+async function createLR(lrDetails) {
     let params = {}
     let detailsIsValid = true;
     Object.keys(lrDetails).map(key => {
-        if(lrDetails[key] === false){
+        if (lrDetails[key] === false) {
             detailsIsValid = false;
             return false;
         }

@@ -1,0 +1,29 @@
+{
+
+    "Home":"घर",
+    "To Receive":"लेने के लिए",
+    "To Pay":"देने के लिए",
+    "Search Customer": "ग्राहक खोजें",
+    "Customer Name":"ग्राहक का नाम",
+    "Balance":"शेष",
+    
+    "Trip":"यात्रा",
+    "Search Trips": "यात्रा खोजें",
+    "Create Trip":"नई यात्रा जोड़ें",
+    "All": "सब",
+    "Settled": "सेटल्ड",
+    "Not Settled": "नॉट सेटल्ड",
+
+
+    "Truck":"ट्रक",
+    "my truck": "मेरी ट्रक",
+    "Add Truck": "नया ट्रक जोड़ें",
+    "Mini truck/ LCV": "छोटी हल्की गाड़ी",
+    "Full Load Truck": "पूरी लोड गाड़ी",
+    "Closed Container": "बंद कंटेनर गाड़ी",
+    "Open Body Truck": "खुली बॉडी गाड़ी",
+    "Select the language of the application": "ऐप की भाषा चुनें",
+
+    "Settings" : "सेटिंग",
+    "Logout": "साइन आउट"
+}

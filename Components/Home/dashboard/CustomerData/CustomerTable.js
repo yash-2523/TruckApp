@@ -4,10 +4,12 @@ import { Button, Avatar } from '@material-ui/core'
 import { RefreshOutlined, SentimentDissatisfiedOutlined } from '@material-ui/icons'
 import { PulseLoader } from 'react-spinners'
 import Link from 'next/link'
+import { useTranslation } from 'react-i18next'
 
 export default function CustomerTable(props) {
+    const { t } = useTranslation()
 
-    const {customerData,token,LoadMoreCustomers, RefreshCustomerData, loading} = props.operations
+    const { customerData, token, LoadMoreCustomers, RefreshCustomerData, loading } = props.operations
 
     return (
         <>
@@ -21,21 +23,21 @@ export default function CustomerTable(props) {
                     {customerData.length === 0 ?
 
                         <h4 className={`text-center mt-5 no-data-found`}>No Data Found <SentimentDissatisfiedOutlined /></h4>
-                        
+
                         :
 
                         <table className={`w-100 rounded-3 position-relative mt-4 ${styles['table']} mx-auto`} id="table">
 
                             <thead className="py-2 px-2">
                                 <tr>
-                                    <th>Customer Name</th>
-                                    <th className="text-center">Balance</th>
+                                    <th>{t('Customer Name')}</th>
+                                    <th className="text-center">{t('Balance')}</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                {customerData.map(customer => 
-                                    <Link href={`/dashboard/customer/${customer.from_uid}`} key={customer.from_uid}><tr onClick={() => window.sessionStorage.setItem('customer',JSON.stringify({balance: customer.balance,name: customer.from_name}))}>
+                                {customerData.map(customer =>
+                                    <Link href={`/dashboard/customer/${customer.from_uid}`} key={customer.from_uid}><tr onClick={() => window.sessionStorage.setItem('customer', JSON.stringify({ balance: customer.balance, name: customer.from_name }))}>
                                         <td>
                                             <div className="d-flex justify-content-start align-items-center">
                                                 <Avatar className={`${styles['avatar']}`} variant="circle">{customer.from_name.split(' ').map(word => word.charAt(0).toUpperCase())}</Avatar>
@@ -47,18 +49,18 @@ export default function CustomerTable(props) {
                                         </td>
                                     </tr></Link>
                                 )}
-                                
+
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colSpan="7" className="text-center">
-                                    {loading ? <PulseLoader size={15} margin={2} color="#36D7B7" /> : (token!=="" && token!=="[]") && <Button onClick={LoadMoreCustomers}>Load More</Button>}
+                                        {loading ? <PulseLoader size={15} margin={2} color="#36D7B7" /> : (token !== "" && token !== "[]") && <Button onClick={LoadMoreCustomers}>Load More</Button>}
                                     </td>
                                 </tr>
                             </tfoot>
                         </table>
                     }
-                
+
                 </>
             }
 

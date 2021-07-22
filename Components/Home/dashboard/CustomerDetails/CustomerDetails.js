@@ -193,7 +193,7 @@ export default function CustomerDetails() {
                 </div>
             }
 
-            <TripPdfModal open={tripPdfModalOpen} onClose={() => setTripPdfModalOpen(false)} customerName={customerTrips[0].customer_name} />
+            <TripPdfModal open={tripPdfModalOpen} onClose={() => setTripPdfModalOpen(false)} customerName={customerData.name} />
         </>
     )
 }
