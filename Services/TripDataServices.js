@@ -163,4 +163,34 @@ async function getCustomerTripPdf(from_date, to_date, customerUid, customerName)
     }
 }
 
-export { getTrips, deleteTrip, getTripDetails, CreateTransactionAdvance, getExpense, CreateTransactionExpense, getBill, getCustomerTripPdf, getShortLivedUrl }
+
+
+async function searchTrips(search_term, status, from_date = null, to_date = null) {
+    if (from_date === null || from_date === "" || to_date === null || to_date === "") {
+
+        from_date = null;
+        to_date = null;
+    }
+    else {
+        from_date = ((new Date(from_date).getTime()) / 1000);
+        to_date = ((new Date(moment(new Date(to_date)).add(1, 'days').format("YYYY-MM-DD")).getTime()) / 1000);
+    }
+
+
+    try {
+        let searchTripsResponse = await API.post('backend', '/search_trips', {
+            body: {
+                "search_term": search_term,
+                "status": status,
+                "from_date": from_date,
+                "to_date": to_date
+            }
+        });
+        return searchTripsResponse.trips;
+    } catch (err) {
+        return false;
+    }
+}
+
+
+export { getTrips, searchTrips, deleteTrip, getTripDetails, CreateTransactionAdvance, getExpense, CreateTransactionExpense, getBill, getCustomerTripPdf, getShortLivedUrl }

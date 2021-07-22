@@ -4,10 +4,15 @@ import { Button } from "@material-ui/core";
 
 const Language = () => {
     const { t, i18n } = useTranslation();
-    const [lng, setLng] = useState('en');
+    const [lng, setLng] = useState();
 
     useEffect(() => {
-        setLng(i18n.language)
+        if (i18n.language.slice(0, 2) === 'en') {
+            i18n.changeLanguage('en');
+            setLng('en')
+        }
+        else
+            setLng(i18n.language)
     }, [])
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -19,9 +24,9 @@ const Language = () => {
                 <h4>{t('Select the language of the application')}</h4>
                 <form onSubmit={e => handleSubmit(e)}>
                     <div onChange={e => setLng(e.target.value)}>
-                        <input type="radio" value="en" name="language" checked={true ? lng == 'en' : false} /> English
-                        <input type="radio" value="hi" name="language" checked={true ? lng == 'hi' : false} /> Hindi
-                        <input type="radio" value="hinglish" name="language" checked={true ? lng == 'hinglish' : false} /> Hinglish
+                        <input type="radio" value="en" name="language" checked={lng == 'en'} /> English
+                        <input type="radio" value="hi" name="language" checked={lng == 'hi'} /> Hindi
+                        <input type="radio" value="hinglish" name="language" checked={lng == 'hinglish'} /> Hinglish
                     </div>
                     <Button type="submit" variant='contained' color='primary'>Save</Button>
                 </form>

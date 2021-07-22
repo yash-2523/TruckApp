@@ -26,7 +26,7 @@ const Operations = ({ trucks, getTrucks }) => {
                     </div>
                 </div>
 
-                <Button onClick={() => setAddTruckModalOpen(true)} startIcon={<AddIcon />} variant='contained' color="primary">Add New Truck</Button>
+                <Button onClick={() => setAddTruckModalOpen(true)} startIcon={<AddIcon />} variant='contained' color="primary">{t('Add Truck')}</Button>
             </div>
             <AddTruckModal open={addTruckModalOpen} truckListUpdate={getTrucks} close={AddTruckModalClose} />
         </>

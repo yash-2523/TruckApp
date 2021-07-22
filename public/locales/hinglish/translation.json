@@ -1,8 +1,29 @@
 {
-    "my truck": "मेरी ट्रक",
-    "Mini truck/ LCV": "छोटी हल्की गाड़ी",
-    "Full Load Truck": "पूरी लोड गाड़ी",
-    "Closed Container": "बंद कंटेनर गाड़ी",
-    "Open Body Truck": "खुली बॉडी गाड़ी",
-    "Select the language of the application": "App Ki Bhasha Chunein"
+
+    "Home":"Home",
+    "To Receive":"Aapko milenge",
+    "To Pay":"Aap denge",
+    "Search Customer": "Grahak khoje",
+    "Customer Name":"Customer ka naam",
+    "Balance":"Balance",
+    
+    "Trip":"Trips",
+    "Search Trips": "Search Trips",
+    "Create Trip":"Trip jodein",
+    "All": "Sabhi",
+    "Settled": "Settled",
+    "Not Settled": "Non Settled",
+
+
+    "Truck":"Trucks",
+    "my truck": "Meri Truck",
+    "Add Truck": "Create Truck",
+    "Mini truck/ LCV": "Chhoti Halki Gaadi",
+    "Full Load Truck": "Puri Load Gaadi",
+    "Closed Container": "Band Gaadi ",
+    "Open Body Truck": "Khuli Body Gaadi",
+    "Select the language of the application": "App Ki Bhasha Chunein",
+
+    "Settings" : "Settings",
+    "Logout": "Logout"
 }

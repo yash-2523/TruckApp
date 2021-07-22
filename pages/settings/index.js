@@ -7,11 +7,12 @@ import styles from '../../styles/Settings.module.scss'
 import { SignOut } from '../../Services/AuthServices'
 import { GlobalLoadingContext } from '../../Context/GlobalLoadingContext';
 import { currentUser, getUser } from '../../Services/AuthServices';
+import { useTranslation } from 'react-i18next';
 
 
 
 export default function Settings() {
-
+    const { t } = useTranslation()
     const { setGlobalLoading } = useContext(GlobalLoadingContext)
 
     let handleLogout = async () => {
@@ -60,7 +61,7 @@ export default function Settings() {
 
                 <div className='d-flex justify-content-between'>
                     <Button startIcon={<FiLogOut />} onClick={handleLogout} style={{ fontWeight: 'bold' }}>
-                        Logout
+                        {t('Logout')}
                     </Button>
                     <div className="d-flex flex-column" style={{ fontSize: '.8rem', textAlign: 'right' }}>
                         <div style={{ color: '#8F91A2' }}><img className="mx-1" src='./settings/safe.svg' />100% Safe and Secure</div>
