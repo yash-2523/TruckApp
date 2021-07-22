@@ -34,8 +34,9 @@ async function createTrip(tripDetails,role){
     if(tripDetails.startKmReading !== ""){
         params[`driver_name`] = tripDetails.driverName
     }
+    console.log(params)
     try{
-        return await API.post('dev','/create_trip',{
+        return await API.post('backend','/create_trip',{
             body: params
         })
     }catch(err){

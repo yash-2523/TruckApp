@@ -152,7 +152,18 @@ export default function AddPaymentMadeModal(props) {
                             type="number"
                             required
                         />
-                        <DatePicker 
+                        <TextField  
+                            label="Expense Date"
+                            variant="outlined"
+                            className="mx-5 col-lg-6 col-md-6 col-8 mt-3"
+                            error={addPaymentMadeDetails.expenseDate === ""}
+                            required
+                            value={addPaymentMadeDetails.expenseDate}
+                            onChange={(e) => setAddPaymentMadeDetails({...addPaymentMadeDetails,expenseDate: e.target.value})}
+                            type="date"
+                            focused
+                        />
+                        {/* <DatePicker 
                             label="Expense Date"
                             variant="outlined"
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-3"
@@ -163,7 +174,7 @@ export default function AddPaymentMadeModal(props) {
                             format="DD-MM-YYYY"
                             helperText=""
                             autoOk
-                        />
+                        /> */}
                         <TextField 
                             label="Expense Mode"
                             variant="outlined"

@@ -1,16 +1,17 @@
 import { API,Storage } from "aws-amplify";
 import moment from "moment";
+import { getShortLivedUrl } from "./TripDataServices";
 
 async function getStates() {
     try {
-        return await API.post('dev', '/get_states', {});
+        return await API.post('backend', '/get_states', {});
     } catch (err) {
         return false;
     }
 }
 async function getPackagingType() {
     try {
-        return await API.post('dev', '/get_packaging_types', {});
+        return await API.post('backend', '/get_packaging_types', {});
     } catch (err) {
         return false;
     }
@@ -25,8 +26,11 @@ async function createLR(lrDetails){
             return false;
         }
         else{
+            
+            
+            
             Object.keys(lrDetails[key]).map(k => {
-                if(lrDetails[key][k] !== "" && lrDetails[key][k] !== undefined && lrDetails[key][k] !== null){
+                if(lrDetails[key][k] !== "" && lrDetails[key][k] !== undefined && lrDetails[key][k] !== null && k!=="imageUploadMethod" && k!=="imageSrc" && k!=="signatureSrc"){
                     params[k] = lrDetails[key][k];
                 }
             })
@@ -36,22 +40,16 @@ async function createLR(lrDetails){
     params.freight_amount = parseInt(params.freight_amount)
     params.weight = parseInt(params.weight)
     params.rate = parseInt(params.rate)
+    params.no_of_articles = parseInt(params.no_of_articles)
     
-    params.company_phone = `+91${(params.company_phone).toString()}`
+    params.consignor_phone = `+91${(params.consignor_phone).toString()}`
+    params.consignee_phone = `+91${(params.consignee_phone).toString()}`
     params.lr_date = parseInt((new Date(moment(params.lr_date).format("YYYY-MM-DD")).getTime()) / 1000);
     params.lr_number = params.lr_number.toString()
-    if(params.insurance_value && params.insurance_value !== ""){
-        params.insurance_value = parseInt(params.insurance_value)
-    }
-    if(params.insured_on_date && params.insured_on_date !== ""){
-        params.insured_on_date = (new Date(moment(params.insured_on_date).format("YYYY-MM-DD")).getTime()) / 1000
-    }
-    if(params.invoice_value && params.invoice_value !== ""){
-        params.invoice_value = (new Date(moment(params.invoice_value).format("YYYY-MM-DD")).getTime()) / 1000
-    }
-    console.log(params)
+
+    console.log(JSON.stringify(params))
     try {
-        return await API.post('dev', '/create_lr', {
+        return await API.post('backend', '/create_lr', {
             body: params
         });
     } catch (err) {
@@ -61,9 +59,12 @@ async function createLR(lrDetails){
 }
 
 
-async function uploadSignature(blob,progressCallback){
+async function uploadSignature(blob,uid,progressCallback){
     console.log(blob);
-    const response = await Storage.put(blob.name, blob, {
+    let seconds = parseInt(new Date().getTime());
+    console.log(blob.name)
+    console.log(`prod/private/${uid}/lr_sign/${seconds}-${blob.name}`)
+    const response = await Storage.put(`lr_sign/${seconds}-sign.${blob.type.split('/')[1]}`, blob, {
         contentType: blob.type,
         customPrefix: {
             private: `prod/private/`
@@ -78,7 +79,10 @@ async function uploadSignature(blob,progressCallback){
         },
         expires: 600000
     });
-    return signedURL
+    console.log(response.key,response)
+    return `prod/private/${uid}/${response.key}`;
+    // return await getShortLivedUrl(response.key,"lr");
+
 }
 
 export { getStates, getPackagingType, createLR, uploadSignature }

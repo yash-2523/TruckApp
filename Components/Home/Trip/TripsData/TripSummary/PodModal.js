@@ -6,6 +6,7 @@ import moment from 'moment'
 import { GlobalLoadingContext } from '../../../../../Context/GlobalLoadingContext';
 
 import { S3Upload, SubmitPod } from '../../../../../Services/PodServices'
+import uploadSizeValidation from '../../../../uploadSizeValidation';
 
 const PodModal = ({ open, onClose, updateTripDetails, tripId }) => {
     const [podDate, setPodDate] = useState(null)
@@ -61,7 +62,14 @@ const PodModal = ({ open, onClose, updateTripDetails, tripId }) => {
                 <div className='w-100 d-flex flex-column justify-content-center align-items-center p-4 my-3' style={{ borderRadius: '4px', border: '1px dashed #DFE0E1' }}>
                     <h5 style={{ textAlign: 'center' }}>{blob ? blob.name : 'Upload Image,Doc'}</h5>
                     <label className='upload_image_2'>
-                        <input type='file' onChange={(e) => setBlob(e.target.files[0])} required />
+                        <input type='file' onChange={(e) => {
+                            if(uploadSizeValidation(e)){
+                                setBlob(e.target.files[0])
+                            }else{
+                                setInputValid("File size should be less than 5 MB")
+                            }
+                            
+                        }} required />
                         Select Image
                     </label>
 

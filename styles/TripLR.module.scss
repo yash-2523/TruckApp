@@ -43,6 +43,31 @@
         transform: scale(2);
     }
 
+    .trip-details-info{
+        tfoot{
+            tr > td{
+                background-color: rgba(239, 248, 241, 1);
+                p{
+                    font-family: 'Roboto';
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 20px;
+                    color: #34393F;
+                }
+                span{
+                    font-family: 'Lato';
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 20px;
+                    color: #404040;
+                    white-space: nowrap;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+    }
+
     .company-details-form-fields{
         row-gap: 1rem;
         column-gap: 0.7rem;
@@ -102,36 +127,9 @@
     }
     
 
-    .insurance-signature-form{
-        .add-insurance-form-fields{
-            row-gap: 1rem;
-            column-gap: 0.7rem;
-        }
+    .signature-form{
 
-        .risk-types{
-            font-family: 'Roboto';
-            font-style: normal;
-            font-weight: normal;
-            font-size: 14px;
-            color: #34393F;
-            row-gap: 0.7rem;
-            div{
-                column-gap: 0.4rem;
-            }
-            .active{
-                background-color: rgba(49, 41, 104, 1);
-                color: white;
-                &:hover{
-                    background-color: rgba(49, 41, 104, 1);
-                    color: white;
-                }
-            }
-            div{
-                row-gap: 0.7rem;
-            }
-        }
-
-        .insurance-details-form-fields{
+        // .insurance-details-form-fields{
             column-gap: 0.7rem;
             row-gap: 1rem;
 
@@ -212,6 +210,10 @@
                     span{
                         color: white;
                     }
+                    &:disabled{
+                        background-color: rgba(0, 0, 0, 0.26);
+                        color: rgba(0, 0, 0, 0.26);
+                    }
                 }
             }
             .upload-image-info-text{
@@ -221,7 +223,7 @@
                 font-size: 9px;
                 color: #C2C6CA;
             }
-        }
+        // }
 
         .insurance-signature-info-text{
             font-family: 'Roboto';
@@ -246,6 +248,38 @@
                 font-weight: normal;
                 font-size: 14px;
                 color: #3D3D3D;
+            }
+
+            .goods-insured{
+                background-color: rgba(244, 247, 252, 1);
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                color: #25242A;
+                row-gap: 0.7rem;
+                button{
+                    height: 34px !important;
+                    background: #FFFFFF;
+                    font-family: 'Roboto';
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 14px;
+                    color: #DADADA;
+
+                    &:hover{
+                        background: #FFFFFF;
+                        color: #DADADA;
+                    }
+                }
+                .active{
+                    background: #2DBC53 !important;
+                    color: #FFFFFF !important;
+                    &:hover{
+                        background: #2DBC53 !important;
+                        color: #FFFFFF !important;
+                    }
+                }
             }
         }
         

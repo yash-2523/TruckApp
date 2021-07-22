@@ -58,23 +58,28 @@ async function getUser() {
 }
 
 async function CreateUser(name, phone, role, email) {
+
+
+    let params = {
+        "business_name": name,
+        "name": name,
+        "role": role,
+        "phone": phone,
+    }
+    if(email!==""){
+        params['email'] = email;
+    }
     try {
         let newUser = await API.post('backend', '/create_user', {
 
-            body: {
-                "business_name": name,
-                "name": name,
-                "role": role,
-                "phone": phone,
-                "email": email
-            }
+            body: params
         });
         if (newUser.success == false) {
             return false;
         }
         else {
             try {
-                await getUser
+                await getUser()
                 return true;
             } catch (err) {
                 return false;

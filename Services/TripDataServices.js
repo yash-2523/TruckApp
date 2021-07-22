@@ -22,7 +22,7 @@ async function getTrips(token, status, from_date = null, to_date = null, custome
         params['customer_uid'] = customerId;
     }
     try {
-        let TripsResponse = await API.post('dev', '/get_trips', {
+        let TripsResponse = await API.post('backend', '/get_trips', {
             body: params
         });
         let trips = TripsResponse.trips;
@@ -62,7 +62,7 @@ async function deleteTrip(id) {
 
 async function getTripDetails(id) {
     try {
-        return await API.post('dev', '/get_trip_details', {
+        return await API.post('backend', '/get_trip_details', {
             body: {
                 trip_id: id
             }
@@ -84,7 +84,7 @@ async function CreateTransactionAdvance(tripDetails, role, paymentDetails) {
         advance_note: paymentDetails.paymentNote
     }
     try {
-        return await API.post('dev', '/create_transaction', {
+        return await API.post('backend', '/create_transaction', {
             body: params
         });
     } catch (err) {
@@ -104,7 +104,7 @@ async function CreateTransactionExpense(tripDetails, role, expenseDetails) {
         expense_note: expenseDetails.expenseNote
     }
     try {
-        return await API.post('dev', '/create_transaction', {
+        return await API.post('backend', '/create_transaction', {
             body: params
         });
     } catch (err) {
@@ -134,8 +134,11 @@ async function getBill(idx) {
 
 async function getShortLivedUrl(s3_key,type){
     try{
-        return await API.post('dev','/get_short_lived_url',{
+        return await API.post('backend','/get_short_lived_url',{
             body: {
+                customPrefix: {
+                    private: `prod/private/`
+                },
                 s3_key: s3_key,
                 type: type
             }

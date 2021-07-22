@@ -136,6 +136,7 @@ export default function CreateTrip(props) {
                 router.push({pathname: `/trip/${CreateTripResponse.trip_id}`})
             }
             else{
+                console.log(CreateTripResponse)
                 toast.error("Unable to create Trip")
             }
             
