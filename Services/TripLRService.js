@@ -49,6 +49,7 @@ async function createLR(lrDetails) {
     params.consignee_phone = `+91${(params.consignee_phone).toString()}`
     params.lr_date = parseInt((new Date(moment(params.lr_date).format("YYYY-MM-DD")).getTime()) / 1000);
     params.lr_number = params.lr_number.toString()
+    console.log(params)
     try {
         return await API.post('dev', '/create_lr', {
             body: params

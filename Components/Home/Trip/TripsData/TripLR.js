@@ -957,6 +957,7 @@ export default function TripLR(){
         setGlobalLoading(true);
         try{
             let createLRResponse = await createLR(lrDetails);
+            console.log(createLRResponse)
             if(createLRResponse && createLRResponse.success){
                 
                 window.open(createLRResponse.link,'_blank')
