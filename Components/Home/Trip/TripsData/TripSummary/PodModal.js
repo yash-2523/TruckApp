@@ -29,7 +29,6 @@ const PodModal = ({ open, onClose, updateTripDetails, tripId }) => {
         setGlobalLoading(true)
         try {
             const uploadRes = await S3Upload(blob)
-            console.log(uploadRes)
             const sp = await SubmitPod(tripId, podDate, uploadRes)
             if (sp.success)
                 toast.success('POD successfully uploaded')

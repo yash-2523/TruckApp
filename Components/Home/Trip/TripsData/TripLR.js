@@ -90,7 +90,6 @@ export default function TripLR(){
 
             try{
                 let TripDetailsResponse = await getTripDetails(tripId);
-                console.log(TripDetailsResponse)
                 if(TripDetailsResponse){
                     // if(TripDetailsResponse.lr_created){
                     //     router.push(`/trip/${tripId}`);
@@ -269,6 +268,7 @@ export default function TripLR(){
                 </TextField>
                 
                 <div className="w-100 mt-4 d-flex justify-content-end align-items-center">
+                    <Button variant="outlined" onClick={() => router.push(`/trip/${tripId}`)} className="me-2">Cancel</Button>
                     <Button variant="contained" disabled={!tripFormDetailsIsValid} color="primary" onClick={() => {setLrDetails({...lrDetails,tripDetails: tripFormDetails});setActiveStep(prev => prev + 1)}}>Save & Next</Button>
                 </div>
             </div>
@@ -444,9 +444,13 @@ export default function TripLR(){
                     </div>
                 </div>
                 
-                <div className={`w-100 my-3 px-lg-0 px-md-2 px-2 d-flex justify-content-between align-items-center`}>
+                <div className={`w-100 my-3 px-lg-0 px-md-2 px-2 d-flex justify-content-lg-between justify-content-md-between flex-wrap justify-content-start align-items-center`} style={{columnGap: "0.7rem",rowGap: "0.7rem"}}>
                     <Button variant="outlined" onClick={() => {setLrDetails({...lrDetails,consignorDetails: consignorFormDetails});setActiveStep(prev => prev - 1)}}>Back</Button>
-                    <Button variant="contained" color="primary" disabled={!consignorFormDetailsIsValid} onClick={() => {setLrDetails({...lrDetails,consignorDetails: consignorFormDetails});setActiveStep(prev => prev + 1)}}>Save & Next</Button>
+                    <div className="d-flex align-itens-center">
+                        <Button variant="outlined" onClick={() => router.push(`/trip/${tripId}`)} className="me-2">Cancel</Button>
+                        <Button variant="contained" color="primary" disabled={!consignorFormDetailsIsValid} onClick={() => {setLrDetails({...lrDetails,consignorDetails: consignorFormDetails});setActiveStep(prev => prev + 1)}}>Save & Next</Button>
+                    </div>
+                    
                 </div>    
 
             </div>
@@ -580,11 +584,15 @@ export default function TripLR(){
                         </TextField>
                     </div>
                 </div>
-                
-                <div className={`w-100 my-3 px-lg-0 px-md-2 px-2 d-flex justify-content-between align-items-center`}>
+
+                <div className={`w-100 my-3 px-lg-0 px-md-2 px-2 d-flex justify-content-lg-between justify-content-md-between flex-wrap justify-content-start align-items-center`} style={{columnGap: "0.7rem",rowGap: "0.7rem"}}>
                     <Button variant="outlined" onClick={() => {setLrDetails({...lrDetails,consigneeDetails: consigneeFormDetails});setActiveStep(prev => prev - 1)}}>Back</Button>
-                    <Button variant="contained" disabled={!consigneeFormDetailsIsValid} color="primary" onClick={() => {setLrDetails({...lrDetails,consigneeDetails: consigneeFormDetails});setActiveStep(prev => prev + 1)}}>Save & Next</Button>
-                </div>    
+                    <div className="d-flex align-itens-center">
+                        <Button variant="outlined" onClick={() => router.push(`/trip/${tripId}`)} className="me-2">Cancel</Button>
+                        <Button variant="contained" disabled={!consigneeFormDetailsIsValid} color="primary" onClick={() => {setLrDetails({...lrDetails,consigneeDetails: consigneeFormDetails});setActiveStep(prev => prev + 1)}}>Save & Next</Button>
+                    </div>
+                    
+                </div>   
 
             </div>
         )
@@ -648,18 +656,15 @@ export default function TripLR(){
                 try{
                     
                     let imageLink = await uploadSignature(signatureDetails.imageSrc,user.identityId);
-                    console.log(imageLink)
                     setSignatureDetails({...signatureDetails,signature_s3_key: imageLink})
                     setUploadLoader(false)
                 }catch(err){
-                    console.log(err)
                     toast.error("Unable to Upload Image")
                     setUploadLoader(false)
                 }
                 
             }
         }
-        console.log(signatureDetails)
         return (
             <>
             <div className={`w-100 ${styles['signature-form']}`}>
@@ -736,10 +741,15 @@ export default function TripLR(){
                     </div>
                 </div>
             </div>
-            <div className={`w-100 my-3 px-lg-0 px-md-2 px-2 d-flex justify-content-between align-items-center`}>
-                <Button variant="outlined" onClick={() => {setLrDetails({...lrDetails,signatureDetails: signatureDetails});setActiveStep(prev => prev - 1)}}>Back</Button>
-                <Button variant="contained" color="primary" disabled={signatureDetails.signature_s3_key===""} onClick={() => {setLrDetails({...lrDetails,signatureDetails: signatureDetails});setActiveStep(prev => prev + 1)}}>Save & Next</Button>
-            </div>
+
+                <div className={`w-100 my-3 px-lg-0 px-md-2 px-2 d-flex justify-content-lg-between justify-content-md-between flex-wrap justify-content-start align-items-center`} style={{columnGap: "0.7rem",rowGap: "0.7rem"}}>
+                    <Button variant="outlined" onClick={() => {setLrDetails({...lrDetails,signatureDetails: signatureDetails});setActiveStep(prev => prev - 1)}}>Back</Button>
+                    <div className="d-flex align-itens-center">
+                        <Button variant="outlined" onClick={() => router.push(`/trip/${tripId}`)} className="me-2">Cancel</Button>
+                        <Button variant="contained" color="primary" disabled={signatureDetails.signature_s3_key===""} onClick={() => {setLrDetails({...lrDetails,signatureDetails: signatureDetails});setActiveStep(prev => prev + 1)}}>Save & Next</Button>
+                    </div>
+                    
+                </div>  
             </>
         )
     }
@@ -755,6 +765,7 @@ export default function TripLR(){
         }
 
         if(tripDetails.weight !== undefined){
+            console
             initialObject['weight'] = tripDetails.weight!=="" ? tripDetails.weight : "";
             initialObject['weight_unit'] = tripDetails.weight_unit!=="" ? (tripDetails.weight_unit==="kg" ? "KG" : "Tonne") : "KG";
             initialObject['rate'] = tripDetails.rate!=="" ? tripDetails.rate : "";
@@ -767,8 +778,7 @@ export default function TripLR(){
         useEffect(() => {
             let isValid = true;
             Object.keys(goodsFormDetails).map(key => {
-                if((key==="packaging_type" || key==="material_name" || key==="weight" || key==="weight_unit" || key==="rate" || key==="rate_unit" || key==="no_of_articles") && goodsFormDetails[key]===""){
-                    console.log(key,goodsFormDetails[key])    
+                if((key==="packaging_type" || key==="material_name" || key==="weight" || key==="weight_unit" || key==="rate" || key==="rate_unit" || key==="no_of_articles") && goodsFormDetails[key]===""){  
                     isValid=false;
                 }
             })
@@ -890,11 +900,15 @@ export default function TripLR(){
                         </div>    
                     </div>            
                 </div>
-                
-                <div className={`w-100 my-3 px-lg-0 px-md-2 px-2 d-flex justify-content-between align-items-center`}>
+
+                <div className={`w-100 my-3 px-lg-0 px-md-2 px-2 d-flex justify-content-lg-between justify-content-md-between flex-wrap justify-content-start align-items-center`} style={{columnGap: "0.7rem",rowGap: "0.7rem"}}>
                     <Button variant="outlined" onClick={() => {setLrDetails({...lrDetails,goodsDetails: goodsFormDetails});setActiveStep(prev => prev - 1)}}>Back</Button>
-                    <Button variant="contained" color="primary" disabled={!goodsFormDetailsIsValid} onClick={() => {setLrDetails({...lrDetails,goodsDetails: goodsFormDetails});setActiveStep(prev => prev + 1)}}>Save & Next</Button>
-                </div> 
+                    <div className="d-flex align-itens-center">
+                        <Button variant="outlined" onClick={() => router.push(`/trip/${tripId}`)} className="me-2">Cancel</Button>
+                        <Button variant="contained" color="primary" disabled={!goodsFormDetailsIsValid} onClick={() => {setLrDetails({...lrDetails,goodsDetails: goodsFormDetails});setActiveStep(prev => prev + 1)}}>Save & Next</Button>
+                    </div>
+                    
+                </div>  
 
             </div>
         )
@@ -943,7 +957,6 @@ export default function TripLR(){
         setGlobalLoading(true);
         try{
             let createLRResponse = await createLR(lrDetails);
-            console.log(createLRResponse)
             if(createLRResponse && createLRResponse.success){
                 
                 window.open(createLRResponse.link,'_blank')

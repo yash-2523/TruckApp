@@ -62,7 +62,6 @@ export default function Trip() {
 
             if (search.length > 0) {
                 let trips = await searchTrips(search, trip_status, from_date, to_date)
-                console.log("Trips", trips)
                 setTripData(trips);
             }
             else {

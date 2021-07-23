@@ -22,7 +22,6 @@ const TruckPdfModal = ({ open, onClose, customerName }) => {
             setInputValid('Date range should be less then or equal to 3 months')
         else
             setInputValid('')
-        console.log(customerName)
 
     }, [fromDate, toDate])
 
@@ -31,7 +30,6 @@ const TruckPdfModal = ({ open, onClose, customerName }) => {
         setGlobalLoading(true)
         try {
             const tripPdfResponse = await getCustomerTripPdf(fromDate, toDate, id, customerName)
-            console.log(tripPdfResponse)
             if (tripPdfResponse && tripPdfResponse.success)
                 window.open(tripPdfResponse.link, '_blank')
             else

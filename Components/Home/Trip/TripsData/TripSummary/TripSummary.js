@@ -127,7 +127,6 @@ export default function TripSummary() {
     let TripDetails = async () => {
         try {
             let TripDetailsResponse = await getTripDetails(tripId);
-            console.log(TripDetailsResponse)
 
             if (TripDetailsResponse) {
                 setTripDetails(TripDetailsResponse);

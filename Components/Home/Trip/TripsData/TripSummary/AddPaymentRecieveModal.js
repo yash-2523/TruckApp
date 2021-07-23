@@ -127,7 +127,7 @@ export default function AddPaymentRecieveModal(props) {
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-4"
                             value={addPaymentReceivedDetails.paymentDate}
                             type="date"
-                            onChange={(e) => {console.log(e),setAddPaymentReceivedDetails({...addPaymentReceivedDetails,paymentDate: e.target.value})}}
+                            onChange={(e) => {setAddPaymentReceivedDetails({...addPaymentReceivedDetails,paymentDate: e.target.value})}}
                             required
                             focused
                             error={addPaymentReceivedDetails.paymentDate === ""}
@@ -137,7 +137,7 @@ export default function AddPaymentRecieveModal(props) {
                             inputVariant="outlined"
                             className="mx-5 col-lg-6 col-md-6 col-8 mt-4"
                             value={addPaymentReceivedDetails.paymentDate}
-                            onChange={(e) => {console.log(e),setAddPaymentReceivedDetails({...addPaymentReceivedDetails,paymentDate: e})}}
+                            onChange={(e) => {setAddPaymentReceivedDetails({...addPaymentReceivedDetails,paymentDate: e})}}
                             required
                             format="DD-MM-YYYY"
                             helperText=""

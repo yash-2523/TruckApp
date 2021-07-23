@@ -33,7 +33,6 @@ async function getCustomerTripPdf(fromDate, toDate, customerUid, customerName) {
             }
         })
     } catch (error) {
-        console.log(error)
         return false
     }
 }

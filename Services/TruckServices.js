@@ -2,7 +2,6 @@ import { API } from "aws-amplify";
 
 async function getAllTrucks() {
     try {
-        console.log('truck get all')
         return await API.post('backend', '/get_trucks', {
             body: {
                 "is_available": "all"

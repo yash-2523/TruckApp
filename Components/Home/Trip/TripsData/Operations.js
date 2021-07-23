@@ -21,8 +21,6 @@ export default function Operations(props) {
         HandleOperation(fromDate, toDate, status, search)
     }, [toDate, status, search])
 
-    console.log(fromDate, toDate)
-
     let HandleFilters = (e) => {
         setFilters(e.target.value)
         let TempFromDate, TempToDate;

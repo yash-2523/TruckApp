@@ -22,7 +22,7 @@ async function getTrips(token, status, from_date = null, to_date = null, custome
         params['customer_uid'] = customerId;
     }
     try {
-        let TripsResponse = await API.post('backend', '/get_trips', {
+        let TripsResponse = await API.post('dev', '/get_trips', {
             body: params
         });
         let trips = TripsResponse.trips;
@@ -31,7 +31,7 @@ async function getTrips(token, status, from_date = null, to_date = null, custome
             while (trips.length <= 10 && (responseToken !== "[]" && responseToken !== "")) {
                 params["token"] = responseToken;
                 try {
-                    let TempTripResponse = await API.post('backend', '/get_trips', {
+                    let TempTripResponse = await API.post('dev', '/get_trips', {
                         body: params
                     });
                     trips = [...trips, ...TempTripResponse.trips];
@@ -62,7 +62,7 @@ async function deleteTrip(id) {
 
 async function getTripDetails(id) {
     try {
-        return await API.post('backend', '/get_trip_details', {
+        return await API.post('dev', '/get_trip_details', {
             body: {
                 trip_id: id
             }
@@ -161,7 +161,6 @@ async function getCustomerTripPdf(from_date, to_date, customerUid, customerName)
             }
         })
     } catch (error) {
-        console.log(error)
         return false
     }
 }
