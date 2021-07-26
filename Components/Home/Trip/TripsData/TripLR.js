@@ -90,6 +90,7 @@ export default function TripLR(){
 
             try{
                 let TripDetailsResponse = await getTripDetails(tripId);
+                console.log(TripDetailsResponse)
                 if(TripDetailsResponse){
                     // if(TripDetailsResponse.lr_created){
                     //     router.push(`/trip/${tripId}`);
@@ -277,8 +278,6 @@ export default function TripLR(){
     }
 
     function ConsignorFieldsForm(){
-
-        const [showExtraAddressField,setShowExtraAddressField] = useState(false);
         const [consignorFormDetails,setConsignorFormDetails] = useState(lrDetails.consignorDetails ? lrDetails.consignorDetails : {
             lr_number: tripDetails.lr_number || "",
             lr_date: moment().format('YYYY-MM-DD'),
@@ -287,9 +286,9 @@ export default function TripLR(){
             consignor_phone: "",
             consignor_eway_number: "",
             consignor_address: "",
-            consignor_address_2: "",
             consignor_pin_code: "",
             consignor_state: "",
+            goods_invoice_number: ""
 
         })
         const [consignorFormDetailsIsValid,setConsignorFormDetailsIsValid] = useState(false);
@@ -384,6 +383,8 @@ export default function TripLR(){
                         label="Invoice Number"
                         className={`col-lg-12 col-md-6 col-10`}
                         variant="outlined" 
+                        value={consignorFormDetails.goods_invoice_number}
+                        onChange={(e) => setConsignorFormDetails({...consignorFormDetails,goods_invoice_number: e.target.value})}
                     />
                 </div>
 
@@ -403,19 +404,6 @@ export default function TripLR(){
                         onChange={(e) => setConsignorFormDetails({...consignorFormDetails,consignor_address: e.target.value})}
                         error={consignorFormDetails.consignor_address === ""}
                     />
-                    <Button className={`mt-3 ${styles['add-street-address-2']}`} onClick={() => setShowExtraAddressField(!showExtraAddressField)} >{!showExtraAddressField ? <AddOutlined /> : <RemoveOutlined />} Street Address 2 (optional)</Button>
-
-                    {showExtraAddressField && 
-                         <TextField 
-                         label="Address"
-                         multiline
-                         rows={3}
-                         className="mt-3 col-10"
-                         variant="outlined"
-                         value={consignorFormDetails.consignor_address_2}
-                         onChange={(e) => setConsignorFormDetails({...consignorFormDetails,consignor_address_2: e.target.value})}
-                        />
-                    }
 
                     <div className="mt-3 d-flex align-items-start flex-wrap">
                         <TextField 
@@ -460,14 +448,11 @@ export default function TripLR(){
     }
 
     function ConsigneeDetailsForm() {
-        
-        const [showExtraAddressField,setShowExtraAddressField] = useState(false);
 
         const [consigneeFormDetails,setConsigneeFormDetails] = useState(lrDetails.consigneeDetails ? lrDetails.consigneeDetails : {
             consignee_name: "",
             consignee_gstin_number: "",
             consignee_address: "",
-            consignee_address_2: "",
             consignee_pin_code: "",
             consignee_state: "",
             consignee_phone: ""
@@ -544,19 +529,6 @@ export default function TripLR(){
                         onChange={(e) => setConsigneeFormDetails({...consigneeFormDetails,consignee_address: e.target.value})}
                         error={consigneeFormDetails.consignee_address === ""}
                     />
-                    <Button className={`mt-3 ${styles['add-street-address-2']}`} onClick={() => setShowExtraAddressField(!showExtraAddressField)} >{!showExtraAddressField ? <AddOutlined /> : <RemoveOutlined />} Street Address 2 (optional)</Button>
-
-                    {showExtraAddressField && 
-                         <TextField 
-                         label="Address"
-                         multiline
-                         rows={3}
-                         className="mt-3 col-10"
-                         variant="outlined"
-                         value={consigneeFormDetails.consignee_address_2}
-                         onChange={(e) => setConsigneeFormDetails({...consigneeFormDetails,consignee_address_2: e.target.value})}
-                        />
-                    }
 
                     <div className="mt-3 d-flex align-items-start flex-wrap">
                         <TextField 
@@ -764,7 +736,7 @@ export default function TripLR(){
             goods_invoice_number: ""
         }
 
-        if(tripDetails.weight !== undefined){
+        if(tripDetails.weight !== undefined && tripDetails.weight!=="" && tripDetails.rate!==undefined && tripDetails.rate!==""){
             console
             initialObject['weight'] = tripDetails.weight!=="" ? tripDetails.weight : "";
             initialObject['weight_unit'] = tripDetails.weight_unit!=="" ? (tripDetails.weight_unit==="kg" ? "KG" : "Tonne") : "KG";
@@ -830,7 +802,7 @@ export default function TripLR(){
                         error={goodsFormDetails.no_of_articles === ""}
                     />
 
-                    {tripDetails.weight!==undefined && 
+                    {(tripDetails.weight !== undefined && tripDetails.weight!=="" && tripDetails.rate!==undefined && tripDetails.rate!=="") && 
                     // <div className={`d-flex flex-column justify-content-between col-lg-5 col-md-6 col-10`}>
                     //     Actual Weight
                     //     <div className="w-100 d-flex justify-content-between align-items-center">
@@ -861,7 +833,7 @@ export default function TripLR(){
                         // </div>
                     // </div> 
                     }
-                    {tripDetails.rate!==undefined && 
+                    {(tripDetails.weight !== undefined && tripDetails.weight!=="" && tripDetails.rate!==undefined && tripDetails.rate!=="") && 
                     // <div className={`d-flex flex-column justify-content-between col-lg-5 col-md-6 col-10`}>
                     //     Actual Rate
                     //     <div className="w-100 d-flex justify-content-between align-items-center">

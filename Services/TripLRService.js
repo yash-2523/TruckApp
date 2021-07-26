@@ -4,14 +4,14 @@ import { getShortLivedUrl } from "./TripDataServices";
 
 async function getStates() {
     try {
-        return await API.post('dev', '/get_states', {});
+        return await API.post('backend', '/get_states', {});
     } catch (err) {
         return false;
     }
 }
 async function getPackagingType() {
     try {
-        return await API.post('dev', '/get_packaging_types', {});
+        return await API.post('backend', '/get_packaging_types', {});
     } catch (err) {
         return false;
     }
@@ -51,7 +51,7 @@ async function createLR(lrDetails) {
     params.lr_number = params.lr_number.toString()
     console.log(params)
     try {
-        return await API.post('dev', '/create_lr', {
+        return await API.post('backend', '/create_lr', {
             body: params
         });
     } catch (err) {
