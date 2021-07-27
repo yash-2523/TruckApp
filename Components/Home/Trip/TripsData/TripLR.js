@@ -90,7 +90,6 @@ export default function TripLR(){
 
             try{
                 let TripDetailsResponse = await getTripDetails(tripId);
-                console.log(TripDetailsResponse)
                 if(TripDetailsResponse){
                     // if(TripDetailsResponse.lr_created){
                     //     router.push(`/trip/${tripId}`);
